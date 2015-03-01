@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "34843D861A8B93EC0089DFBF"
-               BuildableName = "HUSAPp.app"
+               BuildableName = "HUSApp.temp_caseinsensitive_rename.app"
                BlueprintName = "HUSApp.temp_caseinsensitive_rename"
                ReferencedContainer = "container:HUSApp.xcodeproj">
             </BuildableReference>
@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "34843D9E1A8B93ED0089DFBF"
-               BuildableName = "HUSAPpTests.xctest"
+               BuildableName = "HUSApp.temp_caseinsensitive_renameTests.xctest"
                BlueprintName = "HUSApp.temp_caseinsensitive_renameTests"
                ReferencedContainer = "container:HUSApp.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "34843D9E1A8B93ED0089DFBF"
-               BuildableName = "HUSAPpTests.xctest"
+               BuildableName = "HUSApp.temp_caseinsensitive_renameTests.xctest"
                BlueprintName = "HUSApp.temp_caseinsensitive_renameTests"
                ReferencedContainer = "container:HUSApp.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "34843D861A8B93EC0089DFBF"
-            BuildableName = "HUSAPp.app"
+            BuildableName = "HUSApp.temp_caseinsensitive_rename.app"
             BlueprintName = "HUSApp.temp_caseinsensitive_rename"
             ReferencedContainer = "container:HUSApp.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "34843D861A8B93EC0089DFBF"
-            BuildableName = "HUSAPp.app"
+            BuildableName = "HUSApp.temp_caseinsensitive_rename.app"
             BlueprintName = "HUSApp.temp_caseinsensitive_rename"
             ReferencedContainer = "container:HUSApp.xcodeproj">
          </BuildableReference>
@@ -94,7 +94,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "34843D861A8B93EC0089DFBF"
-            BuildableName = "HUSAPp.app"
+            BuildableName = "HUSApp.temp_caseinsensitive_rename.app"
             BlueprintName = "HUSApp.temp_caseinsensitive_rename"
             ReferencedContainer = "container:HUSApp.xcodeproj">
          </BuildableReference>
