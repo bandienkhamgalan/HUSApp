@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Zgv-WQ-8gH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Zgv-WQ-8gH">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -151,6 +151,11 @@
                                     <segment title="Female"/>
                                 </segments>
                             </segmentedControl>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="John Smith" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1EC-o6-NeN">
+                                <rect key="frame" x="34" y="120" width="532" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -259,12 +264,8 @@
                         <barButtonItem title="New Record" id="Qb5-N7-o5w"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="hJL-C3-4Tk"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Annabelle Houston" id="QgZ-Mx-Fwo">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="RN0-uR-HoP">
-                            <connections>
-                                <segue destination="gPH-7y-98f" kind="presentation" id="4DA-Fa-uOU"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="Annabelle Houston" id="nVL-FY-Tk0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="sor-yN-yXW"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
