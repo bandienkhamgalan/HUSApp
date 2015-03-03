@@ -17,4 +17,9 @@
 @dynamic patientID;
 @dynamic operations;
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"Patient named: %@", self.name];
+}
+
 @end

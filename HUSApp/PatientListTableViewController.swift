@@ -9,23 +9,37 @@
 import UIKit
 import CoreData
 
-class PatientListTableViewController: UITableViewController {
+class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    var results: NSFetchedResultsController;
+    var results: NSFetchedResultsController?;
+    var managedObjectContext: NSManagedObjectContext?
+    {
+        didSet
+        {
+            var fetchRequest = NSFetchRequest(entityName:"Patient")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+            let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.managedObjectContext!, sectionNameKeyPath:"name", cacheName:nil)
+            results!.delegate = self
+        }
+    }
 
     required init(coder aDecoder: NSCoder) {
-        var fetchRequest = NSFetchRequest(entityName:"Patient")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        self.results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.managedObjectContext!, sectionNameKeyPath: nil, cacheName:nil)
         super.init(coder: aDecoder)
     }
 
     override func viewDidLoad()
     {
-        var error: NSError?;
-        self.results.performFetch(&error);
-            
+        self.results!.performFetch(nil);
+        println("fetched \(self.results!.fetchedObjects!.count) objects")
+        for object in self.results!.fetchedObjects!
+        {
+            var patient = object as Patient
+            println(patient)
+        }
+        
+       
+        
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
@@ -47,20 +61,26 @@ class PatientListTableViewController: UITableViewController {
     {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return self.results.sections!.count;
+        return self.results!.sections!.count;
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return self.results.sections?[section].count ?? 0;
+        if self.results == nil
+        {
+            return 0
+        }
+        let sectionInfo = self.results!.sections![0] as NSFetchedResultsSectionInfo
+        return sectionInfo.numberOfObjects;
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as? UITableViewCell
+                println("in tableView cellForRowAtIndexPath")
+        var cell = tableView.dequeueReusableCellWithIdentifier("patientCell") as? UITableViewCell
 
         // Configure the cell...
         if cell == nil
@@ -68,7 +88,7 @@ class PatientListTableViewController: UITableViewController {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "patientCell")
         }
         
-        var currentPatient: Patient = self.results.objectAtIndexPath(indexPath) as Patient
+        var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
         cell!.textLabel!.text = currentPatient.name
         
         return cell!

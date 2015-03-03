@@ -17,13 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        var entityDescription = NSEntityDescription.entityForName("Patient", inManagedObjectContext: managedObjectContext!)
-        var patient : Patient = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext) as Patient
-        patient.name = "Test"
-        self.managedObjectContext?.save(nil)
-        var fetchRequest = NSFetchRequest(entityName: "Patient")
-        //fetchRequest.predicate = [NSPredicate(format: "name like Test")]
-        
+        let entityDescript = NSEntityDescription.entityForName("Patient", inManagedObjectContext: managedObjectContext!)!
+        let newPatient = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: managedObjectContext!) as Patient
+        newPatient.name = "Bandi Enkh-Amgalan";
+        let rootViewController = window!.rootViewController! as UINavigationController
+        let patientListViewController = rootViewController.visibleViewController as PatientListTableViewController
+        patientListViewController.managedObjectContext = managedObjectContext;
         return true
     }
 
