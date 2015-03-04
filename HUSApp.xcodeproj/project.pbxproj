@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		343736E01AA6813700013C79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343736DF1AA6813700013C79 /* Main.storyboard */; };
 		344F95CB1AA37FCB0015B806 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CA1AA37FCB0015B806 /* AppDelegate.swift */; };
 		344F95D01AA37FCB0015B806 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CF1AA37FCB0015B806 /* ViewController.swift */; };
-		344F95D31AA37FCB0015B806 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 344F95D11AA37FCB0015B806 /* Main.storyboard */; };
 		344F95D51AA37FCB0015B806 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344F95D41AA37FCB0015B806 /* Images.xcassets */; };
 		344F95D81AA37FCB0015B806 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 344F95D61AA37FCB0015B806 /* LaunchScreen.xib */; };
 		344F95E41AA37FCB0015B806 /* HUSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95E31AA37FCB0015B806 /* HUSAppTests.swift */; };
@@ -30,11 +30,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		343736DF1AA6813700013C79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		344F95C51AA37FCB0015B806 /* HUSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HUSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		344F95C91AA37FCB0015B806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		344F95CA1AA37FCB0015B806 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		344F95CF1AA37FCB0015B806 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		344F95D21AA37FCB0015B806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		344F95D41AA37FCB0015B806 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		344F95D71AA37FCB0015B806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		344F95DD1AA37FCB0015B806 /* HUSAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HUSAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,8 +91,8 @@
 				344F95CA1AA37FCB0015B806 /* AppDelegate.swift */,
 				344F95CF1AA37FCB0015B806 /* ViewController.swift */,
 				344F95F71AA380430015B806 /* PatientListTableViewController.swift */,
-				344F95D11AA37FCB0015B806 /* Main.storyboard */,
 				344F95D41AA37FCB0015B806 /* Images.xcassets */,
+				343736DF1AA6813700013C79 /* Main.storyboard */,
 				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
 				344F95F11AA3803A0015B806 /* Operation.h */,
 				344F95F21AA3803A0015B806 /* Operation.m */,
@@ -210,7 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				344F95D31AA37FCB0015B806 /* Main.storyboard in Resources */,
+				343736E01AA6813700013C79 /* Main.storyboard in Resources */,
 				344F95D81AA37FCB0015B806 /* LaunchScreen.xib in Resources */,
 				344F95D51AA37FCB0015B806 /* Images.xcassets in Resources */,
 			);
@@ -258,14 +258,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		344F95D11AA37FCB0015B806 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				344F95D21AA37FCB0015B806 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		344F95D61AA37FCB0015B806 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -432,6 +424,7 @@
 				344F95E91AA37FCB0015B806 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		344F95EA1AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "HUSAppTests" */ = {
 			isa = XCConfigurationList;
@@ -440,6 +433,7 @@
 				344F95EC1AA37FCB0015B806 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
