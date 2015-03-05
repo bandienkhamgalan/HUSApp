@@ -17,6 +17,7 @@
 		344F95F51AA3803A0015B806 /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = 344F95F21AA3803A0015B806 /* Operation.m */; };
 		344F95F61AA3803A0015B806 /* Patient.m in Sources */ = {isa = PBXBuildFile; fileRef = 344F95F41AA3803A0015B806 /* Patient.m */; };
 		344F95F81AA380430015B806 /* PatientListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95F71AA380430015B806 /* PatientListTableViewController.swift */; };
+		34A776211AA88529002AA3C8 /* OperationEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */; };
 		34B1C06D1AA740D2007DA58E /* PatientEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */; };
 		34B1C06F1AA76BC2007DA58E /* PatientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B1C06E1AA76BC2007DA58E /* PatientTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		344F95F31AA3803A0015B806 /* Patient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patient.h; sourceTree = "<group>"; };
 		344F95F41AA3803A0015B806 /* Patient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Patient.m; sourceTree = "<group>"; };
 		344F95F71AA380430015B806 /* PatientListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientListTableViewController.swift; sourceTree = "<group>"; };
+		34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationEditorViewController.swift; sourceTree = "<group>"; };
 		34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientEditorViewController.swift; sourceTree = "<group>"; };
 		34B1C06E1AA76BC2007DA58E /* PatientTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +101,7 @@
 				344F95D41AA37FCB0015B806 /* Images.xcassets */,
 				343736DF1AA6813700013C79 /* Main.storyboard */,
 				34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */,
+				34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */,
 				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
 				344F95F11AA3803A0015B806 /* Operation.h */,
 				344F95F21AA3803A0015B806 /* Operation.m */,
@@ -239,6 +242,7 @@
 				34B1C06D1AA740D2007DA58E /* PatientEditorViewController.swift in Sources */,
 				344F95D01AA37FCB0015B806 /* ViewController.swift in Sources */,
 				344F95CB1AA37FCB0015B806 /* AppDelegate.swift in Sources */,
+				34A776211AA88529002AA3C8 /* OperationEditorViewController.swift in Sources */,
 				344F95F61AA3803A0015B806 /* Patient.m in Sources */,
 				344F95F81AA380430015B806 /* PatientListTableViewController.swift in Sources */,
 				344F95EF1AA3802C0015B806 /* HUSApp.xcdatamodeld in Sources */,

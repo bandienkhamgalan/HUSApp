@@ -92,14 +92,38 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
                 delegate!.userDidPressCancel(self)
             }
         }
-        
-        nameField.delegate = self
-        idField.delegate = self
-        ageField.delegate = self
+        else
+        {
+            if(patient!.name != nil)
+            {
+                nameField.text = patient!.name
+                name = patient!.name
+            }
+            if(patient!.patientID != nil)
+            {
+                idField.text = patient!.name
+                patientID = patient!.name
+            }
+            if(patient!.age != nil)
+            {
+                ageField.text = patient!.ageString()
+                age = patient!.age.integerValue
+            }
+            if(patient!.gender != nil)
+            {
+                gender = patient!.gender.integerValue
+                genderPicker.selectedSegmentIndex = gender
+            }
+            nameField.delegate = self
+            idField.delegate = self
+            ageField.delegate = self
+        }
         doneButton.enabled = false
         // Do any additional setup after loading the view.
     }
 
+    @IBOutlet weak var genderPicker: UISegmentedControl!
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

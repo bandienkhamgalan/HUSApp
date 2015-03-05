@@ -41,13 +41,9 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
-        println("in prepareForSegue(segue: \(segue), sender: \(sender)")
         let destination = segue.destinationViewController as UIViewController
         switch(destination.restorationIdentifier!)
         {
-            case "PatientViewer":
-                
-                break
             case "PatientEditor":
                 let destinationNVC = destination as UINavigationController
                 let patientEditor = destinationNVC.visibleViewController as PatientEditorViewController
@@ -111,6 +107,16 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         }
         println("\(self.results!.sections!.count) sections in table view");
         return self.results!.sections!.count;
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let patientTVC = storyboard.instantiateViewControllerWithIdentifier("PatientViewer") as PatientTableViewController
+        patientTVC.setup(managedObjectContext: managedObjectContext!, patient: currentPatient)
+        let parentNVC = self.parentViewController as UINavigationController
+        parentNVC.pushViewController(patientTVC, animated: true)
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int

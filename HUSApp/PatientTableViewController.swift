@@ -8,11 +8,23 @@
 
 import UIKit
 
-class PatientTableViewController: UITableViewController, NSFetchedResultsControllerDelegate
+class PatientTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate
 {
     var patient: Patient?
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
+    
+    func userDidPressCancel(patientEditor: PatientEditorViewController)
+    {
+        managedObjectContext!.reset()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func userDidPressDone(patientEditor: PatientEditorViewController)
+    {
+        managedObjectContext!.save(nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
@@ -23,9 +35,21 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: "year", cacheName: nil)
         results!.delegate = self
+        self.title = patient!.name
+    }
+    
+    func userPressedEdit()
+    {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
+        let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
+        patientEditor.patient = patient!
+        self.presentViewController(patientEditorNVC, animated: true, completion:nil)
     }
     
     override func viewDidLoad() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
+        results!.performFetch(nil)
         super.viewDidLoad()
         
         // Uncomment the following line to preserve selection between presentations
@@ -45,23 +69,55 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return self.results!.sections!.count
+        return self.results!.sections!.count + 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
+        if section == 0
+        {
+            return 1
+        }
+        let sectionInfo = self.results!.sections![section - 1] as NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-
-        return cell
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        if indexPath.section == 0
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as UITableViewCell
+            for obj in cell.contentView.subviews
+            {
+                let view = obj as UIView
+                println(view.tag)
+                switch(view.tag)
+                {
+                    case 10:
+                        let gender = view as UILabel
+                        gender.text = patient!.genderString()
+                        break
+                    case 11:
+                        let id = view as UILabel
+                        id.text = "#" + patient!.patientID
+                        break
+                    case 12:
+                        let age = view as UILabel
+                        age.text = patient!.age.stringValue
+                        break
+                    default:
+                        break
+                }
+            }
+            return cell
+        }
+        else
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("operationCell", forIndexPath: indexPath) as UITableViewCell
+            return cell
+        }
     }
     
 
