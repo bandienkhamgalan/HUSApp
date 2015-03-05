@@ -52,7 +52,7 @@
 		344F95F71AA380430015B806 /* PatientListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientListTableViewController.swift; sourceTree = "<group>"; };
 		34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientEditorViewController.swift; sourceTree = "<group>"; };
 		34B1C06E1AA76BC2007DA58E /* PatientTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientTableViewController.swift; sourceTree = "<group>"; };
-		3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateAndTimePickerTableViewController.swift; path = HUSApp/DateAndTimePickerTableViewController.swift; sourceTree = "<group>"; };
+		3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,6 @@
 		344F95BC1AA37FCB0015B806 = {
 			isa = PBXGroup;
 			children = (
-				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
 				344F95C71AA37FCB0015B806 /* HUSApp */,
 				344F95E01AA37FCB0015B806 /* HUSAppTests */,
 				344F95C61AA37FCB0015B806 /* Products */,
@@ -95,6 +94,7 @@
 		344F95C71AA37FCB0015B806 /* HUSApp */ = {
 			isa = PBXGroup;
 			children = (
+				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
 				344F95CA1AA37FCB0015B806 /* AppDelegate.swift */,
 				344F95CF1AA37FCB0015B806 /* ViewController.swift */,
 				344F95F71AA380430015B806 /* PatientListTableViewController.swift */,

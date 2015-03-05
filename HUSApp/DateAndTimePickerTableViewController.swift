@@ -8,8 +8,16 @@
 
 import UIKit
 
-class DateAndTimePickerTableViewController: UITableViewController {
+enum PickerMode
+{
+    case Time
+    case Date
+}
 
+class DateAndTimePickerTableViewController: UITableViewController
+{
+    var pickerMode = PickerMode.Date
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,24 +38,35 @@ class DateAndTimePickerTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return 1
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("datePickerContainer", forIndexPath: indexPath) as UITableViewCell
 
+        for obj in cell.contentView.subviews
+        {
+            var view = obj as UIView
+            if view.tag == 1
+            {
+                var datePicker = view as UIDatePicker
+                datePicker.datePickerMode = self.pickerMode == .Time ? UIDatePickerMode.Time : UIDatePickerMode.Date
+            }
+        }
+        
+        
         // Configure the cell...
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
