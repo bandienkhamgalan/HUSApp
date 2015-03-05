@@ -347,15 +347,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BeT-a7-MsC">
-                                <rect key="frame" x="0.0" y="140" width="600" height="162"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BLOOD LOSS/mL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYG-2c-pQv">
+                                <rect key="frame" x="16" y="20" width="152" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="152" id="Gfj-ax-98h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BeT-a7-MsC">
+                                <rect key="frame" x="0.0" y="63" width="600" height="162"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="162" id="eZW-SW-ITr"/>
+                                </constraints>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BeT-a7-MsC" firstAttribute="top" secondItem="U8X-6G-vsa" secondAttribute="bottom" constant="120" id="6KK-yY-CXt"/>
-                            <constraint firstAttribute="trailing" secondItem="BeT-a7-MsC" secondAttribute="trailing" id="QAc-ae-b0w"/>
-                            <constraint firstItem="BeT-a7-MsC" firstAttribute="leading" secondItem="hnH-SZ-RpH" secondAttribute="leading" id="tOG-kR-TxM"/>
+                            <constraint firstItem="XYG-2c-pQv" firstAttribute="top" secondItem="U8X-6G-vsa" secondAttribute="bottom" constant="8" symbolic="YES" id="1r4-fj-guj"/>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="leading" secondItem="hnH-SZ-RpH" secondAttribute="leading" id="2bm-aQ-H6X"/>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="top" secondItem="XYG-2c-pQv" secondAttribute="bottom" constant="46" id="B2G-02-8NK"/>
+                            <constraint firstAttribute="trailing" secondItem="BeT-a7-MsC" secondAttribute="trailing" id="Dxv-Ff-In3"/>
+                            <constraint firstAttribute="width" secondItem="BeT-a7-MsC" secondAttribute="width" id="I3i-I0-Uho"/>
+                            <constraint firstItem="XYG-2c-pQv" firstAttribute="leading" secondItem="hnH-SZ-RpH" secondAttribute="leadingMargin" id="XzY-1y-aSN"/>
+                            <constraint firstItem="e9V-YH-37a" firstAttribute="top" secondItem="BeT-a7-MsC" secondAttribute="bottom" constant="329" id="kCu-LL-IRN"/>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="top" secondItem="U8X-6G-vsa" secondAttribute="bottom" constant="43" id="lKe-31-Xpq"/>
                         </constraints>
                     </view>
                 </viewController>
