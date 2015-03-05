@@ -8,7 +8,7 @@
         <!--All Patients-->
         <scene sceneID="A4Y-5Z-vUm">
             <objects>
-                <tableViewController id="qV9-Dn-17g" customClass="PatientListTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="patientList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qV9-Dn-17g" customClass="PatientListTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zIN-Yz-HNX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -49,7 +49,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fH4-38-dfA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-612" y="1278"/>
+            <point key="canvasLocation" x="-634" y="1298"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nrE-O6-ggV">
@@ -65,12 +65,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPV-RR-cf9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="255" y="1222"/>
+            <point key="canvasLocation" x="43" y="1208"/>
         </scene>
         <!--New Patient-->
         <scene sceneID="qTM-Ft-87L">
             <objects>
-                <viewController id="gPH-7y-98f" customClass="PatientEditorViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="patientEditorInside" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gPH-7y-98f" customClass="PatientEditorViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ia1-16-iTU"/>
                         <viewControllerLayoutGuide type="bottom" id="C3S-3f-aOh"/>
@@ -182,7 +182,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tGr-AH-bhl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="260" y="1389"/>
+            <point key="canvasLocation" x="102" y="1319"/>
         </scene>
         <!--Annabelle Houston-->
         <scene sceneID="bah-sP-PKo">
@@ -335,12 +335,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tvW-hD-OhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="364" y="2838"/>
+            <point key="canvasLocation" x="444" y="2800"/>
         </scene>
         <!--Record-->
         <scene sceneID="Lm1-Eg-DO2">
             <objects>
-                <tableViewController id="fit-oi-3Z2" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="operationViewer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fit-oi-3Z2" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" sectionIndexMinimumDisplayRowCount="2" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fBW-ky-4Mo">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -418,12 +418,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lvz-af-qPm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-187" y="3390"/>
+            <point key="canvasLocation" x="-265" y="3468"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jVd-h8-6bA">
             <objects>
-                <navigationController id="Zgv-WQ-8gH" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="patientListContainer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zgv-WQ-8gH" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="48L-Is-34f">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
