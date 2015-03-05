@@ -11,7 +11,6 @@ import UIKit
 class OperationEditorViewController: UIViewController {
 
         
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

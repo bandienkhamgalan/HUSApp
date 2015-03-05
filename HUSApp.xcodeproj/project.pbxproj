@@ -96,7 +96,6 @@
 		344F95C71AA37FCB0015B806 /* HUSApp */ = {
 			isa = PBXGroup;
 			children = (
-				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
 				344F95CA1AA37FCB0015B806 /* AppDelegate.swift */,
 				344F95CF1AA37FCB0015B806 /* ViewController.swift */,
 				344F95F71AA380430015B806 /* PatientListTableViewController.swift */,
@@ -105,6 +104,7 @@
 				343736DF1AA6813700013C79 /* Main.storyboard */,
 				34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */,
 				34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */,
+				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
 				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
 				344F95F11AA3803A0015B806 /* Operation.h */,
 				344F95F21AA3803A0015B806 /* Operation.m */,
