@@ -10,8 +10,9 @@ import UIKit
 
 enum PickerMode
 {
-    case Time
-    case Date
+
+    case Time:
+    case Date:
 }
 
 class DateAndTimePickerTableViewController: UITableViewController
