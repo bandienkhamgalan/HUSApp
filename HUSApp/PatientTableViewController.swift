@@ -84,7 +84,6 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         return sectionInfo.numberOfObjects
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         if indexPath.section == 0
