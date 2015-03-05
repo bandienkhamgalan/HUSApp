@@ -399,22 +399,22 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="lM3-5J-Qdh">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="179" id="lM3-5J-Qdh">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lM3-5J-Qdh" id="Cpg-vA-hNi">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Uw0-Y2-OVY">
-                                            <rect key="frame" x="0.0" y="-59" width="600" height="162"/>
-                                            <date key="date" timeIntervalSinceReferenceDate="447249586.56897998">
-                                                <!--2015-03-05 11:59:46 +0000-->
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6vt-7y-lTE">
+                                            <rect key="frame" x="0.0" y="9" width="600" height="162"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="447250724.31093699">
+                                                <!--2015-03-05 12:18:44 +0000-->
                                             </date>
                                         </datePicker>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Uw0-Y2-OVY" firstAttribute="leading" secondItem="Cpg-vA-hNi" secondAttribute="leading" id="MGG-Zv-KDK"/>
-                                        <constraint firstItem="Uw0-Y2-OVY" firstAttribute="top" secondItem="Cpg-vA-hNi" secondAttribute="topMargin" constant="-67" id="Sam-bF-jiw"/>
-                                        <constraint firstAttribute="trailing" secondItem="Uw0-Y2-OVY" secondAttribute="trailing" id="urb-Nc-irr"/>
+                                        <constraint firstItem="6vt-7y-lTE" firstAttribute="top" secondItem="Cpg-vA-hNi" secondAttribute="topMargin" constant="1" id="9Xe-Cc-Yyu"/>
+                                        <constraint firstAttribute="trailing" secondItem="6vt-7y-lTE" secondAttribute="trailing" id="tGy-Vk-jSI"/>
+                                        <constraint firstItem="6vt-7y-lTE" firstAttribute="leading" secondItem="Cpg-vA-hNi" secondAttribute="leading" id="zQq-ez-BrN"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
