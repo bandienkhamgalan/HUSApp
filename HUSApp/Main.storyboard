@@ -80,19 +80,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2k-Vh-wEb">
-                                <rect key="frame" x="37" y="163" width="17" height="21"/>
+                                <rect key="frame" x="37" y="163" width="17" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Age" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5b-9v-epQ">
-                                <rect key="frame" x="37" y="235" width="31" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5b-9v-epQ">
+                                <rect key="frame" x="37" y="235" width="30.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdy-Sq-KfO">
-                                <rect key="frame" x="37" y="91" width="46" height="21"/>
+                                <rect key="frame" x="37" y="91" width="45.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -107,7 +107,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#000000" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t26-sG-bAN">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="fill" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#000000" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t26-sG-bAN">
                                 <rect key="frame" x="34" y="191" width="532" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
@@ -277,27 +277,29 @@
         <scene sceneID="RSP-cS-gDv">
             <objects>
                 <tableViewController title="DateTimeTableView" id="oGU-lP-gTi" customClass="DateAndTimePickerTableViewController" customModule="HUSApp" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="163" sectionHeaderHeight="22" sectionFooterHeight="22" id="QEF-La-Gih">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="22" sectionHeaderHeight="22" sectionFooterHeight="22" id="QEF-La-Gih">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerContainer" rowHeight="163" id="64u-bb-nSp">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerContainer" rowHeight="162" id="64u-bb-nSp">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="64u-bb-nSp" id="tCW-bd-SSO">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <datePicker tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="fJe-NL-42Q">
-                                            <rect key="frame" x="0.0" y="-20" width="600" height="180"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="600" id="8w2-TN-WKc"/>
-                                                <constraint firstAttribute="height" constant="180" id="avp-li-9Gf"/>
-                                            </constraints>
+                                        <datePicker tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="fJe-NL-42Q">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="162"/>
                                             <date key="date" timeIntervalSinceReferenceDate="447250782.32856297">
                                                 <!--2015-03-05 12:19:42 +0000-->
                                             </date>
                                         </datePicker>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="fJe-NL-42Q" secondAttribute="bottom" constant="-8.5" id="QTh-P9-nc4"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="fJe-NL-42Q" secondAttribute="trailing" constant="-8" id="bXj-V7-ElO"/>
+                                        <constraint firstItem="fJe-NL-42Q" firstAttribute="leading" secondItem="tCW-bd-SSO" secondAttribute="leadingMargin" constant="-8" id="vJb-cC-TGY"/>
+                                        <constraint firstItem="fJe-NL-42Q" firstAttribute="top" secondItem="tCW-bd-SSO" secondAttribute="topMargin" constant="-8" id="xyu-8Q-ys8"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -449,19 +451,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="157" id="PsQ-YA-TDY">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="valuePickerContainer" rowHeight="180" id="PsQ-YA-TDY">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PsQ-YA-TDY" id="fNT-zT-ySl">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lcg-Xd-DiF">
-                                            <rect key="frame" x="0.0" y="-11" width="600" height="180"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="180" id="Xcs-4E-hL3"/>
-                                                <constraint firstAttribute="width" constant="600" id="icz-y8-O2E"/>
-                                            </constraints>
+                                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcg-Xd-DiF">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
                                         </pickerView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="lcg-Xd-DiF" secondAttribute="trailing" constant="-8" id="QaV-BX-Rdm"/>
+                                        <constraint firstItem="lcg-Xd-DiF" firstAttribute="top" secondItem="fNT-zT-ySl" secondAttribute="topMargin" constant="-8" id="h0j-jI-UL5"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="lcg-Xd-DiF" secondAttribute="bottom" constant="-8.5" id="km3-WN-Cqr"/>
+                                        <constraint firstItem="lcg-Xd-DiF" firstAttribute="leading" secondItem="fNT-zT-ySl" secondAttribute="leadingMargin" constant="-8" id="uEj-3Q-NZ9"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
