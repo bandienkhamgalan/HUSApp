@@ -309,10 +309,10 @@
             </objects>
             <point key="canvasLocation" x="228" y="2550"/>
         </scene>
-        <!--Table View Controller-->
+        <!--TableSelector-->
         <scene sceneID="rzW-z1-t5h">
             <objects>
-                <tableViewController id="Gie-Cb-WBp" sceneMemberID="viewController">
+                <tableViewController title="TableSelector" id="Gie-Cb-WBp" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UqJ-ta-zZQ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -335,31 +335,33 @@
             </objects>
             <point key="canvasLocation" x="228" y="3222"/>
         </scene>
-        <!--Table View Controller-->
-        <scene sceneID="oAA-fq-ccR">
+        <!--Value Picker-->
+        <scene sceneID="0b9-Rf-dBI">
             <objects>
-                <tableViewController id="sYI-9Q-tb8" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zet-7e-4TS">
+                <viewController title="Value Picker" id="HAr-w3-36b" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U8X-6G-vsa"/>
+                        <viewControllerLayoutGuide type="bottom" id="e9V-YH-37a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hnH-SZ-RpH">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BeT-a7-MsC">
+                                <rect key="frame" x="0.0" y="140" width="600" height="162"/>
+                            </pickerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8cu-Bn-ZaX">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cu-Bn-ZaX" id="t2u-om-lpU">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="sYI-9Q-tb8" id="opm-Ej-dkH"/>
-                            <outlet property="delegate" destination="sYI-9Q-tb8" id="2NV-vK-6uX"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="g91-NV-aoc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <constraints>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="top" secondItem="U8X-6G-vsa" secondAttribute="bottom" constant="120" id="6KK-yY-CXt"/>
+                            <constraint firstAttribute="trailing" secondItem="BeT-a7-MsC" secondAttribute="trailing" id="QAc-ae-b0w"/>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="leading" secondItem="hnH-SZ-RpH" secondAttribute="leading" id="tOG-kR-TxM"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KNC-dQ-wqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="920" y="3222"/>
+            <point key="canvasLocation" x="994" y="3276"/>
         </scene>
         <!--Record-->
         <scene sceneID="Lm1-Eg-DO2">
