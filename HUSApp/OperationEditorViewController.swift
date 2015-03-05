@@ -8,9 +8,14 @@
 
 import UIKit
 
-class OperationEditorViewController: UIViewController {
-
+class OperationEditorViewController: UIViewController
+{
+    @IBAction func userPressedCancel(sender: UIBarButtonItem)
+    {
         
+    }
+    @IBOutlet weak var topRightButton: UIBarButtonItem!
+    @IBOutlet weak var scrollView: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
 

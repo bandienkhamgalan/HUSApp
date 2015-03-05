@@ -28,14 +28,13 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
-        patient = patientValue
+        self.patient = patientValue
         managedObjectContext = moc
         let request = NSFetchRequest(entityName:"Operation")
         request.predicate = NSPredicate(format: "patient = %@", patient!)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: "year", cacheName: nil)
-        results!.delegate = self
-        self.title = patient!.name
+        self.results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: "year", cacheName: nil)
+        self.results!.delegate = self
     }
     
     func userPressedEdit()
@@ -47,8 +46,10 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         self.presentViewController(patientEditorNVC, animated: true, completion:nil)
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
+        self.title = patient!.name
         results!.performFetch(nil)
         super.viewDidLoad()
         
@@ -88,7 +89,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         if indexPath.section == 0
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("patientInfoCell", forIndexPath: indexPath) as UITableViewCell
             for obj in cell.contentView.subviews
             {
                 let view = obj as UIView

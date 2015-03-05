@@ -116,6 +116,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         let patientTVC = storyboard.instantiateViewControllerWithIdentifier("PatientViewer") as PatientTableViewController
         patientTVC.setup(managedObjectContext: managedObjectContext!, patient: currentPatient)
         let parentNVC = self.parentViewController as UINavigationController
+        println("created patient tvc \(patientTVC)")
         parentNVC.pushViewController(patientTVC, animated: true)
     }
 
