@@ -276,22 +276,22 @@
         <!--DateTimeTableView-->
         <scene sceneID="RSP-cS-gDv">
             <objects>
-                <tableViewController title="DateTimeTableView" id="oGU-lP-gTi" sceneMemberID="viewController">
+                <tableViewController title="DateTimeTableView" id="oGU-lP-gTi" customClass="DateAndTimePickerTableViewController" customModule="HUSApp" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="163" sectionHeaderHeight="22" sectionFooterHeight="22" id="QEF-La-Gih">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="163" id="oXD-Td-Ceb">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerContainer" rowHeight="163" id="64u-bb-nSp">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oXD-Td-Ceb" id="O8E-d5-AVY">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="64u-bb-nSp" id="tCW-bd-SSO">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <datePicker contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="LaJ-j5-s6s">
+                                        <datePicker tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="fJe-NL-42Q">
                                             <rect key="frame" x="0.0" y="-20" width="600" height="180"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="180" id="dVw-Fv-huK"/>
-                                                <constraint firstAttribute="width" constant="600" id="hIj-fo-esp"/>
+                                                <constraint firstAttribute="width" constant="600" id="8w2-TN-WKc"/>
+                                                <constraint firstAttribute="height" constant="180" id="avp-li-9Gf"/>
                                             </constraints>
                                             <date key="date" timeIntervalSinceReferenceDate="447250782.32856297">
                                                 <!--2015-03-05 12:19:42 +0000-->
@@ -301,6 +301,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="oGU-lP-gTi" id="dMV-I8-CtE"/>
                             <outlet property="delegate" destination="oGU-lP-gTi" id="iuw-gB-OC4"/>
@@ -336,6 +337,60 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tvW-hD-OhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="444" y="2800"/>
+        </scene>
+        <!--Death Switch-->
+        <scene sceneID="CNR-Z9-tM3">
+            <objects>
+                <tableViewController title="Death Switch" id="f00-IE-q6L" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gFK-we-3hx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ZVv-TF-E1P">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZVv-TF-E1P" id="8t6-YS-pKZ">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V9v-gj-fK4">
+                                            <rect key="frame" x="530" y="6" width="51" height="31"/>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="V9v-gj-fK4" firstAttribute="centerY" secondItem="8t6-YS-pKZ" secondAttribute="centerY" id="4v7-Oj-RFo"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="V9v-gj-fK4" secondAttribute="trailing" constant="13" id="UNU-cd-ybO"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="179" id="lM3-5J-Qdh">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lM3-5J-Qdh" id="Cpg-vA-hNi">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6vt-7y-lTE">
+                                            <rect key="frame" x="0.0" y="9" width="600" height="162"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="447250724.31093699">
+                                                <!--2015-03-05 12:18:44 +0000-->
+                                            </date>
+                                        </datePicker>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="6vt-7y-lTE" firstAttribute="top" secondItem="Cpg-vA-hNi" secondAttribute="topMargin" constant="1" id="9Xe-Cc-Yyu"/>
+                                        <constraint firstAttribute="trailing" secondItem="6vt-7y-lTE" secondAttribute="trailing" id="tGy-Vk-jSI"/>
+                                        <constraint firstItem="6vt-7y-lTE" firstAttribute="leading" secondItem="Cpg-vA-hNi" secondAttribute="leading" id="zQq-ez-BrN"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="f00-IE-q6L" id="Gd3-Lf-bfR"/>
+                            <outlet property="delegate" destination="f00-IE-q6L" id="qz3-F3-Pgz"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UEk-PN-FdV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1628" y="2878"/>
         </scene>
         <!--Record-->
         <scene sceneID="Lm1-Eg-DO2">
