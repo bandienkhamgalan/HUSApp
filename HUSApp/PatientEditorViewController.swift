@@ -94,6 +94,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         }
         else
         {
+            println(patient!)
             if(patient!.name != nil)
             {
                 nameField.text = patient!.name
@@ -101,8 +102,8 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
             }
             if(patient!.patientID != nil)
             {
-                idField.text = patient!.name
-                patientID = patient!.name
+                idField.text = patient!.patientID
+                patientID = patient!.patientID
             }
             if(patient!.age != nil)
             {
@@ -131,16 +132,17 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
+        var newString = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
         switch(textField)
         {
             case nameField:
-                name = textField.text
+                name = newString
                 break
             case idField:
-                patientID = textField.text
+                patientID = newString
                 break
             case ageField:
-                let processedAge = NSNumberFormatter().numberFromString(textField.text)
+                let processedAge = NSNumberFormatter().numberFromString(newString)
                 if processedAge != nil
                 {
                     age = processedAge!.integerValue

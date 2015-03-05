@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PatientTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate
+class PatientTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, OperationEditorViewControllerDelegate
 {
     var patient: Patient?
     var results: NSFetchedResultsController?
@@ -16,7 +16,6 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     
     func userDidPressCancel(patientEditor: PatientEditorViewController)
     {
-        managedObjectContext!.reset()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -26,29 +25,45 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func userDidPressCancel(operationEditor: OperationEditorViewController)
+    {
+        managedObjectContext!.deleteObject(operationEditor.operation!)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func userDidPressDone(operationEditor: OperationEditorViewController)
+    {
+        patient!.addOperations(NSSet(object: operationEditor.operation!))
+        managedObjectContext!.save(nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
-        self.patient = patientValue
+        patient = patientValue
         managedObjectContext = moc
         let request = NSFetchRequest(entityName:"Operation")
         request.predicate = NSPredicate(format: "patient = %@", patient!)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        self.results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: "year", cacheName: nil)
-        self.results!.delegate = self
+        results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: "year", cacheName: nil)
+        results!.delegate = self
     }
     
-    func userPressedEdit()
+    func userPressedAdd()
     {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
-        let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
-        patientEditor.patient = patient!
-        self.presentViewController(patientEditorNVC, animated: true, completion:nil)
+        let operationEditor = OperationEditorViewController()
+        let entityDescript = NSEntityDescription.entityForName("Operation", inManagedObjectContext: managedObjectContext!)!
+        let newOperation = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: managedObjectContext!) as Operation
+        newOperation.patient = patient!
+        operationEditor.delegate = self
+        operationEditor.operation = newOperation
+        let nvc = UINavigationController(rootViewController: operationEditor)
+        self.presentViewController(nvc, animated: true, completion:nil)
     }
     
     override func viewDidLoad()
     {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "userPressedAdd")
         self.title = patient!.name
         results!.performFetch(nil)
         super.viewDidLoad()
@@ -73,7 +88,8 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         return self.results!.sections!.count + 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         if section == 0
@@ -92,7 +108,6 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             for obj in cell.contentView.subviews
             {
                 let view = obj as UIView
-                println(view.tag)
                 switch(view.tag)
                 {
                     case 10:
@@ -121,6 +136,20 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     }
     
 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if indexPath.section == 0
+        {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
+            let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
+            patientEditor.patient = patient!
+            patientEditor.delegate = self
+            self.presentViewController(patientEditorNVC, animated: true, completion: nil)
+            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
