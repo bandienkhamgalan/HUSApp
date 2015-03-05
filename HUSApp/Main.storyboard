@@ -266,10 +266,10 @@
             </objects>
             <point key="canvasLocation" x="-423" y="2027"/>
         </scene>
-        <!--Question 1-->
+        <!--DateTime Picker-->
         <scene sceneID="j5X-OM-zR2">
             <objects>
-                <viewController title="Question 1" id="kfX-8o-bi0" sceneMemberID="viewController">
+                <viewController title="DateTime Picker" id="kfX-8o-bi0" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xz6-E0-3gF"/>
                         <viewControllerLayoutGuide type="bottom" id="pju-Zi-ggi"/>
@@ -278,38 +278,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kdt-sV-aY7">
-                                <rect key="frame" x="-6" y="20" width="606" height="44"/>
-                                <items>
-                                    <navigationItem title="Question 1" id="BAa-Jt-SZm"/>
-                                </items>
-                            </navigationBar>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="sQM-p2-s9g">
-                                <rect key="frame" x="0.0" y="127" width="600" height="162"/>
-                                <date key="date" timeIntervalSinceReferenceDate="447103570.800502">
-                                    <!--2015-03-03 19:26:10 +0000-->
-                                </date>
-                            </datePicker>
-                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="10" translatesAutoresizingMaskIntoConstraints="NO" id="1TO-QC-VhQ">
-                                <rect key="frame" x="20" y="519" width="561" height="37"/>
-                                <color key="pageIndicatorTintColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                <color key="currentPageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </pageControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DATE OF OPERATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGW-3M-cTU">
-                                <rect key="frame" x="20" y="98" width="170" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="DATE OF OPERATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGW-3M-cTU">
+                                <rect key="frame" x="16" y="20" width="170" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <datePicker contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="sQM-p2-s9g">
+                                <rect key="frame" x="0.0" y="49" width="600" height="162"/>
+                                <date key="date" timeIntervalSinceReferenceDate="447103570.800502">
+                                    <!--2015-03-03 19:26:10 +0000-->
+                                </date>
+                            </datePicker>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xGW-3M-cTU" firstAttribute="leading" secondItem="jUM-6o-k1o" secondAttribute="leadingMargin" id="bPX-FG-Im6"/>
+                            <constraint firstItem="sQM-p2-s9g" firstAttribute="width" secondItem="jUM-6o-k1o" secondAttribute="width" id="yYt-n2-n5h"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJj-6o-YeG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="228" y="2550"/>
+            <point key="canvasLocation" x="266" y="2610"/>
         </scene>
         <!--Record-->
         <scene sceneID="Lm1-Eg-DO2">
