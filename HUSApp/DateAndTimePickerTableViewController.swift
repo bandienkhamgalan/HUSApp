@@ -1,5 +1,5 @@
 //
-//  DatePickerTableViewController.swift
+//  DateAndTimePickerTableViewController.swift
 //  HUSApp
 //
 //  Created by Yee Chong Tan on 05/03/2015.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DatePickerTableViewController: UITableViewController {
+class DateAndTimePickerTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
