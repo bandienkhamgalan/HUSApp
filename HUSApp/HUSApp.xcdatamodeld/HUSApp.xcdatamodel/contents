@@ -13,8 +13,8 @@
         <relationship name="patient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="operations" inverseEntity="Patient" syncable="YES"/>
     </entity>
     <entity name="Patient" representedClassName="Patient" syncable="YES">
-        <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="age" optional="YES" attributeType="Integer 16" minValueString="0" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="1" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="patientID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="operations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Operation" inverseName="patient" inverseEntity="Operation" syncable="YES"/>
@@ -27,6 +27,6 @@
     </entity>
     <elements>
         <element name="Operation" positionX="151" positionY="59" width="128" height="193"/>
-        <element name="Patient" positionX="-63" positionY="-18" width="128" height="161"/>
+        <element name="Patient" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

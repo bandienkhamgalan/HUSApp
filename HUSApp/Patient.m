@@ -8,7 +8,6 @@
 
 #import "Patient.h"
 
-
 @implementation Patient
 
 @dynamic age;
@@ -19,7 +18,15 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"Patient named: %@", self.name];
+    return [NSString stringWithFormat:@"Patient named: %@, aged: %@, id: %@ and gender: %@", self.name, self.age, self.patientID, self.gender];
+}
+
+- (NSString *)firstLetter
+{
+    [self willAccessValueForKey:@"firstLetter"];
+    NSString *firstLetter = [[[self name] substringToIndex:1] uppercaseString];
+    [self didAccessValueForKey:@"firstLetter"];
+    return firstLetter;
 }
 
 @end
