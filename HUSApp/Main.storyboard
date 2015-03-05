@@ -307,6 +307,77 @@
             </objects>
             <point key="canvasLocation" x="266" y="2610"/>
         </scene>
+        <!--TableSelector-->
+        <scene sceneID="rzW-z1-t5h">
+            <objects>
+                <tableViewController title="TableSelector" id="Gie-Cb-WBp" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UqJ-ta-zZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="I2o-A0-6rF">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I2o-A0-6rF" id="lbG-CO-CdF">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Gie-Cb-WBp" id="HQc-qX-Wl1"/>
+                            <outlet property="delegate" destination="Gie-Cb-WBp" id="lTH-Xc-99F"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tvW-hD-OhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="228" y="3222"/>
+        </scene>
+        <!--Value Picker-->
+        <scene sceneID="0b9-Rf-dBI">
+            <objects>
+                <viewController title="Value Picker" id="HAr-w3-36b" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U8X-6G-vsa"/>
+                        <viewControllerLayoutGuide type="bottom" id="e9V-YH-37a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hnH-SZ-RpH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BLOOD LOSS/mL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XYG-2c-pQv">
+                                <rect key="frame" x="16" y="20" width="152" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="152" id="Gfj-ax-98h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BeT-a7-MsC">
+                                <rect key="frame" x="0.0" y="63" width="600" height="162"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="162" id="eZW-SW-ITr"/>
+                                </constraints>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XYG-2c-pQv" firstAttribute="top" secondItem="U8X-6G-vsa" secondAttribute="bottom" constant="8" symbolic="YES" id="1r4-fj-guj"/>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="leading" secondItem="hnH-SZ-RpH" secondAttribute="leading" id="2bm-aQ-H6X"/>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="top" secondItem="XYG-2c-pQv" secondAttribute="bottom" constant="46" id="B2G-02-8NK"/>
+                            <constraint firstAttribute="trailing" secondItem="BeT-a7-MsC" secondAttribute="trailing" id="Dxv-Ff-In3"/>
+                            <constraint firstAttribute="width" secondItem="BeT-a7-MsC" secondAttribute="width" id="I3i-I0-Uho"/>
+                            <constraint firstItem="XYG-2c-pQv" firstAttribute="leading" secondItem="hnH-SZ-RpH" secondAttribute="leadingMargin" id="XzY-1y-aSN"/>
+                            <constraint firstItem="e9V-YH-37a" firstAttribute="top" secondItem="BeT-a7-MsC" secondAttribute="bottom" constant="329" id="kCu-LL-IRN"/>
+                            <constraint firstItem="BeT-a7-MsC" firstAttribute="top" secondItem="U8X-6G-vsa" secondAttribute="bottom" constant="43" id="lKe-31-Xpq"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KNC-dQ-wqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="994" y="3276"/>
+        </scene>
         <!--Record-->
         <scene sceneID="Lm1-Eg-DO2">
             <objects>
