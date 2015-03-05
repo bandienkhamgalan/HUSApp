@@ -37,6 +37,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Patients" id="za4-hT-AVH">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Y4Q-t3-B7i">
+                            <color key="tintColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="newPatient:" destination="qV9-Dn-17g" id="Pob-4e-92K"/>
                                 <segue destination="Wnb-nd-rBY" kind="presentation" id="bIO-Ie-NDZ"/>
@@ -55,6 +56,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MoW-Rh-lwk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="gPH-7y-98f" kind="relationship" relationship="rootViewController" id="02h-BH-Zkq"/>
@@ -250,11 +254,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="New Patient" id="7hS-Gu-e3f">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wC3-gh-93W">
+                            <color key="tintColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cancel:" destination="gPH-7y-98f" id="RYQ-re-6bw"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="8bK-q6-kQ8">
+                            <color key="tintColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="done:" destination="gPH-7y-98f" id="92g-Hu-wnk"/>
                             </connections>
@@ -335,7 +341,9 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Annabelle Houston" id="nVL-FY-Tk0">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="sor-yN-yXW"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="sor-yN-yXW">
+                            <color key="tintColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
@@ -512,7 +520,9 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="hTq-9u-wNl"/>
                     <toolbarItems>
-                        <barButtonItem title="Item" id="la6-hp-27L"/>
+                        <barButtonItem title="Item" id="la6-hp-27L">
+                            <color key="tintColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Record" id="PHZ-UR-MQP"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -572,6 +582,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="48L-Is-34f">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="qV9-Dn-17g" kind="relationship" relationship="rootViewController" id="Nhn-Oq-uWm"/>
