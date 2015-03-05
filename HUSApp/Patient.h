@@ -9,11 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
 @interface Patient : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * age;
-@property (nonatomic, retain) NSString * gender;
+@property (nonatomic, retain) NSNumber * gender;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * patientID;
 @property (nonatomic, retain) NSSet *operations;
@@ -25,5 +24,8 @@
 - (void)removeOperationsObject:(NSManagedObject *)value;
 - (void)addOperations:(NSSet *)values;
 - (void)removeOperations:(NSSet *)values;
+- (BOOL)isCompletePatient;
+
+- (NSString *)firstLetter;
 
 @end

@@ -23,4 +23,12 @@
 @dynamic resection;
 @dynamic patient;
 
+- (NSString *)year
+{
+    [self willAccessValueForKey:@"year"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy";
+    return [dateFormatter stringFromDate:self.date];
+}
+
 @end

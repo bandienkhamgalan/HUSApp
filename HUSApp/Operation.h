@@ -24,4 +24,6 @@
 @property (nonatomic, retain) NSNumber * resection;
 @property (nonatomic, retain) Patient *patient;
 
+- (NSString *)year;
+
 @end
