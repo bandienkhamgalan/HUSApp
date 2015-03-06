@@ -46,6 +46,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
     var doneButton: UIBarButtonItem?
     var nextButton: UIBarButtonItem?
     
+    let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+
+    
     func userPressedDone()
     {
         println("done")
@@ -147,6 +150,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
         println("setting up screen \(index)")
         switch(index)
         {
+            case 0:
+                screenOne!.prompt = "Date of Operation"
+                screenOne!.pickerMode = .Date
+                break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
                 screenTwo!.options = ["Minimally Invasive", "Thoracotomy"]
@@ -156,6 +163,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
                 screenThree!.prompt = "Type of Resection"
                 screenThree!.options = ["Lobectomy", "Segmentectomy", "Pneumonectomy", "Broncho- or Vasculo-plastic", "Nonanatomical resection"]
                 screenThree!.mode = .Single
+                break
+            case 3:
+                screenFour!.prompt = "Duration of Operation"
+                screenFour!.pickerMode = .CountDownTimer
                 break
             case 4:
                 screenFive!.prompt = "Blood Loss / mL"
@@ -180,6 +191,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
                 screenEight!.prompt = "Admission to ICU"
                 screenEight!.options = ["Yes", "No"]
                 screenEight!.mode = .Single
+                break
+            case 8:
+                screenNine!.prompt = "Follow-up Date"
+                screenNine!.pickerMode = .Date
                 break
             default:
                 break
@@ -234,11 +249,19 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
             }
         }
         var screenRect = UIScreen.mainScreen().bounds
-        
+        self.view.tintColor = themeColour
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
+            
         // bar buttons
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "userPressedCancel")
+      
         doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "userPressedDone")
+       
         nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: "userPressedNext")
+        
+        self.navigationItem.leftBarButtonItem?.tintColor = themeColour
+        doneButton?.tintColor = themeColour
+        nextButton?.tintColor = themeColour
         
         // page control
         pageControl = UIPageControl(frame: CGRectMake(screenRect.size.width / 2.0 - 100, screenRect.size.height - 37 - 20, 200, 37))
@@ -253,6 +276,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
         progressView!.frame = CGRectMake(0, 64, screenRect.size.width, 2)
         progressView!.progress = 0
         view.addSubview(progressView!)
+        
+        
         
         // setup screens array
         for _ in 0...9
