@@ -147,6 +147,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
         println("setting up screen \(index)")
         switch(index)
         {
+            case 0:
+                screenOne!.prompt = "Date of Operation"
+                screenOne!.pickerMode = .Date
+                break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
                 screenTwo!.options = ["Minimally Invasive", "Thoracotomy"]
@@ -156,6 +160,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
                 screenThree!.prompt = "Type of Resection"
                 screenThree!.options = ["Lobectomy", "Segmentectomy", "Pneumonectomy", "Broncho- or Vasculo-plastic", "Nonanatomical resection"]
                 screenThree!.mode = .Single
+                break
+            case 3:
+                screenFour!.prompt = "Duration of Operation"
+                screenFour!.pickerMode = .CountDownTimer
                 break
             case 4:
                 screenFive!.prompt = "Blood Loss / mL"
@@ -180,6 +188,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
                 screenEight!.prompt = "Admission to ICU"
                 screenEight!.options = ["Yes", "No"]
                 screenEight!.mode = .Single
+                break
+            case 8:
+                screenNine!.prompt = "Follow-up Date"
+                screenNine!.pickerMode = .Date
                 break
             default:
                 break
