@@ -23,6 +23,7 @@
 		34E20D651AA8D13F004F0C8F /* SelectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */; };
 		34E20D671AA8D18A004F0C8F /* ValuePickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */; };
 		34E20D691AA8D1DB004F0C8F /* DeathTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */; };
+		391BE22C1AA9FD470046D5C8 /* OperationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */; };
 		3970E8691AA8820400999358 /* DateAndTimePickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorTableViewController.swift; sourceTree = "<group>"; };
 		34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValuePickerTableViewController.swift; sourceTree = "<group>"; };
 		34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeathTableViewController.swift; sourceTree = "<group>"; };
+		391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationTableViewController.swift; sourceTree = "<group>"; };
 		3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 				34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */,
 				34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */,
 				34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */,
+				391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */,
 				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
 				344F95F11AA3803A0015B806 /* Operation.h */,
 				344F95F21AA3803A0015B806 /* Operation.m */,
@@ -279,6 +282,7 @@
 				34B1C06F1AA76BC2007DA58E /* PatientTableViewController.swift in Sources */,
 				34E20D671AA8D18A004F0C8F /* ValuePickerTableViewController.swift in Sources */,
 				34E20D691AA8D1DB004F0C8F /* DeathTableViewController.swift in Sources */,
+				391BE22C1AA9FD470046D5C8 /* OperationTableViewController.swift in Sources */,
 				34E20D651AA8D13F004F0C8F /* SelectorTableViewController.swift in Sources */,
 				344F95F51AA3803A0015B806 /* Operation.m in Sources */,
 			);
