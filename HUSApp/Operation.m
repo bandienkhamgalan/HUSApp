@@ -25,6 +25,17 @@
 @dynamic patient;
 @dynamic durationOfStay;
 
+- (NSString *)durationString
+{
+    int minutes = self.duration.intValue;
+    if( minutes > 60 )
+    {
+        return minutes % 60 == 0 ? [NSString stringWithFormat:@"%d hours", minutes / 60] : [NSString stringWithFormat:@"%d hours and %d minutes", minutes / 60, minutes % 60];
+    }
+    else
+        return [NSString stringWithFormat:@"%d minutes", minutes];
+}
+
 - (NSArray *)complicationsArray
 {
     NSArray *sortedComplicationKeys = [[Operation emptyComplications].allKeys sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]];
@@ -55,12 +66,30 @@
     self.complications = [NSNumber numberWithInt:toSet];
 }
 
-- (NSString *)dateString
+-(NSString *)simpleDateString:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterLongStyle];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    return [dateFormatter stringFromDate:self.date];
+    return [dateFormatter stringFromDate:date];
+}
+
+- (NSString *)dateString
+{
+    return [self simpleDateString:self.date];
+}
+
+- (NSString *)followUpDateString
+{
+    return [self simpleDateString:self.followUpDate];
+}
+
+- (NSString *)deathDateString
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    return [dateFormatter stringFromDate:self.deathDate];
 }
 
 - (NSString *)resectionString

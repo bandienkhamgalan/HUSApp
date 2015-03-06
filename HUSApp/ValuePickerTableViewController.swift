@@ -19,7 +19,7 @@ class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSou
     {
         get
         {
-            return picker.selectedRowInComponent(0) * interval + max
+            return picker.selectedRowInComponent(0) * interval + min
         }
     }
     

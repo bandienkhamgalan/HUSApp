@@ -37,6 +37,10 @@
 + (NSArray *)possibleApproaches;
 - (void)setApproachValue:(NSString *)approach;
 - (NSString *)dateString;
+-(NSString *)simpleDateString:(NSDate *)date;
 - (NSString *)durationString;
+- (NSString *)followUpDateString;
+- (NSString *)deathDateString;
+
 
 @end

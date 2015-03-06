@@ -13,11 +13,10 @@ class OperationTableViewController: UITableViewController {
     var operation: Operation?
     
     override func viewDidLoad()
-    {
-        tableView.scrollEnabled = false
-        
+    {        
         super.viewDidLoad()
-        
+        self.title = "Operation"
+   
     }
     
     override func didReceiveMemoryWarning()
@@ -47,7 +46,7 @@ class OperationTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("selectorCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("operationViewerCell", forIndexPath: indexPath) as UITableViewCell
         
         if (indexPath.section == 0){
             switch (indexPath.row){
@@ -85,7 +84,8 @@ class OperationTableViewController: UITableViewController {
         
         if (indexPath.section == 1){
             var complication = operation!.complicationsArray()[indexPath.row] as String
-            cell.textLabel?.text = complication
+            cell.textLabel!.text = complication
+            cell.detailTextLabel!.text = " "
         }
         
         if (indexPath.section == 2){
@@ -127,7 +127,7 @@ class OperationTableViewController: UITableViewController {
         if (section == 1){
             return "Complications During Hospital Stay"
         }
-        return " "
+        return ""
     }
 
 

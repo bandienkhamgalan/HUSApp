@@ -140,10 +140,11 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         {
             progressView!.setProgress(1.0, animated: true)
             operation!.date = screenOne!.date
-            operation!.duration = screenFour!.duration
+            operation!.duration = Int(screenFour!.duration! / 60)
             operation!.bloodLoss = screenFive!.value
             operation!.durationOfStay = screenSix!.value
-            operation!.alive = screenTen!.death
+            operation!.alive = !(screenTen!.death)
+            operation!.followUpDate = screenNine!.date
             operation!.deathDate = screenTen!.date
             delegate!.userDidPressDone(self)
         }

@@ -87,7 +87,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return self.results!.sections!.count + 1
+        return self.results!.fetchedObjects!.count == 0 ? 1 : 2
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -98,7 +98,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             return 1
         }
-        let sectionInfo = self.results!.sections![section - 1] as NSFetchedResultsSectionInfo
+        let sectionInfo = self.results!.sections![0] as NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
     }
 
@@ -133,6 +133,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         else
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("operationCell", forIndexPath: indexPath) as UITableViewCell
+            cell.textLabel!.text = (self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation)!.dateString()
             return cell
         }
     }
@@ -150,6 +151,18 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             self.presentViewController(patientEditorNVC, animated: true, completion: nil)
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
+        else if indexPath.section == 1
+        {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let operationViewer = storyboard.instantiateViewControllerWithIdentifier("OperationTableView") as OperationTableViewController
+            operationViewer.operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
+            self.navigationController!.showViewController(operationViewer, sender: self)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        return section == 0 ? "" : "Operations"
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
