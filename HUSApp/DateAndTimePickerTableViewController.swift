@@ -29,7 +29,7 @@ class DateAndTimePickerTableViewController: UITableViewController
             return nil
         }
     }
-    var minutes: NSTimeInterval?
+    var duration: NSTimeInterval?
     {
         get
         {
@@ -46,7 +46,7 @@ class DateAndTimePickerTableViewController: UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.datePickerMode = pickerMode == .Date ? .Date : .CountDownTimer
-        
+        datePicker.countDownDuration = NSTimeInterval(1800);
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

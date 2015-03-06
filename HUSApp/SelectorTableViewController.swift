@@ -14,7 +14,7 @@ enum SelectorMode
     case Single
 }
 
-protocol SingleSelectorTableViewControllerDelegate
+protocol SelectorTableViewControllerDelegate
 {
     func userDidSelectChoice(sender: SelectorTableViewController)
 }
@@ -25,7 +25,7 @@ class SelectorTableViewController: UITableViewController
     var mode = SelectorMode.Multiple
     var selection: [String] = []
     var prompt = ""
-    var delegate: SingleSelectorTableViewControllerDelegate?
+    var delegate: SelectorTableViewControllerDelegate?
     
     override func viewDidLoad()
     {
@@ -107,14 +107,12 @@ class SelectorTableViewController: UITableViewController
             cell!.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
             
             selection = [options![indexPath.row]]
-            
-            if delegate != nil
-            {
-                delegate!.userDidSelectChoice(self)
-            }
+        }
+        if delegate != nil
+        {
+            delegate!.userDidSelectChoice(self)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        println(selection)
     }
     
     /*

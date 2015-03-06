@@ -9,6 +9,7 @@
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="deathDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="durationOfStay" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="followUpDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="resection" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="patient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="operations" inverseEntity="Patient" syncable="YES"/>
@@ -27,7 +28,7 @@
         </fetchedProperty>
     </entity>
     <elements>
-        <element name="Operation" positionX="151" positionY="59" width="128" height="210"/>
+        <element name="Operation" positionX="151" positionY="59" width="128" height="225"/>
         <element name="Patient" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

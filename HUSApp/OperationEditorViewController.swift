@@ -14,7 +14,7 @@ protocol OperationEditorViewControllerDelegate
     func userDidPressDone(operationEditor: OperationEditorViewController)
 }
 
-class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SingleSelectorTableViewControllerDelegate
+class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SelectorTableViewControllerDelegate
 {
     func userPressedCancel()
     {
@@ -24,8 +24,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
         }
     }
     
+    // views
+    
     var scrollView: UIScrollView?
-    var pageControl: UIPageControl?
     var progressView: UIProgressView?
     
     var initialized = false
@@ -41,25 +42,109 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
     var screenEight: SelectorTableViewController?
     var screenNine: DateAndTimePickerTableViewController?
     var screenTen: DeathTableViewController?
-    
-    var delegate: OperationEditorViewControllerDelegate?
-    var operation: Operation?
     var doneButton: UIBarButtonItem?
     var nextButton: UIBarButtonItem?
+    
+    // model
+    var currentPage: Int = 0
+    var screensCompleted: [Bool] = []
+    var completion: Float
+    {
+        get
+        {
+            var completed = 0
+            for obj in screensCompleted
+            {
+                if (obj as Bool) == true
+                {
+                    completed++
+                }
+            }
+            return Float(completed) / 10.0
+        }
+    }
+    
+    var essentialCompleted: Bool
+    {
+        get
+        {
+            for i in [1, 2, 6, 7]
+            {
+                if screensCompleted[i] == false
+                {
+                    return false
+                }
+            }
+            return true
+        }
+    }
+    
+    var operation: Operation?
+    var complications: NSMutableDictionary?
+    
+    // miscellaneous
+    var delegate: OperationEditorViewControllerDelegate?
     
     let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
 
     func userDidSelectChoice(sender: SelectorTableViewController)
     {
-        userPressedNext()
+        var selections = sender.selection
+        switch(sender)
+        {
+            case screenTwo!:
+                // approach
+                operation!.setApproachValue(selections[0])
+                println(operation!.approachString())
+                screensCompleted[1] = true
+                userPressedNext()
+                break
+            case screenThree!:
+                // resection
+                operation!.setResectionValue(selections[0])
+                println(operation!.resectionString())
+                screensCompleted[2] = true
+                userPressedNext()
+                break
+            case screenSeven!:
+                // complications
+                for obj in complications!.allKeys
+                {
+                    var key = obj as String
+                    complications!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
+                }
+                operation!.setComplicationsValue(complications!)
+                screensCompleted[6] = true
+                break
+            case screenEight!:
+                // admission to ICU
+                var answer = selections[0] as String
+                if answer == "Yes"
+                {
+                    operation!.admittedToICU = NSNumber(bool: true)
+                }
+                else
+                {
+                    operation!.admittedToICU = NSNumber(bool: false)
+                }
+                screensCompleted[7] = true
+                userPressedNext()
+            default:
+                break
+        }
     }
     
     func userPressedDone()
     {
-        println("done")
         if delegate != nil
         {
-            // IMPLEMENT THIS SHIT (save info to operatoin)
+            progressView!.setProgress(1.0, animated: true)
+            operation!.date = screenOne!.date
+            operation!.duration = screenFour!.duration
+            operation!.bloodLoss = screenFive!.value
+            operation!.durationOfStay = screenSix!.value
+            operation!.alive = screenTen!.death
+            operation!.deathDate = screenTen!.date
             delegate!.userDidPressDone(self)
         }
     }
@@ -80,9 +165,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
     
     func userPressedNext()
     {
-        if pageControl!.currentPage < 9
+        if currentPage < 9
         {
-            var targetX = (pageControl!.currentPage + 1) * Int(scrollView!.frame.size.width)
+            var targetX = (currentPage + 1) * Int(scrollView!.frame.size.width)
             scrollView!.setContentOffset(CGPointMake(CGFloat(targetX), 0), animated: true)
         }
     }
@@ -90,9 +175,25 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
     func updateIndicatorAndTitle()
     {
         var screen = scrollView!.contentOffset.x / scrollView!.frame.size.width
-        pageControl!.currentPage = Int(screen)
-        var progress = Float(Int(screen) + 1) / Float(10)
-        progressView!.setProgress(progress, animated: true)
+        var previousPage = currentPage
+        currentPage = Int(screen)
+        
+        // determine progress
+        if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 8) && previousPage < currentPage
+        {
+            screensCompleted[previousPage] = true
+        }
+        
+        if essentialCompleted && currentPage == 9
+        {
+            self.navigationItem.rightBarButtonItem = doneButton
+        }
+        else
+        {
+            self.navigationItem.rightBarButtonItem = nextButton
+        }
+    
+        progressView!.setProgress(completion, animated: true)
         title = "Question \((Int(screen) + 1))/10"
     }
     
@@ -111,7 +212,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
     
     func initializeScreen(index: Int) -> UITableViewController?
     {
-        println("initializing screen \(index)")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         switch(index)
         {
@@ -152,7 +252,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
     
     func setupScreen(index: Int)
     {
-        println("setting up screen \(index)")
         switch(index)
         {
             case 0:
@@ -193,8 +292,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
                 break
             case 6:
                 screenSeven!.prompt = "Complications during hospital stay"
-                screenSeven!.options = ["Pneumonia", "Respiratory failure", "Empyema", "Prolonged air leak", "Pulmonary embolism", "Arrythmia", "Myocardial infarction", "Delirium", "Cerebral infarktion/bleeding"]
+                complications = Operation.emptyComplications()
+                screenSeven!.options = complications!.allKeys as? [String]
                 screenSeven!.mode = .Multiple
+                screenSeven!.delegate = self
                 break
             case 7:
                 screenEight!.prompt = "Admission to ICU"
@@ -228,7 +329,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
                 if screens[i] == nil
                 {
                     initialized = false
-                    if i <= pageControl!.currentPage + 1
+                    if i <= currentPage + 1
                     {
                         screens[i] = initializeScreen(i)
                         setupScreen(i)
@@ -273,21 +374,17 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sin
         doneButton?.tintColor = themeColour
         nextButton?.tintColor = themeColour
         
-        // page control
-        pageControl = UIPageControl(frame: CGRectMake(screenRect.size.width / 2.0 - 100, screenRect.size.height - 37 - 20, 200, 37))
-        pageControl!.numberOfPages = 10
-        pageControl!.currentPage = 0
-        pageControl!.pageIndicatorTintColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.8)
-        pageControl!.currentPageIndicatorTintColor  = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
-        view.addSubview(pageControl!)
-        
         // progress view
         progressView = UIProgressView(progressViewStyle: UIProgressViewStyle.Bar)
         progressView!.frame = CGRectMake(0, 64, screenRect.size.width, 2)
         progressView!.progress = 0
         view.addSubview(progressView!)
         
-        
+        // setup screen completed (model)
+        for _ in 0...9
+        {
+            screensCompleted.append(false)
+        }
         
         // setup screens array
         for _ in 0...9

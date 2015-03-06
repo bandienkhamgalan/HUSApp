@@ -15,6 +15,13 @@ class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSou
     var initial = 50
     var max = 100
     var interval = 1
+    var value: Int
+    {
+        get
+        {
+            return picker.selectedRowInComponent(0) * interval + max
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +52,6 @@ class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSou
         forComponent component: Int) -> String!
     {
         return String(row * interval + min)
-    }
-    
-    func pickerView(pickerView: UIPickerView,
-        didSelectRow row: Int,
-        inComponent component: Int)
-    {
-        
     }
     
     override func didReceiveMemoryWarning() {

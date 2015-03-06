@@ -47,7 +47,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         let request = NSFetchRequest(entityName:"Operation")
         request.predicate = NSPredicate(format: "patient = %@", patient!)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: "year", cacheName: nil)
+        results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         results!.delegate = self
     }
     

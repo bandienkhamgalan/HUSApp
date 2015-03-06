@@ -11,7 +11,14 @@ import UIKit
 class DeathTableViewController: UITableViewController
 {
     var death = false
-    var date: NSDate? = nil
+    var date: NSDate?
+    {
+        get
+        {
+            return death == false ? nil : deathDate.date
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         deathCell.hidden = true
@@ -43,13 +50,11 @@ class DeathTableViewController: UITableViewController
     }
     
     @IBOutlet weak var deathCell: UITableViewCell!
-    @IBOutlet weak var datePickerContainer: UIView!
-    
     @IBOutlet weak var deathDate: UIDatePicker!
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        return "  "
+        return " "
     }
     
 }

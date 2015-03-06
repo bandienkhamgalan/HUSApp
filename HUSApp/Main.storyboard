@@ -365,7 +365,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mgj-j9-VHS" id="1dL-rF-FBJ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="14w-dt-ZFR">
+                                                <datePicker tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="14w-dt-ZFR">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="162"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="447250782.32856297">
                                                         <!--2015-03-05 12:19:42 +0000-->
@@ -471,9 +471,16 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="V9v-gj-fK4" secondAttribute="bottom" constant="-1" id="9wJ-1G-0ij"/>
                                                 <constraint firstItem="q6h-9R-TaZ" firstAttribute="leading" secondItem="8t6-YS-pKZ" secondAttribute="leadingMargin" constant="10" id="Enx-Up-jba"/>
                                                 <constraint firstItem="q6h-9R-TaZ" firstAttribute="top" secondItem="8t6-YS-pKZ" secondAttribute="topMargin" constant="5" id="Gns-Ey-Y4L"/>
+                                                <constraint firstAttribute="centerY" secondItem="V9v-gj-fK4" secondAttribute="centerY" constant="0.25" id="RgW-24-xws"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="q6h-9R-TaZ" secondAttribute="bottom" constant="5" id="ZG1-Qy-tYp"/>
                                                 <constraint firstItem="V9v-gj-fK4" firstAttribute="top" secondItem="8t6-YS-pKZ" secondAttribute="topMargin" constant="-2" id="aHD-TN-vCm"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="9wJ-1G-0ij"/>
+                                                    <exclude reference="aHD-TN-vCm"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="deathDatePickerContainer" rowHeight="205" id="lM3-5J-Qdh">
@@ -489,6 +496,11 @@
                                                     <date key="date" timeIntervalSinceReferenceDate="447250724.31093699">
                                                         <!--2015-03-05 12:18:44 +0000-->
                                                     </date>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="OBU-ll-1yJ"/>
+                                                        </mask>
+                                                    </variation>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
