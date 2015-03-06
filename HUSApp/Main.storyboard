@@ -311,6 +311,11 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="SKc-VR-sPL" secondAttribute="bottom" constant="7.5" id="nPl-yw-1qC"/>
                                         <constraint firstAttribute="centerX" secondItem="SKc-VR-sPL" secondAttribute="centerX" constant="-0.5" id="vWg-Vb-eZG"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="EHa-qp-aj5"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="operationCell" textLabel="nWU-mZ-LPb" rowHeight="65" style="IBUITableViewCellStyleDefault" id="Iam-kT-xqw">
@@ -480,6 +485,11 @@
                             <outlet property="delegate" destination="f00-IE-q6L" id="qz3-F3-Pgz"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="datePickerContainer" destination="Cpg-vA-hNi" id="rnz-DY-aLZ"/>
+                        <outlet property="deathCell" destination="lM3-5J-Qdh" id="Bn1-9d-9HI"/>
+                        <outlet property="deathDate" destination="6vt-7y-lTE" id="Cq1-ii-hpF"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UEk-PN-FdV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
