@@ -311,11 +311,6 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="SKc-VR-sPL" secondAttribute="bottom" constant="7.5" id="nPl-yw-1qC"/>
                                         <constraint firstAttribute="centerX" secondItem="SKc-VR-sPL" secondAttribute="centerX" constant="-0.5" id="vWg-Vb-eZG"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="EHa-qp-aj5"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="operationCell" textLabel="nWU-mZ-LPb" rowHeight="65" style="IBUITableViewCellStyleDefault" id="Iam-kT-xqw">
@@ -440,53 +435,79 @@
         <scene sceneID="CNR-Z9-tM3">
             <objects>
                 <tableViewController storyboardIdentifier="Death" title="Death" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f00-IE-q6L" customClass="DeathTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="gFK-we-3hx">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="gFK-we-3hx">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="deathSwitchContainer" id="ZVv-TF-E1P">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZVv-TF-E1P" id="8t6-YS-pKZ">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V9v-gj-fK4">
-                                            <rect key="frame" x="530" y="6" width="51" height="31"/>
-                                        </switch>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="V9v-gj-fK4" firstAttribute="centerY" secondItem="8t6-YS-pKZ" secondAttribute="centerY" id="4v7-Oj-RFo"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="V9v-gj-fK4" secondAttribute="trailing" constant="13" id="UNU-cd-ybO"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="deathDatePickerContainer" rowHeight="179" id="lM3-5J-Qdh">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lM3-5J-Qdh" id="Cpg-vA-hNi">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6vt-7y-lTE">
-                                            <rect key="frame" x="0.0" y="9" width="600" height="162"/>
-                                            <date key="date" timeIntervalSinceReferenceDate="447250724.31093699">
-                                                <!--2015-03-05 12:18:44 +0000-->
-                                            </date>
-                                        </datePicker>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="6vt-7y-lTE" firstAttribute="top" secondItem="Cpg-vA-hNi" secondAttribute="topMargin" constant="1" id="9Xe-Cc-Yyu"/>
-                                        <constraint firstAttribute="trailing" secondItem="6vt-7y-lTE" secondAttribute="trailing" id="tGy-Vk-jSI"/>
-                                        <constraint firstItem="6vt-7y-lTE" firstAttribute="leading" secondItem="Cpg-vA-hNi" secondAttribute="leading" id="zQq-ez-BrN"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                        <sections>
+                            <tableViewSection id="WG3-Yy-fG0">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="deathSwitchContainer" id="ZVv-TF-E1P">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZVv-TF-E1P" id="8t6-YS-pKZ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="V9v-gj-fK4">
+                                                    <rect key="frame" x="530" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="deathSwitchChanged:" destination="f00-IE-q6L" eventType="valueChanged" id="kgB-zv-0z3"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Death" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNN-pH-OzU">
+                                                    <rect key="frame" x="18" y="13" width="40.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Death" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6h-9R-TaZ">
+                                                    <rect key="frame" x="18" y="13" width="40.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="V9v-gj-fK4" secondAttribute="trailing" constant="13" id="6Kw-l3-qqb"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="V9v-gj-fK4" secondAttribute="bottom" constant="-1" id="9wJ-1G-0ij"/>
+                                                <constraint firstItem="q6h-9R-TaZ" firstAttribute="leading" secondItem="8t6-YS-pKZ" secondAttribute="leadingMargin" constant="10" id="Enx-Up-jba"/>
+                                                <constraint firstItem="q6h-9R-TaZ" firstAttribute="top" secondItem="8t6-YS-pKZ" secondAttribute="topMargin" constant="5" id="Gns-Ey-Y4L"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="q6h-9R-TaZ" secondAttribute="bottom" constant="5" id="ZG1-Qy-tYp"/>
+                                                <constraint firstItem="V9v-gj-fK4" firstAttribute="top" secondItem="8t6-YS-pKZ" secondAttribute="topMargin" constant="-2" id="aHD-TN-vCm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="deathDatePickerContainer" rowHeight="205" id="lM3-5J-Qdh">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lM3-5J-Qdh" id="Cpg-vA-hNi">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6vt-7y-lTE">
+                                                    <rect key="frame" x="0.0" y="22" width="600" height="162"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="600" id="OBU-ll-1yJ"/>
+                                                    </constraints>
+                                                    <date key="date" timeIntervalSinceReferenceDate="447250724.31093699">
+                                                        <!--2015-03-05 12:18:44 +0000-->
+                                                    </date>
+                                                </datePicker>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="6vt-7y-lTE" secondAttribute="bottom" constant="12.5" id="Ehc-c3-Ss8"/>
+                                                <constraint firstItem="6vt-7y-lTE" firstAttribute="leading" secondItem="Cpg-vA-hNi" secondAttribute="leadingMargin" constant="-8" id="WzP-fH-tGC"/>
+                                                <constraint firstItem="6vt-7y-lTE" firstAttribute="top" secondItem="Cpg-vA-hNi" secondAttribute="topMargin" constant="14" id="YuC-Km-Qpj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="6vt-7y-lTE" secondAttribute="trailing" constant="-8" id="hX3-wu-9NK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
                         <connections>
                             <outlet property="dataSource" destination="f00-IE-q6L" id="Gd3-Lf-bfR"/>
                             <outlet property="delegate" destination="f00-IE-q6L" id="qz3-F3-Pgz"/>
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="datePickerContainer" destination="Cpg-vA-hNi" id="rnz-DY-aLZ"/>
                         <outlet property="deathCell" destination="lM3-5J-Qdh" id="Bn1-9d-9HI"/>
                         <outlet property="deathDate" destination="6vt-7y-lTE" id="Cq1-ii-hpF"/>
                     </connections>
