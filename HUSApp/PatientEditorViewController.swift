@@ -92,14 +92,39 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
                 delegate!.userDidPressCancel(self)
             }
         }
-        
-        nameField.delegate = self
-        idField.delegate = self
-        ageField.delegate = self
+        else
+        {
+            println(patient!)
+            if(patient!.name != nil)
+            {
+                nameField.text = patient!.name
+                name = patient!.name
+            }
+            if(patient!.patientID != nil)
+            {
+                idField.text = patient!.patientID
+                patientID = patient!.patientID
+            }
+            if(patient!.age != nil)
+            {
+                ageField.text = patient!.ageString()
+                age = patient!.age.integerValue
+            }
+            if(patient!.gender != nil)
+            {
+                gender = patient!.gender.integerValue
+                genderPicker.selectedSegmentIndex = gender
+            }
+            nameField.delegate = self
+            idField.delegate = self
+            ageField.delegate = self
+        }
         doneButton.enabled = false
         // Do any additional setup after loading the view.
     }
 
+    @IBOutlet weak var genderPicker: UISegmentedControl!
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -107,16 +132,17 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
+        var newString = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
         switch(textField)
         {
             case nameField:
-                name = textField.text
+                name = newString
                 break
             case idField:
-                patientID = textField.text
+                patientID = newString
                 break
             case ageField:
-                let processedAge = NSNumberFormatter().numberFromString(textField.text)
+                let processedAge = NSNumberFormatter().numberFromString(newString)
                 if processedAge != nil
                 {
                     age = processedAge!.integerValue

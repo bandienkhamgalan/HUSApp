@@ -25,7 +25,8 @@
 - (void)addOperations:(NSSet *)values;
 - (void)removeOperations:(NSSet *)values;
 - (BOOL)isCompletePatient;
-
+- (NSString *)genderString;
+- (NSString *)ageString;
 - (NSString *)firstLetter;
 
 @end

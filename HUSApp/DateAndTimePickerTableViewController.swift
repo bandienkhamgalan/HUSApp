@@ -10,9 +10,8 @@ import UIKit
 
 enum PickerMode
 {
-
-    case Time:
-    case Date:
+        case Date
+        case Time
 }
 
 class DateAndTimePickerTableViewController: UITableViewController
@@ -48,13 +47,13 @@ class DateAndTimePickerTableViewController: UITableViewController
         return 1
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("datePickerContainer", forIndexPath: indexPath) as UITableViewCell
 
         for obj in cell.contentView.subviews
         {
             var view = obj as UIView
+            
             if view.tag == 1
             {
                 var datePicker = view as UIDatePicker
@@ -68,7 +67,9 @@ class DateAndTimePickerTableViewController: UITableViewController
         return cell
     }
     
-
+//figure out how to extract the chosen data
+//create an outlet to let outside class to get data quickly
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

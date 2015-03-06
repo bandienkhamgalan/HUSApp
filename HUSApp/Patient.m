@@ -21,6 +21,17 @@
     return [NSString stringWithFormat:@"Patient named: %@, aged: %@, id: %@ and gender: %@", self.name, self.age, self.patientID, self.gender];
 }
 
+- (NSString *)genderString
+{
+    return [self.gender isEqualToNumber:[NSNumber numberWithInt:0]] ? @"Male" : @"Female";
+}
+
+- (NSString *)ageString
+{
+    return self.age != nil ? [self.age stringValue] : @"";
+}
+
+
 - (NSString *)firstLetter
 {
     [self willAccessValueForKey:@"firstLetter"];
