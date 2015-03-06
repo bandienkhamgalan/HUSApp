@@ -14,6 +14,8 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
     
+    
+    
     func userDidPressCancel(patientEditor: PatientEditorViewController)
     {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -148,6 +150,11 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             self.presentViewController(patientEditorNVC, animated: true, completion: nil)
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return indexPath.section == 0 ? 67 : 40
     }
     
     /*

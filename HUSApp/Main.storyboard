@@ -276,16 +276,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tGr-AH-bhl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="71" y="1259"/>
+            <point key="canvasLocation" x="37" y="1241"/>
         </scene>
         <!--PatientViewer-->
         <scene sceneID="bah-sP-PKo">
             <objects>
                 <tableViewController storyboardIdentifier="PatientViewer" title="PatientViewer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oU2-Mo-mmM" customClass="PatientTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="em7-MD-4nA">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="em7-MD-4nA">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="patientInfoCell" rowHeight="67" id="arP-Jw-bux">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -306,12 +306,10 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Nfr-vV-Guu" secondAttribute="bottom" constant="29" id="4YH-Ht-gaC"/>
-                                        <constraint firstAttribute="centerX" secondItem="Nfr-vV-Guu" secondAttribute="centerX" constant="-0.5" id="7I6-5F-aTg"/>
-                                        <constraint firstItem="SKc-VR-sPL" firstAttribute="top" secondItem="uNu-Pz-Szn" secondAttribute="topMargin" constant="22" id="9qu-Kb-PWh"/>
-                                        <constraint firstAttribute="centerX" secondItem="SKc-VR-sPL" secondAttribute="centerX" constant="-0.5" id="Kvw-O5-I3u"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="SKc-VR-sPL" secondAttribute="bottom" constant="7" id="bD9-1J-u4n"/>
-                                        <constraint firstItem="Nfr-vV-Guu" firstAttribute="top" secondItem="uNu-Pz-Szn" secondAttribute="topMargin" constant="7" id="qoR-tX-Ll2"/>
+                                        <constraint firstAttribute="centerX" secondItem="Nfr-vV-Guu" secondAttribute="centerX" constant="-0.5" id="J3d-TR-CxJ"/>
+                                        <constraint firstItem="Nfr-vV-Guu" firstAttribute="top" secondItem="uNu-Pz-Szn" secondAttribute="topMargin" constant="7" id="RHA-PN-Ivo"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="SKc-VR-sPL" secondAttribute="bottom" constant="7.5" id="nPl-yw-1qC"/>
+                                        <constraint firstAttribute="centerX" secondItem="SKc-VR-sPL" secondAttribute="centerX" constant="-0.5" id="vWg-Vb-eZG"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>

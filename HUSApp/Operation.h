@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * admittedToICU;
 @property (nonatomic, retain) NSNumber * alive;
+@property (nonatomic, retain) NSNumber * approach;
 @property (nonatomic, retain) NSNumber * bloodLoss;
 @property (nonatomic, retain) NSNumber * complications;
 @property (nonatomic, retain) NSDate * date;
@@ -23,6 +24,15 @@
 @property (nonatomic, retain) NSDate * followUpDate;
 @property (nonatomic, retain) NSNumber * resection;
 @property (nonatomic, retain) Patient *patient;
+
+- (NSArray *)complicationsArray;
++ (NSDictionary *)emptyComplications;
+- (void)setComplicationsValue:(NSDictionary *)complications;
+
++ (NSArray *)possibleResections;
+- (void)setResectionValue:(NSString *)resection;
++ (NSArray *)possibleApproaches;
+- (void)setApproachValue:(NSString *)approach;
 
 - (NSString *)year;
 

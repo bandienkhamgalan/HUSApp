@@ -14,7 +14,7 @@ protocol OperationEditorViewControllerDelegate
     func userDidPressDone(operationEditor: OperationEditorViewController)
 }
 
-class OperationEditorViewController: UIViewController, UIScrollViewDelegate
+class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SingleSelectorTableViewControllerDelegate
 {
     func userPressedCancel()
     {
@@ -23,6 +23,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
             delegate!.userDidPressCancel(self)
         }
     }
+    
     var scrollView: UIScrollView?
     var pageControl: UIPageControl?
     var progressView: UIProgressView?
@@ -48,6 +49,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
     
     let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
 
+    func userDidSelectChoice(sender: SelectorTableViewController)
+    {
+        userPressedNext()
+    }
     
     func userPressedDone()
     {
@@ -156,13 +161,17 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
                 break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
-                screenTwo!.options = ["Minimally Invasive", "Thoracotomy"]
+                var approaches = Operation.possibleApproaches() as [String]
+                screenTwo!.options = approaches
                 screenTwo!.mode = .Single
+                screenTwo!.delegate = self
                 break
             case 2:
                 screenThree!.prompt = "Type of Resection"
-                screenThree!.options = ["Lobectomy", "Segmentectomy", "Pneumonectomy", "Broncho- or Vasculo-plastic", "Nonanatomical resection"]
+                var resections = Operation.possibleResections() as [String]
+                screenThree!.options = Operation.possibleResections() as [String]
                 screenThree!.mode = .Single
+                screenThree!.delegate = self
                 break
             case 3:
                 screenFour!.prompt = "Duration of Operation"
@@ -191,6 +200,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
                 screenEight!.prompt = "Admission to ICU"
                 screenEight!.options = ["Yes", "No"]
                 screenEight!.mode = .Single
+                screenEight!.delegate = self
                 break
             case 8:
                 screenNine!.prompt = "Follow-up Date"

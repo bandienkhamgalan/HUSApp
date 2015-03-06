@@ -3,6 +3,7 @@
     <entity name="Operation" representedClassName="Operation" syncable="YES">
         <attribute name="admittedToICU" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="alive" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="approach" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="bloodLoss" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="complications" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
@@ -26,7 +27,7 @@
         </fetchedProperty>
     </entity>
     <elements>
-        <element name="Operation" positionX="151" positionY="59" width="128" height="193"/>
+        <element name="Operation" positionX="151" positionY="59" width="128" height="210"/>
         <element name="Patient" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

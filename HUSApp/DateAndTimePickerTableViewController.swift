@@ -15,10 +15,32 @@ enum PickerMode
 }
 
 class DateAndTimePickerTableViewController: UITableViewController
-
 {
     @IBOutlet weak var datePicker: UIDatePicker!
     var pickerMode = PickerMode.Date
+    var date: NSDate?
+    {
+        get
+        {
+            if pickerMode == .Date
+            {
+                return datePicker.date
+            }
+            return nil
+        }
+    }
+    var minutes: NSTimeInterval?
+    {
+        get
+        {
+            if pickerMode == .CountDownTimer
+            {
+                return datePicker.countDownDuration
+            }
+            return nil
+        }
+    }
+    
     var prompt = ""
     
     override func viewDidLoad() {
@@ -31,8 +53,6 @@ class DateAndTimePickerTableViewController: UITableViewController
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
