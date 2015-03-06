@@ -12,6 +12,7 @@ class DeathTableViewController: UITableViewController
 {
     var death = false
     var date: NSDate? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         deathCell.hidden = true
