@@ -46,6 +46,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
     var doneButton: UIBarButtonItem?
     var nextButton: UIBarButtonItem?
     
+    let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+
+    
     func userPressedDone()
     {
         println("done")
@@ -246,11 +249,19 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
             }
         }
         var screenRect = UIScreen.mainScreen().bounds
-        
+        self.view.tintColor = themeColour
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
+            
         // bar buttons
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "userPressedCancel")
+      
         doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "userPressedDone")
+       
         nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: "userPressedNext")
+        
+        self.navigationItem.leftBarButtonItem?.tintColor = themeColour
+        doneButton?.tintColor = themeColour
+        nextButton?.tintColor = themeColour
         
         // page control
         pageControl = UIPageControl(frame: CGRectMake(screenRect.size.width / 2.0 - 100, screenRect.size.height - 37 - 20, 200, 37))
@@ -265,6 +276,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate
         progressView!.frame = CGRectMake(0, 64, screenRect.size.width, 2)
         progressView!.progress = 0
         view.addSubview(progressView!)
+        
+        
         
         // setup screens array
         for _ in 0...9
