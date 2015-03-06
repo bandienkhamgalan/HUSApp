@@ -51,29 +51,37 @@ class OperationTableViewController: UITableViewController {
         
         if (indexPath.section == 0){
             switch (indexPath.row){
-                case 0:
+                
+            case 0:
                     cell.textLabel!.text = "Date of Operation"
+                    cell.detailTextLabel!.text = operation!.dateString()
                     break;
                 case 1:
                     cell.textLabel!.text = "Type of Operation"
+                    cell.detailTextLabel!.text = operation!.approachString()
                     break;
                 case 2:
                     cell.textLabel!.text = "Type of Resection"
+                    cell.detailTextLabel!.text = operation!.resectionString()
                     break;
                 case 3:
                     cell.textLabel!.text = "Duration of Operation"
+                    cell.detailTextLabel!.text = operation!.durationString()
                     break;
                 case 4:
                     cell.textLabel!.text = "Blood Loss"
+                    cell.detailTextLabel!.text = "\(operation!.bloodLoss) mL"
                     break;
                 case 5:
                     cell.textLabel!.text = "Duration of Hospital Stay"
+                    cell.detailTextLabel!.text = "\(operation!.durationOfStay) days"
                     break;
                 default:
                     break;
             
             }
         }
+    
         
         if (indexPath.section == 1){
             var complication = operation!.complicationsArray()[indexPath.row] as String
@@ -81,22 +89,35 @@ class OperationTableViewController: UITableViewController {
         }
         
         if (indexPath.section == 2){
+            
             switch (indexPath.row){
             case 0:
                 cell.textLabel!.text = "Admission to ICU"
+                if (operation!.admittedToICU == 1){
+                    cell.detailTextLabel!.text = "Yes"
+                }
+                else {
+                    cell.detailTextLabel!.text = "No"
+                }
                 break;
             case 1:
                 cell.textLabel!.text = "Follow-up Date"
+                cell.detailTextLabel!.text = operation!.followUpDate()
                 break;
             case 2:
-                cell.textLabel!.text = "Death"
+                if (operation!.alive == 1) {
+                    cell.textLabel!.text = "Alive"
+                    cell.detailTextLabel!.text = "Yes"
+                }
+                else {
+                    cell.textLabel!.text = "Death Date"
+                    cell.detailTextLabel!.text = operation!.deathDate()
+                }
                 break;
             default:
                 break;
-                
             }
         }
-
         return cell
     }
     
