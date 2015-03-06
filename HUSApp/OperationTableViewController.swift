@@ -9,89 +9,105 @@
 import UIKit
 
 class OperationTableViewController: UITableViewController {
-
-    override func viewDidLoad() {
+    
+    var operation: Operation?
+    
+    override func viewDidLoad()
+    {
+        tableView.scrollEnabled = false
+        
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
     }
-
-    override func didReceiveMemoryWarning() {
+    
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+        return 3
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        switch(section){
+            case 0:
+                return 6
+            case 1:
+                return operation!.complicationsArray().count
+            case 2:
+                return 3
+            default:
+                return 0
+        }
     }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
+    
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCellWithIdentifier("selectorCell", forIndexPath: indexPath) as UITableViewCell
+        
+        if (indexPath.section == 0){
+            switch (indexPath.row){
+                case 0:
+                    cell.textLabel!.text = "Date of Operation"
+                    break;
+                case 1:
+                    cell.textLabel!.text = "Type of Operation"
+                    break;
+                case 2:
+                    cell.textLabel!.text = "Type of Resection"
+                    break;
+                case 3:
+                    cell.textLabel!.text = "Duration of Operation"
+                    break;
+                case 4:
+                    cell.textLabel!.text = "Blood Loss"
+                    break;
+                case 5:
+                    cell.textLabel!.text = "Duration of Hospital Stay"
+                    break;
+                default:
+                    break;
+            
+            }
+        }
+        
+        if (indexPath.section == 1){
+            var complication = operation!.complicationsArray()[indexPath.row] as String
+            cell.textLabel?.text = complication
+        }
+        
+        if (indexPath.section == 2){
+            switch (indexPath.row){
+            case 0:
+                cell.textLabel!.text = "Admission to ICU"
+                break;
+            case 1:
+                cell.textLabel!.text = "Follow-up Date"
+                break;
+            case 2:
+                cell.textLabel!.text = "Death"
+                break;
+            default:
+                break;
+                
+            }
+        }
 
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String
+    {
+        if (section == 1){
+            return "Complications During Hospital Stay"
+        }
+        return " "
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
