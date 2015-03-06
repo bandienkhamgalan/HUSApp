@@ -102,7 +102,7 @@ class OperationTableViewController: UITableViewController {
                 break;
             case 1:
                 cell.textLabel!.text = "Follow-up Date"
-                cell.detailTextLabel!.text = operation!.followUpDate()
+                cell.detailTextLabel!.text = operation!.followUpDateString()
                 break;
             case 2:
                 if (operation!.alive == 1) {
@@ -111,7 +111,7 @@ class OperationTableViewController: UITableViewController {
                 }
                 else {
                     cell.textLabel!.text = "Death Date"
-                    cell.detailTextLabel!.text = operation!.deathDate()
+                    cell.detailTextLabel!.text = operation!.deathDateString()
                 }
                 break;
             default:
