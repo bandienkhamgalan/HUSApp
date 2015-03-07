@@ -175,7 +175,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     
     func updateIndicatorAndTitle()
     {
-        var screen = scrollView!.contentOffset.x / scrollView!.frame.size.width
+        var screen = round(scrollView!.contentOffset.x / scrollView!.frame.size.width)
         var previousPage = currentPage
         currentPage = Int(screen)
         
@@ -198,14 +198,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         title = "Question \((Int(screen) + 1))/10"
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView)
-    {
-        updateIndicatorAndTitle()
-        ensureScreensInitialized()
-        
-    }
-    
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+    func scrollViewDidScroll(scrollView: UIScrollView)
     {
         updateIndicatorAndTitle()
         ensureScreensInitialized()
