@@ -190,7 +190,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         return cell
     }
     
-    
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!
     {
         return self.results!.sectionIndexTitles
@@ -207,8 +206,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
         return sectionInfo.indexTitle
     }
-    
-
     
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {

@@ -16,6 +16,7 @@ class OperationTableViewController: UITableViewController {
     {        
         super.viewDidLoad()
         self.title = "Operation"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
    
     }
     

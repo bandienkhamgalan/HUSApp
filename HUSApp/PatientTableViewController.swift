@@ -8,8 +8,8 @@
 
 import UIKit
 
-class PatientTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, OperationEditorViewControllerDelegate
-{
+class PatientTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, OperationEditorViewControllerDelegate {
+    
     var patient: Patient?
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
@@ -31,6 +31,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
         managedObjectContext!.deleteObject(operationEditor.operation!)
+        self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -38,10 +39,9 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         patient!.addOperations(NSSet(object: operationEditor.operation!))
         managedObjectContext!.save(nil)
+        self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
-    
     
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
