@@ -180,7 +180,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         currentPage = Int(screen)
         
         // determine progress
-        if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 8) && previousPage < currentPage
+        if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 8) && previousPage != currentPage
         {
             screensCompleted[previousPage] = true
         }
