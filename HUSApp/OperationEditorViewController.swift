@@ -258,6 +258,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 0:
                 screenOne!.prompt = "Date of Operation"
                 screenOne!.pickerMode = .Date
+                if operation?.date != nil {
+                    screenOne!.savedDate = operation!.date
+                }
                 break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
@@ -276,6 +279,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 3:
                 screenFour!.prompt = "Duration of Operation"
                 screenFour!.pickerMode = .CountDownTimer
+                var duration = operation!.duration as Int
+                var countdown = duration * 60
+                screenFour!.savedCountdown = NSTimeInterval(countdown)
                 break
             case 4:
                 screenFive!.prompt = "Blood Loss / mL"
@@ -283,6 +289,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenFive!.max = 100
                 screenFive!.interval = 1
                 screenFive!.initial = 20
+                var bloodLoss = operation!.bloodLoss as Int
+                screenFive!.savedValue = bloodLoss
                 break
             case 5:
                 screenSix!.prompt = "Total Time in Hospital / days"
@@ -290,6 +298,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenSix!.max = 30
                 screenSix!.interval = 1
                 screenSix!.initial = 7
+                var durationOfStay = operation!.durationOfStay as Int
+                screenSix!.savedValue = durationOfStay
                 break
             case 6:
                 screenSeven!.prompt = "Complications during hospital stay"
@@ -307,6 +317,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 8:
                 screenNine!.prompt = "Follow-up Date"
                 screenNine!.pickerMode = .Date
+                if operation?.followUpDate != nil {
+                    screenNine!.savedDate = operation!.followUpDate
+                }
                 break
             default:
                 break

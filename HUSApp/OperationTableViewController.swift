@@ -8,9 +8,31 @@
 
 import UIKit
 
-class OperationTableViewController: UITableViewController {
+class OperationTableViewController: UITableViewController, OperationEditorViewControllerDelegate {
     
     var operation: Operation?
+    var patient: Patient?
+    
+    func userDidPressCancel(operationEditor: OperationEditorViewController)
+    {
+        self.tableView.reloadData()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func userDidPressDone(operationEditor: OperationEditorViewController)
+    {
+        self.tableView.reloadData()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func userPressedEdit()
+    {
+        let operationEditor = OperationEditorViewController()
+        operationEditor.operation = operation
+        operationEditor.delegate = self
+        let nvc = UINavigationController(rootViewController: operationEditor)
+        self.presentViewController(nvc, animated: true, completion:nil)
+    }
     
     override func viewDidLoad()
     {        
