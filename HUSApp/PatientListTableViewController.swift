@@ -80,12 +80,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         }
         
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning()
@@ -130,6 +124,15 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         return sectionInfo.numberOfObjects;
     }
     
+    
+    
+    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
+    {
+        var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
+        cell.textLabel!.text = currentPatient.name
+
+    }
+    
     func controllerWillChangeContent(controller: NSFetchedResultsController)
     {
         tableView.beginUpdates();
@@ -139,22 +142,15 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     {
         switch(type)
         {
-            case .Insert:
-                tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Left)
-                break
-            case .Delete:
-                tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Right)
-                break
-            default:
-                break
+        case .Insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Left)
+            break
+        case .Delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Right)
+            break
+        default:
+            break
         }
-    }
-    
-    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
-    {
-        var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
-        cell.textLabel!.text = currentPatient.name
-
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
@@ -212,13 +208,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         return sectionInfo.indexTitle
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
     
     // Override to support editing the table view.
@@ -231,20 +220,5 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         }
     }
     
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
 }
