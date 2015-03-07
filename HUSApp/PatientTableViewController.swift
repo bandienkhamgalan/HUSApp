@@ -107,23 +107,17 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         if indexPath.section == 0
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("patientInfoCell", forIndexPath: indexPath) as UITableViewCell
+            
             for obj in cell.contentView.subviews
             {
                 let view = obj as UIView
                 switch(view.tag)
                 {
-                    case 10:
-                        let gender = view as UILabel
-                        gender.text = patient!.genderString()
+                    case 1:
+                        let patientLabel = view as UILabel
+                        patientLabel.text = patient!.patientID + " . " + patient!.age.stringValue + " yrs old . " + patient!.genderString()
                         break
-                    case 11:
-                        let id = view as UILabel
-                        id.text = "#" + patient!.patientID
-                        break
-                    case 12:
-                        let age = view as UILabel
-                        age.text = patient!.age.stringValue
-                        break
+
                     default:
                         break
                 }

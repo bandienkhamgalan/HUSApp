@@ -269,7 +269,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 2:
                 screenThree!.prompt = "Type of Resection"
                 var resections = Operation.possibleResections() as [String]
-                screenThree!.options = Operation.possibleResections() as [String]
+                screenThree!.options = Operation.possibleResections() as? [String]
                 screenThree!.mode = .Single
                 screenThree!.delegate = self
                 break
