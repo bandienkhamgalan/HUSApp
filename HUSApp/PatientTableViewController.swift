@@ -84,7 +84,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return self.results!.fetchedObjects!.count == 0 ? 1 : 2
+        return self.results!.sections!.count + 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -123,7 +123,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         else
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("operationCell", forIndexPath: indexPath) as UITableViewCell
-            cell.textLabel!.text = (self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation)!.dateString()
+            configureCell(cell, atIndexPath:indexPath)
             return cell
         }
     }
@@ -149,6 +149,70 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             self.navigationController!.showViewController(operationViewer, sender: self)
         }
     }
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController)
+    {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType)
+    {
+        switch(type)
+        {
+        case .Insert:
+            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Left)
+            break
+        case .Delete:
+            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Right)
+            break
+        default:
+            break
+        }
+    }
+    
+    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
+    {
+        cell.textLabel!.text = (self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation)!.dateString()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
+    {
+        var fixedIndexPath: NSIndexPath?
+        var fixedNewIndexPath: NSIndexPath?
+        if indexPath != nil
+        {
+            fixedIndexPath = NSIndexPath(forRow: indexPath!.row, inSection: 1)
+        }
+        if newIndexPath != nil
+        {
+            fixedNewIndexPath = NSIndexPath(forRow: newIndexPath!.row, inSection: 1)
+        }
+        
+        switch(type)
+        {
+        case .Insert:
+            self.tableView.insertRowsAtIndexPaths([fixedNewIndexPath!], withRowAnimation: .Left)
+            break
+        case .Delete:
+            self.tableView.deleteRowsAtIndexPaths([fixedIndexPath!], withRowAnimation: .Right)
+            break
+        case .Update:
+            configureCell(tableView.cellForRowAtIndexPath(fixedIndexPath!)!, atIndexPath: fixedIndexPath!)
+            break
+        case .Move:
+            self.tableView.deleteRowsAtIndexPaths([fixedIndexPath!], withRowAnimation: .Right)
+            self.tableView.insertRowsAtIndexPaths([fixedNewIndexPath!], withRowAnimation: .Left)
+            break
+        default:
+            break
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController)
+    {
+        self.tableView.endUpdates()
+    }
+    
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {

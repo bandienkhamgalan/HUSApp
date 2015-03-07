@@ -213,7 +213,8 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         {
             // Delete the row from the data source
             let patient = self.results!.objectAtIndexPath(indexPath) as Patient
-            managedObjectContext?.deleteObject(patient)
+            managedObjectContext!.deleteObject(patient)
+            managedObjectContext!.save(nil)
         }
     }
     

@@ -98,6 +98,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
             if(patient!.name != nil)
             {
                 nameField.text = patient!.name
+                self.title = "Editing \(patient!.name)"
                 name = patient!.name
             }
             if(patient!.patientID != nil)
@@ -119,7 +120,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
             idField.delegate = self
             ageField.delegate = self
         }
-        doneButton.enabled = false
+        tryToEnableDoneButton()
         // Do any additional setup after loading the view.
     }
 
