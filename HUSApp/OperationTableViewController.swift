@@ -33,11 +33,11 @@ class OperationTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section){
             case 0:
-                return 6
+                return 7
             case 1:
                 return operation!.complicationsArray().count
             case 2:
-                return 3
+                return 2
             default:
                 return 0
         }
@@ -72,6 +72,15 @@ class OperationTableViewController: UITableViewController {
                     cell.detailTextLabel!.text = "\(operation!.bloodLoss) mL"
                     break;
                 case 5:
+                    cell.textLabel!.text = "Admission to ICU"
+                    if (operation!.admittedToICU == 1){
+                        cell.detailTextLabel!.text = "Yes"
+                    }
+                    else {
+                        cell.detailTextLabel!.text = "No"
+                    }
+                    break;
+                case 6:
                     cell.textLabel!.text = "Duration of Hospital Stay"
                     cell.detailTextLabel!.text = "\(operation!.durationOfStay) days"
                     break;
@@ -91,20 +100,18 @@ class OperationTableViewController: UITableViewController {
         if (indexPath.section == 2){
             
             switch (indexPath.row){
+
             case 0:
-                cell.textLabel!.text = "Admission to ICU"
-                if (operation!.admittedToICU == 1){
-                    cell.detailTextLabel!.text = "Yes"
+                if (operation!.alive == 1) {
+                    cell.textLabel!.text = "Follow-up Date"
+                    cell.detailTextLabel!.text = operation!.followUpDateString()
                 }
-                else {
-                    cell.detailTextLabel!.text = "No"
+                if (operation!.alive == 0) {
+                    cell.textLabel!.text = "Follow-up Date"
+                    cell.detailTextLabel!.text = "NA"
                 }
                 break;
             case 1:
-                cell.textLabel!.text = "Follow-up Date"
-                cell.detailTextLabel!.text = operation!.followUpDateString()
-                break;
-            case 2:
                 if (operation!.alive == 1) {
                     cell.textLabel!.text = "Alive"
                     cell.detailTextLabel!.text = "Yes"
