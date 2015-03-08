@@ -145,6 +145,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let operationViewer = storyboard.instantiateViewControllerWithIdentifier("OperationTableView") as OperationTableViewController
+            operationViewer.setup(managedObjectContext: managedObjectContext!, patient: patient!)
             operationViewer.operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
             self.navigationController!.showViewController(operationViewer, sender: self)
         }

@@ -8,10 +8,12 @@
 
 import UIKit
 
-class OperationTableViewController: UITableViewController, OperationEditorViewControllerDelegate {
+class OperationTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, OperationEditorViewControllerDelegate {
     
     var operation: Operation?
     var patient: Patient?
+    var results: NSFetchedResultsController?
+    var managedObjectContext: NSManagedObjectContext?
     
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
@@ -21,8 +23,21 @@ class OperationTableViewController: UITableViewController, OperationEditorViewCo
     
     func userDidPressDone(operationEditor: OperationEditorViewController)
     {
+        self.operation = operationEditor.operation!
+        managedObjectContext!.save(nil)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
+    {
+        patient = patientValue
+        managedObjectContext = moc
+        let request = NSFetchRequest(entityName:"Operation")
+        request.predicate = NSPredicate(format: "patient = %@", patient!)
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        results!.delegate = self
     }
     
     func userPressedEdit()

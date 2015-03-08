@@ -16,6 +16,10 @@ protocol OperationEditorViewControllerDelegate
 
 class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SelectorTableViewControllerDelegate
 {
+    
+    var operation: Operation?
+    var complications: NSMutableDictionary?
+
     func userPressedCancel()
     {
         if delegate != nil
@@ -46,21 +50,29 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     var nextButton: UIBarButtonItem?
     
     // model
+    var existingOperation:Bool = false
     var currentPage: Int = 0
     var screensCompleted: [Bool] = []
     var completion: Float
     {
         get
         {
-            var completed = 0
-            for obj in screensCompleted
-            {
-                if (obj as Bool) == true
+            if existingOperation {
+                
+                return 1
+                
+            } else {
+                var completed = 0
+                for obj in screensCompleted
                 {
-                    completed++
+                    if (obj as Bool) == true
+                    {
+                        completed++
+                    }
                 }
+                return Float(completed) / 10.0
             }
-            return Float(completed) / 10.0
+            
         }
     }
     
@@ -78,9 +90,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             return true
         }
     }
+
     
-    var operation: Operation?
-    var complications: NSMutableDictionary?
+
     
     // miscellaneous
     var delegate: OperationEditorViewControllerDelegate?
@@ -139,13 +151,26 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         if delegate != nil
         {
             progressView!.setProgress(1.0, animated: true)
-            operation!.date = screenOne!.date
-            operation!.duration = Int(screenFour!.duration! / 60)
-            operation!.bloodLoss = screenFive!.value
-            operation!.durationOfStay = screenSix!.value
-            operation!.alive = !(screenTen!.death)
-            operation!.followUpDate = screenNine!.date
-            operation!.deathDate = screenTen!.date
+            operation!.date = screenOne?.date
+            if screenFour != nil {
+                operation!.duration = Int(screenFour!.duration! / 60)
+            }
+            if screenFive != nil {
+                operation!.bloodLoss = screenFive!.value
+
+            }
+            if screenSix != nil {
+                operation!.durationOfStay = screenSix!.value
+                
+            }
+            if screenNine != nil {
+                operation!.followUpDate = screenNine!.date
+                
+            }
+            if screenTen != nil {
+                operation!.alive = !(screenTen!.death)
+                operation!.deathDate = screenTen!.date
+            }
             delegate!.userDidPressDone(self)
         }
     }
@@ -179,13 +204,18 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         var previousPage = currentPage
         currentPage = Int(screen)
         
+        
         // determine progress
         if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 8) && previousPage != currentPage
         {
             screensCompleted[previousPage] = true
         }
         
-        if essentialCompleted && currentPage == 9
+        if existingOperation
+        {
+            self.navigationItem.rightBarButtonItem = doneButton
+        }
+        else if (essentialCompleted && currentPage == 9 )
         {
             self.navigationItem.rightBarButtonItem = doneButton
         }
@@ -390,13 +420,20 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     
     override func viewDidLoad()
     {
+        
+        
         if operation == nil
         {
             if delegate != nil
             {
                 delegate!.userDidPressCancel(self)
             }
+        } else {
+            existingOperation = operation!.date != nil
         }
+        
+        
+        
         var screenRect = UIScreen.mainScreen().bounds
         self.view.tintColor = themeColour
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
@@ -439,7 +476,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         navigationItem.rightBarButtonItem = nextButton
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
-
+        
+    
         // Do any additional setup after loading the view.
     }
 
