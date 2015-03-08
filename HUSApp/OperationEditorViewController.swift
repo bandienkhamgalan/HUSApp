@@ -277,7 +277,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenTwo!.options = approaches
                 if operation!.approachString() != nil
                 {
-                    screenTwo!.saveSelected = operation?.approachString()
+                    screenTwo!.selection = [operation!.approachString()]
                 }
                 screenTwo!.mode = .Single
                 screenTwo!.delegate = self
@@ -289,7 +289,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenThree!.mode = .Single
                 if operation!.resection != nil
                 {
-                    screenThree!.saveSelected = operation!.resectionString()
+                    screenThree!.selection = [operation!.resectionString()]
                 }
                 screenThree!.delegate = self
                 break
@@ -330,7 +330,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenSeven!.mode = .Multiple
                 if operation!.complications != nil
                 {
-                    screenSeven!.saveSelecteds = operation!.complicationsArray()
+                    screenSeven!.selection = operation!.complicationsArray() as [String]
                 }
                 screenSeven!.delegate = self
                 break
@@ -340,7 +340,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenEight!.mode = .Single
                 if operation!.admittedToICU != nil
                 {
-                    screenEight!.saveNumber = operation!.admittedToICU
+                    screenEight!.selection = [operation!.admittedToICU.boolValue == true ? "Yes" : "No"]
                 }
                 screenEight!.delegate = self
                 break

@@ -21,13 +21,12 @@ protocol SelectorTableViewControllerDelegate
 
 class SelectorTableViewController: UITableViewController
 {
+    var selectedColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+    var deselectedColor = UIColor.blackColor()
     var options: [String]?
     var mode = SelectorMode.Multiple
     var selection: [String] = []
     var prompt = ""
-    var saveSelected: String?
-    var saveSelecteds: [AnyObject]?
-    var saveNumber: NSNumber?
     
     var delegate: SelectorTableViewControllerDelegate?
     
@@ -65,40 +64,16 @@ class SelectorTableViewController: UITableViewController
         // Configure the cell...
         cell.textLabel!.text = options![indexPath.row]
         
-        if mode == .Single {
-            
-            if (saveSelected != nil){
-                if (options![indexPath.row] == saveSelected!){
-                    cell.accessoryType = .Checkmark
-                    cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
-                    selection.append(options![indexPath.row])
-                }
-            } else if (saveNumber != nil) {
-                if saveNumber == 1 && indexPath.row == 0 {
-                    cell.accessoryType = .Checkmark
-                    cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
-                    selection.append(options![indexPath.row])
-                } else if saveNumber == 0 && indexPath.row == 1 {
-                    cell.accessoryType = .Checkmark
-                    cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
-                    selection.append(options![indexPath.row])
-                }
-            }
-            
-        } else if mode == .Multiple {
-            if (saveSelecteds != nil){
-                for item in saveSelecteds!{
-                    var selected = item as String
-                    if (options![indexPath.row] == selected){
-                        cell.accessoryType = .Checkmark
-                        cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
-                        selection.append(options![indexPath.row])
-                    }
-                }
-                
-            }
+        if contains(selection, options![indexPath.row])
+        {
+            cell.accessoryType = .Checkmark
+            cell.textLabel!.textColor = selectedColor
         }
-        
+        else
+        {
+            cell.accessoryType = .None
+            cell.textLabel!.textColor = deselectedColor
+        }
 
         return cell
     }
@@ -123,7 +98,7 @@ class SelectorTableViewController: UITableViewController
             else
             {
                 cell!.accessoryType = .Checkmark
-                cell!.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+                cell!.textLabel!.textColor = selectedColor
                 selection.append(options![indexPath.row])
             }
         }
@@ -136,7 +111,7 @@ class SelectorTableViewController: UITableViewController
                 currentCell!.textLabel!.textColor = UIColor.blackColor()
             }
             cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-            cell!.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+            cell!.textLabel!.textColor = selectedColor
             
             selection = [options![indexPath.row]]
         }
