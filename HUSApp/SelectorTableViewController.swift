@@ -25,6 +25,10 @@ class SelectorTableViewController: UITableViewController
     var mode = SelectorMode.Multiple
     var selection: [String] = []
     var prompt = ""
+    var saveSelected: String?
+    var saveSelecteds: [AnyObject]?
+    var saveNumber: NSNumber?
+    
     var delegate: SelectorTableViewControllerDelegate?
     
     override func viewDidLoad()
@@ -60,6 +64,41 @@ class SelectorTableViewController: UITableViewController
 
         // Configure the cell...
         cell.textLabel!.text = options![indexPath.row]
+        
+        if mode == .Single {
+            
+            if (saveSelected != nil){
+                if (options![indexPath.row] == saveSelected!){
+                    cell.accessoryType = .Checkmark
+                    cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+                    selection.append(options![indexPath.row])
+                }
+            } else if (saveNumber != nil) {
+                if saveNumber == 1 && indexPath.row == 0 {
+                    cell.accessoryType = .Checkmark
+                    cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+                    selection.append(options![indexPath.row])
+                } else if saveNumber == 0 && indexPath.row == 1 {
+                    cell.accessoryType = .Checkmark
+                    cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+                    selection.append(options![indexPath.row])
+                }
+            }
+            
+        } else if mode == .Multiple {
+            if (saveSelecteds != nil){
+                for item in saveSelecteds!{
+                    var selected = item as String
+                    if (options![indexPath.row] == selected){
+                        cell.accessoryType = .Checkmark
+                        cell.textLabel!.textColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+                        selection.append(options![indexPath.row])
+                    }
+                }
+                
+            }
+        }
+        
 
         return cell
     }

@@ -251,11 +251,17 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 0:
                 screenOne!.prompt = "Date of Operation"
                 screenOne!.pickerMode = .Date
+                if operation!.date != nil{
+                    screenOne!.savedDate = operation!.date
+                }
                 break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
                 var approaches = Operation.possibleApproaches() as [String]
                 screenTwo!.options = approaches
+                if (operation!.approachString() != nil){
+                    screenTwo!.saveSelected = operation?.approachString()
+                }
                 screenTwo!.mode = .Single
                 screenTwo!.delegate = self
                 break
@@ -264,11 +270,19 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 var resections = Operation.possibleResections() as [String]
                 screenThree!.options = Operation.possibleResections() as? [String]
                 screenThree!.mode = .Single
+                if (operation!.resectionString() != nil){
+                    screenThree!.saveSelected = operation?.resectionString()
+                }
                 screenThree!.delegate = self
                 break
             case 3:
                 screenFour!.prompt = "Duration of Operation"
                 screenFour!.pickerMode = .CountDownTimer
+                var duration = operation!.duration as Int
+                if duration > 0 {
+                    var countdown = duration * 60
+                    screenFour!.savedCountdown = NSTimeInterval(countdown)
+                }
                 break
             case 4:
                 screenFive!.prompt = "Blood Loss / mL"
@@ -276,6 +290,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenFive!.max = 100
                 screenFive!.interval = 1
                 screenFive!.initial = 20
+                var bloodLoss = operation!.bloodLoss as Int
+                screenFive!.savedValue = bloodLoss
                 break
             case 5:
                 screenSix!.prompt = "Total Time in Hospital / days"
@@ -283,23 +299,40 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenSix!.max = 30
                 screenSix!.interval = 1
                 screenSix!.initial = 7
+                var durationOfStay = operation!.durationOfStay as Int
+                screenSix!.savedValue = durationOfStay
                 break
             case 6:
                 screenSeven!.prompt = "Complications during hospital stay"
                 complications = Operation.emptyComplications()
                 screenSeven!.options = complications!.allKeys as? [String]
                 screenSeven!.mode = .Multiple
+                if operation!.complicationsArray() != nil {
+                    screenSeven!.saveSelecteds = operation!.complicationsArray()
+                }
                 screenSeven!.delegate = self
                 break
             case 7:
                 screenEight!.prompt = "Admission to ICU"
                 screenEight!.options = ["Yes", "No"]
                 screenEight!.mode = .Single
+                if operation!.admittedToICU != nil{
+                    screenEight!.saveNumber = operation!.admittedToICU
+                    println(operation!.admittedToICU)
+                }
                 screenEight!.delegate = self
                 break
             case 8:
                 screenNine!.prompt = "Follow-up Date"
                 screenNine!.pickerMode = .Date
+                if operation!.followUpDate != nil{
+                    screenNine!.savedDate = operation!.followUpDate
+                }
+                break
+            case 9:
+                if operation!.deathDate != nil {
+                    screenTen!.savedDeathDate = operation!.deathDate
+                }
                 break
             default:
                 break

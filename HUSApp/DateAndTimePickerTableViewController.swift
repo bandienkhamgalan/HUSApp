@@ -17,7 +17,11 @@ enum PickerMode
 class DateAndTimePickerTableViewController: UITableViewController
 {
     @IBOutlet weak var datePicker: UIDatePicker!
+    
     var pickerMode = PickerMode.Date
+    var savedDate: NSDate?
+    var savedCountdown :NSTimeInterval?
+    
     var date: NSDate?
     {
         get
@@ -47,9 +51,20 @@ class DateAndTimePickerTableViewController: UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.datePickerMode = pickerMode == .Date ? .Date : .CountDownTimer
-        datePicker.countDownDuration = NSTimeInterval(1800);
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        
+        if pickerMode == .Date {
+            if savedDate != nil {
+                datePicker.setDate(savedDate!, animated: true)
+            } else {
+                datePicker.setDate(NSDate(), animated: true)
+            }
+        } else {
+            if savedCountdown != nil {
+                datePicker.countDownDuration = savedCountdown!
+            } else {
+                datePicker.countDownDuration = NSTimeInterval(1800);
+            }
+        }
 
     }
 

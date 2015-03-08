@@ -10,11 +10,14 @@ import UIKit
 
 class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate
 {
+    
     var prompt = ""
     var min = 0
     var initial = 50
     var max = 100
     var interval = 1
+    var savedValue = 0
+    
     var value: Int
     {
         get
@@ -27,13 +30,12 @@ class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSou
         super.viewDidLoad()
         picker.dataSource = self
         picker.delegate = self
-        picker.selectRow(Int((initial - min) / interval), inComponent: 0, animated: false)
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if savedValue != 0 {
+            picker.selectRow(savedValue, inComponent: 0, animated: false)
+        } else {
+            picker.selectRow(Int((initial - min) / interval), inComponent: 0, animated: false)
+        }
+        
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int

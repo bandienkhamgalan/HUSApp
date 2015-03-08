@@ -10,6 +10,8 @@ import UIKit
 
 class DeathTableViewController: UITableViewController
 {
+    var savedDeathDate :NSDate?
+    
     var death = false
     var date: NSDate?
     {
@@ -19,20 +21,22 @@ class DeathTableViewController: UITableViewController
         }
     }
     
+    @IBOutlet weak var deathSwitch: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         deathCell.hidden = true
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if savedDeathDate != nil {
+            deathSwitch.setOn(true, animated: true)
+            death = true
+            deathDate.setDate(savedDeathDate!, animated: true)
+            deathCell.hidden = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Table view data source

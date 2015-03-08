@@ -521,6 +521,7 @@
                     <connections>
                         <outlet property="deathCell" destination="lM3-5J-Qdh" id="Bn1-9d-9HI"/>
                         <outlet property="deathDate" destination="6vt-7y-lTE" id="Cq1-ii-hpF"/>
+                        <outlet property="deathSwitch" destination="V9v-gj-fK4" id="Ahv-k9-sdX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UEk-PN-FdV" userLabel="First Responder" sceneMemberID="firstResponder"/>
