@@ -246,21 +246,26 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     
     func setupScreen(index: Int)
     {
+        println(operation)
         switch(index)
         {
             case 0:
                 screenOne!.prompt = "Date of Operation"
                 screenOne!.pickerMode = .Date
-                if operation!.date != nil{
+                if operation!.date != nil
+                {
                     screenOne!.savedDate = operation!.date
+                    screensCompleted[0] = true
                 }
                 break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
                 var approaches = Operation.possibleApproaches() as [String]
                 screenTwo!.options = approaches
-                if (operation!.approachString() != nil){
+                if (operation!.approachString() != nil)
+                {
                     screenTwo!.saveSelected = operation?.approachString()
+                    screensCompleted[1] = true
                 }
                 screenTwo!.mode = .Single
                 screenTwo!.delegate = self
@@ -270,8 +275,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 var resections = Operation.possibleResections() as [String]
                 screenThree!.options = Operation.possibleResections() as? [String]
                 screenThree!.mode = .Single
-                if (operation!.resectionString() != nil){
+                if (operation!.resectionString() != nil)
+                {
                     screenThree!.saveSelected = operation?.resectionString()
+                    screensCompleted[2] = true
                 }
                 screenThree!.delegate = self
                 break
@@ -279,9 +286,11 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenFour!.prompt = "Duration of Operation"
                 screenFour!.pickerMode = .CountDownTimer
                 var duration = operation!.duration as Int
-                if duration > 0 {
+                if duration > 0
+                {
                     var countdown = duration * 60
                     screenFour!.savedCountdown = NSTimeInterval(countdown)
+                    screensCompleted[3] = true
                 }
                 break
             case 4:
@@ -318,7 +327,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenEight!.mode = .Single
                 if operation!.admittedToICU != nil{
                     screenEight!.saveNumber = operation!.admittedToICU
-                    println(operation!.admittedToICU)
+                    screensCompleted[7] = true
                 }
                 screenEight!.delegate = self
                 break
@@ -327,11 +336,13 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenNine!.pickerMode = .Date
                 if operation!.followUpDate != nil{
                     screenNine!.savedDate = operation!.followUpDate
+                    screensCompleted[8] = true
                 }
                 break
             case 9:
                 if operation!.deathDate != nil {
                     screenTen!.savedDeathDate = operation!.deathDate
+                    screensCompleted[9] = true
                 }
                 break
             default:
@@ -419,11 +430,12 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             screens.append(nil)
         }
         
+        // add screens
+        ensureScreensInitialized()
+        
         // update
         updateIndicatorAndTitle()
         
-        // add screens
-        ensureScreensInitialized()
         navigationItem.rightBarButtonItem = nextButton
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false

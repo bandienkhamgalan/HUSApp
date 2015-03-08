@@ -2,16 +2,16 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Operation" representedClassName="Operation" syncable="YES">
         <attribute name="admittedToICU" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="alive" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="approach" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="bloodLoss" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="complications" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="alive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="approach" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="bloodLoss" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="complications" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="deathDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="durationOfStay" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="durationOfStay" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="followUpDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="resection" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="resection" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <relationship name="patient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="operations" inverseEntity="Patient" syncable="YES"/>
     </entity>
     <entity name="Patient" representedClassName="Patient" syncable="YES">

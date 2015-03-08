@@ -94,7 +94,7 @@
 
 - (NSString *)resectionString
 {
-    return [[Operation possibleResections] objectAtIndex:self.resection.integerValue];
+    return self.resection == nil ? nil : [[Operation possibleResections] objectAtIndex:self.resection.integerValue];
 }
 
 + (NSArray *)possibleResections
@@ -109,7 +109,7 @@
 
 - (NSString *)approachString
 {
-    return [[Operation possibleApproaches] objectAtIndex:self.approach.integerValue];
+    return self.approach == nil ? nil : [[Operation possibleApproaches] objectAtIndex:self.approach.integerValue];
 }
 
 + (NSArray *)possibleApproaches
