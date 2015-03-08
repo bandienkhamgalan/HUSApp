@@ -84,7 +84,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return self.results!.sections!.count + 1
+        return self.results!.fetchedObjects!.count == 0 ? 1 : 2
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -187,13 +187,22 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             fixedNewIndexPath = NSIndexPath(forRow: newIndexPath!.row, inSection: 1)
         }
-        
         switch(type)
         {
         case .Insert:
+            if( self.results!.fetchedObjects!.count == 1 )
+            {
+                self.tableView.insertSections(NSIndexSet(index: 1), withRowAnimation: .Left)
+            }
+            
             self.tableView.insertRowsAtIndexPaths([fixedNewIndexPath!], withRowAnimation: .Left)
             break
         case .Delete:
+            if( self.results!.fetchedObjects!.count == 0 )
+            {
+                self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Right)
+            }
+            
             self.tableView.deleteRowsAtIndexPaths([fixedIndexPath!], withRowAnimation: .Right)
             break
         case .Update:
