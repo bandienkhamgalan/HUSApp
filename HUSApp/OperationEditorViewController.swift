@@ -251,7 +251,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 0:
                 screenOne!.prompt = "Date of Operation"
                 screenOne!.pickerMode = .Date
-                if operation?.date != nil {
+                if operation!.date != nil{
                     screenOne!.savedDate = operation!.date
                 }
                 break
@@ -259,6 +259,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenTwo!.prompt = "Type of Approach"
                 var approaches = Operation.possibleApproaches() as [String]
                 screenTwo!.options = approaches
+                if (operation!.approachString() != nil){
+                    screenTwo!.saveSelected = operation?.approachString()
+                }
                 screenTwo!.mode = .Single
                 screenTwo!.delegate = self
                 break
@@ -267,14 +270,19 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 var resections = Operation.possibleResections() as [String]
                 screenThree!.options = Operation.possibleResections() as? [String]
                 screenThree!.mode = .Single
+                if (operation!.resectionString() != nil){
+                    screenThree!.saveSelected = operation?.resectionString()
+                }
                 screenThree!.delegate = self
                 break
             case 3:
                 screenFour!.prompt = "Duration of Operation"
                 screenFour!.pickerMode = .CountDownTimer
                 var duration = operation!.duration as Int
-                var countdown = duration * 60
-                screenFour!.savedCountdown = NSTimeInterval(countdown)
+                if duration > 0 {
+                    var countdown = duration * 60
+                    screenFour!.savedCountdown = NSTimeInterval(countdown)
+                }
                 break
             case 4:
                 screenFive!.prompt = "Blood Loss / mL"
@@ -299,19 +307,31 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 complications = Operation.emptyComplications()
                 screenSeven!.options = complications!.allKeys as? [String]
                 screenSeven!.mode = .Multiple
+                if operation!.complicationsArray() != nil {
+                    screenSeven!.saveSelecteds = operation!.complicationsArray()
+                }
                 screenSeven!.delegate = self
                 break
             case 7:
                 screenEight!.prompt = "Admission to ICU"
                 screenEight!.options = ["Yes", "No"]
                 screenEight!.mode = .Single
+                if operation!.admittedToICU != nil{
+                    screenEight!.saveNumber = operation!.admittedToICU
+                    println(operation!.admittedToICU)
+                }
                 screenEight!.delegate = self
                 break
             case 8:
                 screenNine!.prompt = "Follow-up Date"
                 screenNine!.pickerMode = .Date
-                if operation?.followUpDate != nil {
+                if operation!.followUpDate != nil{
                     screenNine!.savedDate = operation!.followUpDate
+                }
+                break
+            case 9:
+                if operation!.deathDate != nil {
+                    screenTen!.savedDeathDate = operation!.deathDate
                 }
                 break
             default:
