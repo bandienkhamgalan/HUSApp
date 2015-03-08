@@ -57,22 +57,15 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     {
         get
         {
-            if existingOperation {
-                
-                return 1
-                
-            } else {
-                var completed = 0
-                for obj in screensCompleted
+            var completed = 0
+            for obj in screensCompleted
+            {
+                if (obj as Bool) == true
                 {
-                    if (obj as Bool) == true
-                    {
-                        completed++
-                    }
+                    completed++
                 }
-                return Float(completed) / 10.0
             }
-            
+            return Float(completed) / 10.0
         }
     }
     
@@ -91,9 +84,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         }
     }
 
-    
-
-    
     // miscellaneous
     var delegate: OperationEditorViewControllerDelegate?
     
@@ -150,7 +140,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     {
         if delegate != nil
         {
-            progressView!.setProgress(1.0, animated: true)
+            progressView?.setProgress(1.0, animated: true)
             operation!.date = screenOne?.date
             if screenFour != nil {
                 operation!.duration = Int(screenFour!.duration! / 60)
@@ -204,18 +194,13 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         var previousPage = currentPage
         currentPage = Int(screen)
         
-        
         // determine progress
         if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 8) && previousPage != currentPage
         {
             screensCompleted[previousPage] = true
         }
         
-        if existingOperation
-        {
-            self.navigationItem.rightBarButtonItem = doneButton
-        }
-        else if (essentialCompleted && currentPage == 9 )
+        if existingOperation || (essentialCompleted && currentPage == 9 )
         {
             self.navigationItem.rightBarButtonItem = doneButton
         }
@@ -224,7 +209,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             self.navigationItem.rightBarButtonItem = nextButton
         }
     
-        progressView!.setProgress(completion, animated: true)
+        progressView?.setProgress(completion, animated: true)
         title = "Question \((Int(screen) + 1))/10"
     }
     
@@ -276,7 +261,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     
     func setupScreen(index: Int)
     {
-        println(operation)
         switch(index)
         {
             case 0:
@@ -285,17 +269,15 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 if operation!.date != nil
                 {
                     screenOne!.savedDate = operation!.date
-                    screensCompleted[0] = true
                 }
                 break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
                 var approaches = Operation.possibleApproaches() as [String]
                 screenTwo!.options = approaches
-                if (operation!.approachString() != nil)
+                if operation!.approachString() != nil
                 {
                     screenTwo!.saveSelected = operation?.approachString()
-                    screensCompleted[1] = true
                 }
                 screenTwo!.mode = .Single
                 screenTwo!.delegate = self
@@ -305,22 +287,18 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 var resections = Operation.possibleResections() as [String]
                 screenThree!.options = Operation.possibleResections() as? [String]
                 screenThree!.mode = .Single
-                if (operation!.resectionString() != nil)
+                if operation!.resection != nil
                 {
-                    screenThree!.saveSelected = operation?.resectionString()
-                    screensCompleted[2] = true
+                    screenThree!.saveSelected = operation!.resectionString()
                 }
                 screenThree!.delegate = self
                 break
             case 3:
                 screenFour!.prompt = "Duration of Operation"
                 screenFour!.pickerMode = .CountDownTimer
-                var duration = operation!.duration as Int
-                if duration > 0
+                if operation!.duration != nil
                 {
-                    var countdown = duration * 60
-                    screenFour!.savedCountdown = NSTimeInterval(countdown)
-                    screensCompleted[3] = true
+                    screenFour!.savedCountdown = NSTimeInterval(operation!.duration.intValue * 60)
                 }
                 break
             case 4:
@@ -329,8 +307,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenFive!.max = 100
                 screenFive!.interval = 1
                 screenFive!.initial = 20
-                var bloodLoss = operation!.bloodLoss as Int
-                screenFive!.savedValue = bloodLoss
+                if operation!.bloodLoss != nil
+                {
+                    screenFive!.savedValue = operation!.bloodLoss.integerValue
+                }
                 break
             case 5:
                 screenSix!.prompt = "Total Time in Hospital / days"
@@ -338,15 +318,18 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenSix!.max = 30
                 screenSix!.interval = 1
                 screenSix!.initial = 7
-                var durationOfStay = operation!.durationOfStay as Int
-                screenSix!.savedValue = durationOfStay
+                if operation!.durationOfStay != nil
+                {
+                    screenSix!.savedValue = operation!.durationOfStay.integerValue
+                }
                 break
             case 6:
                 screenSeven!.prompt = "Complications during hospital stay"
                 complications = Operation.emptyComplications()
                 screenSeven!.options = complications!.allKeys as? [String]
                 screenSeven!.mode = .Multiple
-                if operation!.complicationsArray() != nil {
+                if operation!.complications != nil
+                {
                     screenSeven!.saveSelecteds = operation!.complicationsArray()
                 }
                 screenSeven!.delegate = self
@@ -355,24 +338,24 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenEight!.prompt = "Admission to ICU"
                 screenEight!.options = ["Yes", "No"]
                 screenEight!.mode = .Single
-                if operation!.admittedToICU != nil{
+                if operation!.admittedToICU != nil
+                {
                     screenEight!.saveNumber = operation!.admittedToICU
-                    screensCompleted[7] = true
                 }
                 screenEight!.delegate = self
                 break
             case 8:
                 screenNine!.prompt = "Follow-up Date"
                 screenNine!.pickerMode = .Date
-                if operation!.followUpDate != nil{
+                if operation!.followUpDate != nil
+                {
                     screenNine!.savedDate = operation!.followUpDate
-                    screensCompleted[8] = true
                 }
                 break
             case 9:
-                if operation!.deathDate != nil {
+                if operation!.deathDate != nil
+                {
                     screenTen!.savedDeathDate = operation!.deathDate
-                    screensCompleted[9] = true
                 }
                 break
             default:
@@ -420,8 +403,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     
     override func viewDidLoad()
     {
-        
-        
         if operation == nil
         {
             if delegate != nil
@@ -432,12 +413,11 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             existingOperation = operation!.date != nil
         }
         
-        
-        
         var screenRect = UIScreen.mainScreen().bounds
         self.view.tintColor = themeColour
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
-            
+        self.automaticallyAdjustsScrollViewInsets = false
+        
         // bar buttons
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "userPressedCancel")
       
@@ -449,11 +429,14 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         doneButton?.tintColor = themeColour
         nextButton?.tintColor = themeColour
         
-        // progress view
-        progressView = UIProgressView(progressViewStyle: UIProgressViewStyle.Bar)
-        progressView!.frame = CGRectMake(0, 64, screenRect.size.width, 2)
-        progressView!.progress = 0
-        view.addSubview(progressView!)
+        if !existingOperation
+        {
+            // progress view
+            progressView = UIProgressView(progressViewStyle: UIProgressViewStyle.Bar)
+            progressView!.frame = CGRectMake(0, 64, screenRect.size.width, 2)
+            progressView!.progress = 0
+            view.addSubview(progressView!)
+        }
         
         // setup screen completed (model)
         for _ in 0...9
@@ -473,10 +456,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         // update
         updateIndicatorAndTitle()
         
-        navigationItem.rightBarButtonItem = nextButton
+    
         super.viewDidLoad()
-        self.automaticallyAdjustsScrollViewInsets = false
-        
     
         // Do any additional setup after loading the view.
     }
