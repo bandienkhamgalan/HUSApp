@@ -124,13 +124,36 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         return sectionInfo.numberOfObjects;
     }
     
-    
-    
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
     {
         var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
         cell.textLabel!.text = currentPatient.name
 
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as UITableViewCell
+        
+        configureCell(cell, atIndexPath: indexPath)
+        
+        return cell
+    }
+    
+    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!
+    {
+        return self.results!.sectionIndexTitles
+    }
+    
+    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int
+    {
+        return self.results!.sectionForSectionIndexTitle(title, atIndex: index)
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
+        return sectionInfo.indexTitle
     }
     
     func controllerWillChangeContent(controller: NSFetchedResultsController)
@@ -157,54 +180,27 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     {
         switch(type)
         {
-            case .Insert:
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
-                break
-            case .Delete:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
-                break;
-            case .Update:
-                self.configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, atIndexPath:indexPath!)
-                break
-            case .Move:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
-                break
-            default:
-                break
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
+            break
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
+            break;
+        case .Update:
+            self.configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, atIndexPath:indexPath!)
+            break
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
+            break
+        default:
+            break
         }
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
         tableView.endUpdates()
-    }
-
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as UITableViewCell
-        
-        configureCell(cell, atIndexPath: indexPath)
-        
-        return cell
-    }
-    
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!
-    {
-        return self.results!.sectionIndexTitles
-    }
-    
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int
-    {
-        return self.results!.sectionForSectionIndexTitle(title, atIndex: index)
-    }
-    
-    override func tableView(tableView: UITableView,
-        titleForHeaderInSection section: Int) -> String?
-    {
-        let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
-        return sectionInfo.indexTitle
     }
     
     // Override to support editing the table view.

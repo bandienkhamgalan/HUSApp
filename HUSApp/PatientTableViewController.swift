@@ -86,7 +86,29 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         // Return the number of sections.
         return self.results!.fetchedObjects!.count == 0 ? 1 : 2
     }
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if indexPath.section == 0
+        {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
+            let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
+            patientEditor.patient = patient!
+            patientEditor.delegate = self
+            self.presentViewController(patientEditorNVC, animated: true, completion: nil)
+            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        }
+        else if indexPath.section == 1
+        {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let operationViewer = storyboard.instantiateViewControllerWithIdentifier("OperationTableView") as OperationTableViewController
+            operationViewer.setup(managedObjectContext: managedObjectContext!, patient: patient!)
+            operationViewer.operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
+            self.navigationController!.showViewController(operationViewer, sender: self)
+        }
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         // #warning Incomplete method implementation.
@@ -98,7 +120,12 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         let sectionInfo = self.results!.sections![0] as NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
     }
-
+    
+    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
+    {
+        cell.textLabel!.text = (self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation)!.dateString()
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         if indexPath.section == 0
@@ -128,28 +155,17 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        if indexPath.section == 0
-        {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
-            let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
-            patientEditor.patient = patient!
-            patientEditor.delegate = self
-            self.presentViewController(patientEditorNVC, animated: true, completion: nil)
-            tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        }
-        else if indexPath.section == 1
-        {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let operationViewer = storyboard.instantiateViewControllerWithIdentifier("OperationTableView") as OperationTableViewController
-            operationViewer.setup(managedObjectContext: managedObjectContext!, patient: patient!)
-            operationViewer.operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
-            self.navigationController!.showViewController(operationViewer, sender: self)
-        }
+        return section == 0 ? "" : "Operations"
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return indexPath.section == 0 ? 67 : 40
+    }
+
     
     func controllerWillChangeContent(controller: NSFetchedResultsController)
     {
@@ -171,10 +187,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         }
     }
     
-    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
-    {
-        cell.textLabel!.text = (self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation)!.dateString()
-    }
+
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
     {
@@ -223,15 +236,18 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         self.tableView.endUpdates()
     }
     
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-    {
-        return section == 0 ? "" : "Operations"
+    // Override to support editing the table view.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete
+        {
+            // Delete the row from the data source
+            
+            let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
+            patient!.removeOperations(NSSet(object: operation!))
+            managedObjectContext!.save(nil)
+        }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    {
-        return indexPath.section == 0 ? 67 : 40
-    }
+
 
 }
