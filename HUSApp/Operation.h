@@ -33,6 +33,7 @@
 - (NSString *)resectionString;
 + (NSArray *)possibleResections;
 - (void)setResectionValue:(NSString *)resection;
+
 - (NSString *)approachString;
 + (NSArray *)possibleApproaches;
 - (void)setApproachValue:(NSString *)approach;

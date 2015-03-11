@@ -36,6 +36,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Patients" id="za4-hT-AVH">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Cx5-aB-79l">
+                            <connections>
+                                <action selector="userDidPressSettings:" destination="qV9-Dn-17g" id="uuK-Ec-8Ch"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Y4Q-t3-B7i">
                             <color key="tintColor" red="0.22352941179999999" green="0.62352941179999999" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -52,7 +57,7 @@
         <!--Settings-->
         <scene sceneID="OkI-TY-Aof">
             <objects>
-                <tableViewController title="Settings" id="cda-4j-OkI" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsTable" title="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cda-4j-OkI" customClass="SettingsTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="kjv-G7-K6K">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

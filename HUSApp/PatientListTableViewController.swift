@@ -11,6 +11,14 @@ import CoreData
 
 class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, UISearchResultsUpdating {
     
+	@IBAction func userDidPressSettings(sender: UIBarButtonItem)
+	{
+		let storyboard = UIStoryboard(name: "Main", bundle:nil)
+		var settingsTVC = storyboard.instantiateViewControllerWithIdentifier("SettingsTable") as SettingsTableViewController
+		var settingsNVC = UINavigationController(rootViewController: settingsTVC)
+		self.presentViewController(settingsNVC, animated: true, completion: nil)
+	}
+	
     var searchController: UISearchController?
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
