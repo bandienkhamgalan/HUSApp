@@ -413,6 +413,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             existingOperation = operation!.date != nil
         }
         
+        // layout
         var screenRect = UIScreen.mainScreen().bounds
         self.view.tintColor = themeColour
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
@@ -420,9 +421,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         
         // bar buttons
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "userPressedCancel")
-      
         doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "userPressedDone")
-       
         nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: "userPressedNext")
         
         self.navigationItem.leftBarButtonItem?.tintColor = themeColour

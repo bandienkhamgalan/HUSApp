@@ -18,6 +18,11 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 		var settingsNVC = UINavigationController(rootViewController: settingsTVC)
 		self.presentViewController(settingsNVC, animated: true, completion: nil)
 	}
+    
+    func userDidPressDone(settings: SettingsTableViewController)
+    {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 	
     var searchController: UISearchController?
     var results: NSFetchedResultsController?
