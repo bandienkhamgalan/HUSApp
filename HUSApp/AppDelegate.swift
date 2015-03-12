@@ -31,11 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Dropbox
     func application(application: UIApplication, openURL url: NSURL,
         sourceApplication: String, annotation: AnyObject?) -> Bool {
-            
-            println("link")
+        
             let account = DBAccountManager.sharedManager().handleOpenURL(url)
             if (account != nil) {
-                println("App linked successfully!")
+                println("App linked to Dropbox successfully!")
                 return true
             }
             return false
