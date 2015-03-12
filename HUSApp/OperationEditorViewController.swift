@@ -89,7 +89,14 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
 		}
 	}
 	
-    func userDidSelectChoice(sender: SelectorTableViewController)
+	func userCanUpdateChoice(newSelection: [String], sender: SelectorTableViewController) -> Bool
+	{
+		println("in usercanupdatechoice")
+		println(sender == screenThree! ? countElements(newSelection) > 0 : true)
+		return sender == screenThree! ? countElements(newSelection) > 0 : true
+	}
+	
+    func userDidUpdateChoice(sender: SelectorTableViewController)
     {
         var selections = sender.selection
         switch(sender)
@@ -107,7 +114,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
 					var key = obj as String
 					resections!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
 				}
-                operation!.setResectionsValue(resections)
                 screensCompleted[2] = true
                 break
             case screenSeven!:
@@ -136,7 +142,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         {
             progressView?.setProgress(1.0, animated: true)
             operation!.date = screenOne?.date
-			operation!.setApproachValue(approach)
+			if screenTwo != nil {
+				operation!.setApproachValue(approach!)
+			}
 			if screenThree != nil {
 				operation!.setResectionsValue(resections!)
 			}
@@ -157,7 +165,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
 			}
             if screenNine != nil {
                 operation!.followUpDate = screenNine!.date
-                
             }
             if screenTen != nil {
                 operation!.alive = !(screenTen!.death)
@@ -277,8 +284,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 break
             case 1:
                 screenTwo!.prompt = "Type of Approach"
-                var approaches = Operation.possibleApproaches() as [String]
-                screenTwo!.options = approaches
+				approach = operation!.approachString()
+                screenTwo!.options = Operation.possibleApproaches() as [String]
                 if operation!.approachString() != nil
                 {
                     screenTwo!.selection = [operation!.approachString()]
@@ -289,7 +296,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 2:
                 screenThree!.prompt = "Type of Resection"
                 resections = operation!.resectionsDictionary()
-                screenThree!.options = resections!.allKeys as [String]
+				screenThree!.options = sorted(resections!.allKeys as [String], <)
                 screenThree!.mode = .Multiple
                 if operation!.resection != nil
                 {
@@ -330,7 +337,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 6:
                 screenSeven!.prompt = "Complications during hospital stay"
                 complications = Operation.emptyComplications()
-                screenSeven!.options = complications!.allKeys as? [String]
+				screenSeven!.options = sorted(complications!.allKeys as [String], <)
                 screenSeven!.mode = .Multiple
                 if operation!.complications != nil
                 {
@@ -344,7 +351,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenEight!.mode = .Single
                 if operation!.admittedToICU != nil
                 {
-                    screenEight!.selection = [operation!.admittedToICU.boolValue == true ? "Yes" : "No"]
+					admittedToICU = operation!.admittedToICU.boolValue
+                    screenEight!.selection = [admittedToICU! == true ? "Yes" : "No"]
                 }
                 screenEight!.delegate = self
                 break

@@ -39,11 +39,8 @@
 - (NSMutableDictionary *)complicationsDictionary
 {
     NSArray *sortedComplicationKeys = [[Operation emptyComplications].allKeys sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]];
-    NSMutableDictionary *toReturn = [NSMutableDictionary dictionary];
 	int complications = self.complications == nil ? 0 : self.complications.intValue;
-    for(int i = 0 ; i < sortedComplicationKeys.count ; i++)
-		[toReturn setObject:[NSNumber numberWithBool:complications & 1 << i] forKey:[sortedComplicationKeys objectAtIndex:i]];
-    return toReturn;
+	return [Operation bitFieldToDictionary:complications withSortedKeys:sortedComplicationKeys];
 }
 
 + (NSMutableDictionary *)emptyComplications
@@ -76,13 +73,9 @@
 
 - (NSMutableDictionary *)resectionsDictionary
 {
-	
 	NSArray *sortedPossibleResections = [[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]];
-	NSMutableDictionary *toReturn = [NSMutableDictionary dictionary];
 	int resections = self.resection == nil ? 0 : self.resection.intValue;
-	for(int i = 0 ; i < sortedPossibleResections.count ; i++)
-		[toReturn setObject:[NSNumber numberWithBool:resections & 1 << i] forKey:[sortedPossibleResections objectAtIndex:i]];
-	return toReturn;
+	return [Operation bitFieldToDictionary:resections withSortedKeys:sortedPossibleResections];
 }
 
 + (int)dictionaryToBitField:(NSDictionary *)dictionary withSortedKeys:(NSArray *)sortedKeys
@@ -151,7 +144,10 @@
 
 - (void)setApproachValue:(NSString *)approach
 {
-    self.approach = [NSNumber numberWithInteger:[[Operation possibleApproaches] indexOfObject:approach]];
+	if([[Operation possibleApproaches] containsObject:approach])
+		self.approach = [NSNumber numberWithInteger:[[Operation possibleApproaches] indexOfObject:approach]];
+	else
+		self.approach = nil;
 }
 
 @end

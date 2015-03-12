@@ -14,9 +14,10 @@ enum SelectorMode
     case Single
 }
 
-protocol SelectorTableViewControllerDelegate
+@objc protocol SelectorTableViewControllerDelegate
 {
-    func userDidSelectChoice(sender: SelectorTableViewController)
+    func userDidUpdateChoice(sender: SelectorTableViewController)
+	optional func userCanUpdateChoice(newSelection: [String], sender: SelectorTableViewController) -> Bool
 }
 
 class SelectorTableViewController: UITableViewController
@@ -87,40 +88,65 @@ class SelectorTableViewController: UITableViewController
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
-        if mode == .Multiple
-        {
-            if cell!.accessoryType == .Checkmark
-            {
-                cell!.accessoryType = UITableViewCellAccessoryType.None
-                cell!.textLabel!.textColor = UIColor.blackColor()
-                selection.removeAtIndex(find(selection, options![indexPath.row])!)
-            }
-            else
-            {
-                cell!.accessoryType = .Checkmark
-                cell!.textLabel!.textColor = selectedColor
-                selection.append(options![indexPath.row])
-            }
-        }
-        else if mode == .Single
-        {
-            for row in 0...tableView.numberOfRowsInSection(0) - 1
-            {
-                var currentCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0))
-                currentCell!.accessoryType = UITableViewCellAccessoryType.None
-                currentCell!.textLabel!.textColor = UIColor.blackColor()
-            }
-            cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
-            cell!.textLabel!.textColor = selectedColor
-            
-            selection = [options![indexPath.row]]
-        }
-        if delegate != nil
-        {
-            delegate!.userDidSelectChoice(self)
-        }
+		var newSelection = selection
+		// buffer changes to model
+		var selectedText = options![indexPath.row]
+		if mode == .Single
+		{
+			newSelection = [selectedText]
+		}
+		else
+		{
+			var index = find(selection, selectedText)
+			if index == nil // doesn't exist, "SELECTION"
+			{
+				newSelection.append(selectedText)
+			}
+			else			// exists, "DESELECTION"
+			{
+				newSelection.removeAtIndex(index!)
+			}
+		}
+		
+		// check with delegate
+		if delegate!.userCanUpdateChoice?(newSelection, sender: self) ?? true
+		{
+			selection = newSelection
+			
+			// if allowed, proceed with changes to UI
+			if mode == .Multiple
+			{
+				if cell!.accessoryType == .Checkmark
+				{
+					cell!.accessoryType = UITableViewCellAccessoryType.None
+					cell!.textLabel!.textColor = UIColor.blackColor()
+				}
+				else
+				{
+					cell!.accessoryType = .Checkmark
+					cell!.textLabel!.textColor = selectedColor
+				}
+			}
+			else if mode == .Single
+			{
+				for row in 0...tableView.numberOfRowsInSection(0) - 1
+				{
+					var currentCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0))
+					currentCell!.accessoryType = UITableViewCellAccessoryType.None
+					currentCell!.textLabel!.textColor = UIColor.blackColor()
+				}
+				cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+				cell!.textLabel!.textColor = selectedColor
+			}
+			
+			if delegate != nil
+			{
+				delegate!.userDidUpdateChoice(self)
+			}
+		}
+		
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
-    
+	
 
 }
