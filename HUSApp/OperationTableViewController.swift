@@ -80,10 +80,27 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                 return 0
         }
     }
-    
+	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	{
+		if( indexPath.section == 0 && indexPath.row == 2 )
+		{
+			/*if operation!.resectionsArray().count > 0
+			{
+				println(CGFloat(44 * Int(operation!.resectionsArray().count)))
+				return CGFloat(44 * Int(operation!.resectionsArray().count))
+			}
+			else
+			{ */
+				return 100
+			//}
+		}
+		return 44
+	}
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
+		println("in cellforrowatindexpath: \(indexPath)")
         let cell = tableView.dequeueReusableCellWithIdentifier("operationViewerCell", forIndexPath: indexPath) as UITableViewCell
         
         if (indexPath.section == 0){
@@ -99,7 +116,12 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                     break;
                 case 2:
                     cell.textLabel!.text = "Type of Resection"
-                    cell.detailTextLabel!.text = operation!.resectionString()
+					var text = "" /*
+					for obj in operation!.resectionsArray()
+					{
+						text += (obj as String) + "\n"
+					}
+                    cell.detailTextLabel!.text = text */
                     break;
                 case 3:
                     cell.textLabel!.text = "Duration of Operation"
@@ -130,8 +152,8 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
         
         if (indexPath.section == 1){
-            var complication = operation!.complicationsArray()[indexPath.row] as String
-            cell.textLabel!.text = complication
+            //var complication = operation!.complicationsArray()[indexPath.row] as String
+            cell.textLabel!.text = ""//complication
             cell.detailTextLabel!.text = " "
         }
         
@@ -169,8 +191,9 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String
     {
-        if (section == 1){
-            return "Complications During Hospital Stay"
+        if (section == 1)
+		{
+			return operation!.complicationsArray().count == 0 ? "No complications during hospital stay" : "Complications During Hospital Stay"
         }
         return ""
     }

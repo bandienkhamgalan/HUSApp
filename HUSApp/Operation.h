@@ -27,13 +27,17 @@
 @property (nonatomic, retain) Patient *patient;
 
 - (NSArray *)complicationsArray;
+- (NSMutableDictionary *)complicationsDictionary;
 + (NSMutableDictionary *)emptyComplications;
 - (void)setComplicationsValue:(NSDictionary *)complications;
 
-- (NSString *)resectionString;
-+ (NSArray *)possibleResections;
-- (void)setResectionValue:(NSString *)resection;
++ (NSArray *)trueKeys;
 
+- (NSArray *)resectionsArray;
+- (NSMutableDictionary *)resectionsDictionary;
++ (NSMutableDictionary *)emptyResections;
+- (void)setResectionsValue:(NSDictionary *)resections;
++ (int)dictionaryToBitField:(NSDictionary *)keys withSortedKeys:(NSArray *)sortedKeys;
 - (NSString *)approachString;
 + (NSArray *)possibleApproaches;
 - (void)setApproachValue:(NSString *)approach;

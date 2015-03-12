@@ -16,18 +16,6 @@ protocol OperationEditorViewControllerDelegate
 
 class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SelectorTableViewControllerDelegate
 {
-    
-    var operation: Operation?
-    var complications: NSMutableDictionary?
-
-    func userPressedCancel()
-    {
-        if delegate != nil
-        {
-            delegate!.userDidPressCancel(self)
-        }
-    }
-    
     // views
     
     var scrollView: UIScrollView?
@@ -49,8 +37,13 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     var doneButton: UIBarButtonItem?
     var nextButton: UIBarButtonItem?
     
-    // model
-    var existingOperation:Bool = false
+	// model
+	var operation: Operation?
+	var approach: NSString?
+	var admittedToICU: Bool?
+	var complications: NSMutableDictionary?
+	var resections: NSMutableDictionary?
+    var existingOperation = false
     var currentPage: Int = 0
     var screensCompleted: [Bool] = []
     var completion: Float
@@ -83,12 +76,19 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             return true
         }
     }
-
+	
     // miscellaneous
     var delegate: OperationEditorViewControllerDelegate?
-    
     let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
 
+	func userPressedCancel()
+	{
+		if delegate != nil
+		{
+			delegate!.userDidPressCancel(self)
+		}
+	}
+	
     func userDidSelectChoice(sender: SelectorTableViewController)
     {
         var selections = sender.selection
@@ -96,17 +96,19 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         {
             case screenTwo!:
                 // approach
-                operation!.setApproachValue(selections[0])
-                println(operation!.approachString())
+				approach = selections[0]
                 screensCompleted[1] = true
                 userPressedNext()
                 break
             case screenThree!:
                 // resection
-                operation!.setResectionValue(selections[0])
-                println(operation!.resectionString())
+				for obj in resections!.allKeys
+				{
+					var key = obj as String
+					resections!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
+				}
+                operation!.setResectionsValue(resections)
                 screensCompleted[2] = true
-                userPressedNext()
                 break
             case screenSeven!:
                 // complications
@@ -115,20 +117,12 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                     var key = obj as String
                     complications!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
                 }
-                operation!.setComplicationsValue(complications!)
                 screensCompleted[6] = true
                 break
             case screenEight!:
                 // admission to ICU
                 var answer = selections[0] as String
-                if answer == "Yes"
-                {
-                    operation!.admittedToICU = NSNumber(bool: true)
-                }
-                else
-                {
-                    operation!.admittedToICU = NSNumber(bool: false)
-                }
+                admittedToICU = answer == "Yes"
                 screensCompleted[7] = true
                 userPressedNext()
             default:
@@ -142,17 +136,25 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         {
             progressView?.setProgress(1.0, animated: true)
             operation!.date = screenOne?.date
+			operation!.setApproachValue(approach)
+			if screenThree != nil {
+				operation!.setResectionsValue(resections!)
+			}
             if screenFour != nil {
                 operation!.duration = Int(screenFour!.duration! / 60)
             }
             if screenFive != nil {
                 operation!.bloodLoss = screenFive!.value
-
             }
             if screenSix != nil {
                 operation!.durationOfStay = screenSix!.value
-                
             }
+			if screenSeven != nil {
+				operation!.setComplicationsValue(complications!)
+			}
+			if screenEight != nil {
+				operation!.admittedToICU = NSNumber(bool:admittedToICU!)
+			}
             if screenNine != nil {
                 operation!.followUpDate = screenNine!.date
                 
@@ -161,8 +163,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 operation!.alive = !(screenTen!.death)
                 operation!.deathDate = screenTen!.date
             }
+			println(operation)
             delegate!.userDidPressDone(self)
         }
+
     }
     
     func setupScrollView() -> UIScrollView
@@ -284,12 +288,12 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 break
             case 2:
                 screenThree!.prompt = "Type of Resection"
-                var resections = Operation.possibleResections() as [String]
-                screenThree!.options = Operation.possibleResections() as? [String]
-                screenThree!.mode = .Single
+                resections = operation!.resectionsDictionary()
+                screenThree!.options = resections!.allKeys as [String]
+                screenThree!.mode = .Multiple
                 if operation!.resection != nil
                 {
-                    screenThree!.selection = [operation!.resectionString()]
+                    screenThree!.selection = operation!.resectionsArray() as [String]
                 }
                 screenThree!.delegate = self
                 break
