@@ -315,7 +315,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 5:
                 screenSix!.prompt = "Total Time in Hospital / days"
                 screenSix!.min = 0
-                screenSix!.max = 30
+                screenSix!.max = 365
                 screenSix!.interval = 1
                 screenSix!.initial = 7
                 if operation!.durationOfStay != nil

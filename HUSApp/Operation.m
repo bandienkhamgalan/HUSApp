@@ -99,7 +99,7 @@
 
 + (NSArray *)possibleResections
 {
-    return [NSArray arrayWithObjects:@"Lobectomy", @"Segmentectomy", @"Pneumonectomy", @"Broncho- or Vasculo-plastic", @"Nonanatomical resection", nil];
+    return [NSArray arrayWithObjects:@"Lobectomy", @"Segmentectomy", @"Pneumonectomy", @"Broncho- or Vasculo-plastic", @"Nonanatomical Resection", nil];
 }
 
 - (void)setResectionValue:(NSString *)resection
