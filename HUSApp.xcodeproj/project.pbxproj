@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DED364A1AB0ED3D00F10E76 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36491AB0ED3C00F10E76 /* Dropbox.framework */; };
+		0DED364C1AB0ED6B00F10E76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED364B1AB0ED6B00F10E76 /* CFNetwork.framework */; };
+		0DED364E1AB0ED7600F10E76 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED364D1AB0ED7600F10E76 /* Security.framework */; };
+		0DED36501AB0ED8100F10E76 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED364F1AB0ED8100F10E76 /* SystemConfiguration.framework */; };
+		0DED36521AB0ED8A00F10E76 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36511AB0ED8A00F10E76 /* QuartzCore.framework */; };
+		0DED36541AB0ED9800F10E76 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36531AB0ED9800F10E76 /* libc++.dylib */; };
+		0DED36561AB0EDA400F10E76 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36551AB0EDA400F10E76 /* libz.dylib */; };
 		343736E01AA6813700013C79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343736DF1AA6813700013C79 /* Main.storyboard */; };
 		344F95CB1AA37FCB0015B806 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CA1AA37FCB0015B806 /* AppDelegate.swift */; };
 		344F95D01AA37FCB0015B806 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CF1AA37FCB0015B806 /* ViewController.swift */; };
@@ -39,6 +46,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DED36491AB0ED3C00F10E76 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dropbox.framework; path = HUSApp/Dropbox.framework; sourceTree = "<group>"; };
+		0DED364B1AB0ED6B00F10E76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		0DED364D1AB0ED7600F10E76 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		0DED364F1AB0ED8100F10E76 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0DED36511AB0ED8A00F10E76 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0DED36531AB0ED9800F10E76 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		0DED36551AB0EDA400F10E76 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		343736DF1AA6813700013C79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		344F95C51AA37FCB0015B806 /* HUSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HUSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		344F95C91AA37FCB0015B806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +86,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DED36561AB0EDA400F10E76 /* libz.dylib in Frameworks */,
+				0DED36541AB0ED9800F10E76 /* libc++.dylib in Frameworks */,
+				0DED36521AB0ED8A00F10E76 /* QuartzCore.framework in Frameworks */,
+				0DED36501AB0ED8100F10E76 /* SystemConfiguration.framework in Frameworks */,
+				0DED364E1AB0ED7600F10E76 /* Security.framework in Frameworks */,
+				0DED364C1AB0ED6B00F10E76 /* CFNetwork.framework in Frameworks */,
+				0DED364A1AB0ED3D00F10E76 /* Dropbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +109,13 @@
 		344F95BC1AA37FCB0015B806 = {
 			isa = PBXGroup;
 			children = (
+				0DED36551AB0EDA400F10E76 /* libz.dylib */,
+				0DED36531AB0ED9800F10E76 /* libc++.dylib */,
+				0DED36491AB0ED3C00F10E76 /* Dropbox.framework */,
+				0DED36511AB0ED8A00F10E76 /* QuartzCore.framework */,
+				0DED364F1AB0ED8100F10E76 /* SystemConfiguration.framework */,
+				0DED364D1AB0ED7600F10E76 /* Security.framework */,
+				0DED364B1AB0ED6B00F10E76 /* CFNetwork.framework */,
 				344F95C71AA37FCB0015B806 /* HUSApp */,
 				344F95E01AA37FCB0015B806 /* HUSAppTests */,
 				344F95C61AA37FCB0015B806 /* Products */,
@@ -404,6 +432,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HUSApp",
+				);
 				INFOPLIST_FILE = HUSApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -417,6 +449,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HUSApp",
+				);
 				INFOPLIST_FILE = HUSApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

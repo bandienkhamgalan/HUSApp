@@ -11,6 +11,10 @@ import CoreData
 
 class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, UISearchResultsUpdating {
     
+    
+    var account = DBAccountManager.sharedManager()?.linkedAccount
+    var dbFileSystem = DBFilesystem.sharedFilesystem()
+    
 	@IBAction func userDidPressSettings(sender: UIBarButtonItem)
 	{
 		let storyboard = UIStoryboard(name: "Main", bundle:nil)
@@ -47,8 +51,16 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     func userDidPressDone(patientEditor: PatientEditorViewController)
     {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        account = DBAccountManager.sharedManager().linkedAccount
+        DBFilesystem.setSharedFilesystem(DBFilesystem(account: account))
+        dbFileSystem = DBFilesystem.sharedFilesystem()
+        var name:String? = patientEditor.patient?.name
+        var path:String = "/" + name!
+        var dbpath:DBPath = DBPath.root().childPath(path)
+        dbFileSystem.createFolder(dbpath, error: nil)
+ 
         managedObjectContext!.save(nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
@@ -222,6 +234,17 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         {
             // Delete the row from the data source
             let patient = self.results!.objectAtIndexPath(indexPath) as Patient
+            
+            if (dbFileSystem == nil){
+                account = DBAccountManager.sharedManager().linkedAccount
+                DBFilesystem.setSharedFilesystem(DBFilesystem(account: account))
+                dbFileSystem = DBFilesystem.sharedFilesystem()
+            }
+            var name:String? = patient.name
+            var path:String = "/" + name!
+            var dbpath:DBPath = DBPath.root().childPath(path)
+            dbFileSystem.deletePath(dbpath, error: nil)
+            
             managedObjectContext!.deleteObject(patient)
             managedObjectContext!.save(nil)
         }
