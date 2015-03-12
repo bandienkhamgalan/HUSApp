@@ -66,8 +66,17 @@
 	self.resection = [NSNumber numberWithInt:[Operation dictionaryToBitField:resections withSortedKeys:[[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]]]];
 }
 
++ (NSMutableDictionary *)bitFieldToDictionary:(int)field withSortedKeys:(NSArray *)sortedKeys
+{
+	NSMutableDictionary *toReturn = [NSMutableDictionary dictionary];
+	for(int i = 0 ; i < sortedKeys.count ; i++)
+		[toReturn setObject:[NSNumber numberWithBool:field & 1 << i] forKey:[sortedKeys objectAtIndex:i]];
+	return toReturn;
+}
+
 - (NSMutableDictionary *)resectionsDictionary
 {
+	
 	NSArray *sortedPossibleResections = [[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]];
 	NSMutableDictionary *toReturn = [NSMutableDictionary dictionary];
 	int resections = self.resection == nil ? 0 : self.resection.intValue;
