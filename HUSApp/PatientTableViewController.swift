@@ -77,13 +77,44 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         if dbFileSystem.fileInfoForPath(dbpath, error: nil) != nil {
             dbFileSystem.deletePath(dbpath, error: nil)
         }
+        
+        var header = "<?xml version=\"1.0\"?>\n<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:o=\"urn:schemas-microsoft-com:office:office\"\nxmlns:x=\"urn:schemas-microsoft-com:office:excel\"\nxmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:html=\"http://www.w3.org/TR/REC-html40\">\n<Worksheet ss:Name=\"Sheet1\">\n<Table ss:ExpandedColumnCount=\""
+        
+        var columncount = "\"ss:ExpandedRowCount=\""
+        var rowcount = "\" x:FullColumns=\"1\"x:FullRows=\"1\">\n"
+        
+        var footer = "</Table>\n</Worksheet>\n</Workbook>"
+        
+        var xlsstring = header + "2" + columncount + "3" + rowcount
+        xlsstring += createRow("Name", value:patient.name)
+        xlsstring += createRow("Patient ID", value: patient.patientID)
+        xlsstring += createRow("Age", value: patient.ageString())
+        
+        // var dictionary = operation.serialize()
+        
+        xlsstring += footer
+        
         if create {
             var newFile = dbFileSystem.createFile(dbpath, error: nil)
             if newFile != nil {
-                newFile.writeString(patient.name, error: nil)
+                newFile.writeString(xlsstring, error: nil)
                 newFile.close()
             }
         }
+    }
+    
+    func createRow(label:String, value:String) -> String{
+        
+        var rowStart = "<Row>\n"
+        var rowEnde = "\n</Row>\n"
+        
+        var stringStart = "<Cell><Data ss:Type=\"String\">"
+        var stringEnde = "</Data></Cell>"
+        
+        var numberStart = "<Cell><Data ss:Type=\"String\">"
+        var numberEnde = "</Data></Cell>"
+        
+        return rowStart + numberStart + label + numberEnde + stringStart + value + stringEnde + rowEnde
     }
     
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
