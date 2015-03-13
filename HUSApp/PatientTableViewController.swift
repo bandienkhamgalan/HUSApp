@@ -14,6 +14,9 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
     
+    var dbFileSystem = DBFilesystem.sharedFilesystem()
+    var oldPatientName: String?
+    
     func userDidPressCancel(patientEditor: PatientEditorViewController)
     {
         self.tableView.reloadData()
@@ -24,6 +27,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
+        updateFolderinDropbox(oldPatientName!, newPatientName: patient!.name)
         self.title = patient!.name
         self.dismissViewControllerAnimated(true, completion: nil)
         
@@ -40,8 +44,46 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         patient!.addOperations(NSSet(object: operationEditor.operation!))
         managedObjectContext!.save(nil)
+        exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // Move to new folder and delete old folder if Patient's name change
+    func updateFolderinDropbox(oldPatientName:String, newPatientName:String){
+        if oldPatientName != newPatientName {
+            if (dbFileSystem == nil){
+                DBFilesystem.setSharedFilesystem(DBFilesystem(account: DBAccountManager.sharedManager().linkedAccount))
+                dbFileSystem = DBFilesystem.sharedFilesystem()
+            }
+            var oldPath:DBPath = DBPath.root().childPath("/" + oldPatientName)
+            var newPath:DBPath = DBPath.root().childPath("/" + newPatientName)
+            dbFileSystem.movePath(oldPath, toPath: newPath, error: nil)
+            dbFileSystem.deletePath(oldPath, error: nil)
+        }
+    
+    }
+    
+    // Create or Delete .xls files
+    func exportToDropbox(operation:Operation, patient:Patient, create:Bool){
+        if (dbFileSystem == nil){
+            DBFilesystem.setSharedFilesystem(DBFilesystem(account: DBAccountManager.sharedManager().linkedAccount))
+            dbFileSystem = DBFilesystem.sharedFilesystem()
+        }
+        var name:String? = patient.name
+        var date:String? = operation.dateString()
+        var path:String =  "/" + name! + "/" + date! + ".xls"
+        var dbpath:DBPath = DBPath.root().childPath(path)
+        if dbFileSystem.fileInfoForPath(dbpath, error: nil) != nil {
+            dbFileSystem.deletePath(dbpath, error: nil)
+        }
+        if create {
+            var newFile = dbFileSystem.createFile(dbpath, error: nil)
+            if newFile != nil {
+                newFile.writeString(patient.name, error: nil)
+                newFile.close()
+            }
+        }
     }
     
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
@@ -92,6 +134,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         if indexPath.section == 0
         {
+            oldPatientName = patient!.name
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
             let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
@@ -245,6 +288,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             
             let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
             patient!.removeOperations(NSSet(object: operation!))
+            exportToDropbox(operation!, patient: patient!, create:false)
             managedObjectContext!.save(nil)
         }
     }

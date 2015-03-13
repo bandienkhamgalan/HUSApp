@@ -53,8 +53,10 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     func userDidPressDone(patientEditor: PatientEditorViewController)
     {
         account = DBAccountManager.sharedManager().linkedAccount
-        DBFilesystem.setSharedFilesystem(DBFilesystem(account: account))
-        dbFileSystem = DBFilesystem.sharedFilesystem()
+        if (dbFileSystem == nil){
+            DBFilesystem.setSharedFilesystem(DBFilesystem(account: DBAccountManager.sharedManager().linkedAccount))
+            dbFileSystem = DBFilesystem.sharedFilesystem()
+        }
         var name:String? = patientEditor.patient?.name
         var path:String = "/" + name!
         var dbpath:DBPath = DBPath.root().childPath(path)
