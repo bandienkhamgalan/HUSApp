@@ -24,6 +24,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
+        self.title = patient!.name
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }

@@ -60,6 +60,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         dbFileSystem.createFolder(dbpath, error: nil)
  
         managedObjectContext!.save(nil)
+        self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
