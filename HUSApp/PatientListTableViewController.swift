@@ -83,27 +83,41 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
-        
+		println("in updatesearchresultsforsearchcontroller")
+		var fetchRequest = NSFetchRequest(entityName:"Patient")
+		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector:"caseInsensitiveCompare:")]
+		if countElements(searchController.searchBar.text) > 0
+		{
+			fetchRequest.predicate = NSPredicate(format: "name CONTAINS[c] %@", searchController.searchBar.text)
+		}
+		results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath:"firstLetter", cacheName:nil)
+		results!.performFetch(nil)
+		tableView!.reloadData()
     }
 
     required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
-        searchController = UISearchController(searchResultsController: self)
-        searchController!.searchResultsUpdater = self
+		self.searchController = UISearchController(searchResultsController: nil)
+		self.searchController!.searchResultsUpdater = self
+		self.searchController!.hidesNavigationBarDuringPresentation = false
+		self.searchController!.dimsBackgroundDuringPresentation = false
+		self.searchController!.definesPresentationContext = false
+		self.searchController!.searchBar.sizeToFit()
     }
 
     override func viewDidLoad()
     {
         self.results!.performFetch(nil);
-        println("fetched \(self.results!.fetchedObjects!.count) objects")
         
         for object in self.results!.fetchedObjects!
         {
             var patient = object as Patient
             println(patient)
         }
-        
+		
+		self.tableView.tableHeaderView = self.searchController!.searchBar
+        self.searchController!.searchBar.tintColor = themeColour
         super.viewDidLoad()
     }
 
@@ -117,14 +131,11 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        if self.results == nil
-        {
-            return 0
-        }
-        println("\(self.results!.sections!.count) sections in table view");
-        return self.results!.sections!.count;
+		if self.results == nil
+		{
+			return 0
+		}
+		return self.results!.sections!.count;
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
@@ -138,15 +149,13 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        if self.results == nil
-        {
-            return 0
-        }
-        let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
-        return sectionInfo.numberOfObjects;
+	{
+		if self.results == nil
+		{
+			return 0
+		}
+		let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
+		return sectionInfo.numberOfObjects;
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
@@ -167,12 +176,29 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!
     {
-        return self.results!.sectionIndexTitles
+		if self.tableView.contentSize.height > self.tableView.bounds.size.height * 1.5
+		{
+			var toReturn = self.results!.sectionIndexTitles
+			toReturn.insert(UITableViewIndexSearch, atIndex: 0)
+			return toReturn
+		}
+		else
+		{
+			return nil
+		}
     }
     
     override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int
     {
-        return self.results!.sectionForSectionIndexTitle(title, atIndex: index)
+		if index == 0
+		{
+			tableView.contentOffset = CGPointMake(0, -tableView.contentInset.top)
+			return NSNotFound
+		}
+		else
+		{
+			return self.results!.sectionForSectionIndexTitle(title, atIndex: index - 1)
+		}
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?

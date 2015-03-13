@@ -80,7 +80,15 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                 return 0
         }
     }
-    
+	
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	{
+		if indexPath.section == 0 && indexPath.row == 2 && operation!.resectionsArray().count > 0
+		{
+			return CGFloat(44 + 20 * (Int(operation!.resectionsArray().count - 1)))
+		}
+		return 44
+	}
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
@@ -95,11 +103,21 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                     break;
                 case 1:
                     cell.textLabel!.text = "Type of Operation"
+					println(operation!.approachString())
                     cell.detailTextLabel!.text = operation!.approachString()
                     break;
                 case 2:
                     cell.textLabel!.text = "Type of Resection"
-                    cell.detailTextLabel!.text = operation!.resectionString()
+					var text = ""
+					cell.detailTextLabel!.numberOfLines = 0
+					cell.detailTextLabel!.lineBreakMode = NSLineBreakMode.ByWordWrapping
+					for obj in operation!.resectionsArray()
+					{
+						text += (obj as String) + "\n"
+					}
+					text = (text as NSString).substringToIndex(max(0, countElements(text) - 1))
+					cell.detailTextLabel!.text = text
+					println(text)
                     break;
                 case 3:
                     cell.textLabel!.text = "Duration of Operation"
@@ -169,10 +187,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String
     {
-        if (section == 1){
-            return "Complications During Hospital Stay"
-        }
-        return ""
+		return section == 1 && operation!.complicationsArray().count > 0 ? "Complications During Hospital Stay" : ""
     }
 
 

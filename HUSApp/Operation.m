@@ -25,6 +25,11 @@
 @dynamic patient;
 @dynamic durationOfStay;
 
+-(NSDictionary *)serialize
+{
+	return [NSDictionary dictionaryWithObjectsAndKeys:@"date", self.date, @"approach", self.approachString, @"resection", self.resectionsArray, @"duration", self.duration, @"bloodLoss", self.bloodLoss, @"admittedToICU", self.admittedToICU, @"durationOfStay", self.durationOfStay, @"followUpDate", self.followUpDate, @"complications", self.complicationsArray, @"death", [NSNumber numberWithBool:!self.alive.boolValue], @"deathDate", self.deathDate, nil];
+}
+
 - (NSString *)durationString
 {
     int minutes = self.duration.intValue;
@@ -36,15 +41,11 @@
         return [NSString stringWithFormat:@"%d minutes", minutes];
 }
 
-- (NSArray *)complicationsArray
+- (NSMutableDictionary *)complicationsDictionary
 {
     NSArray *sortedComplicationKeys = [[Operation emptyComplications].allKeys sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]];
-    NSMutableArray *toReturn = [NSMutableArray array];
-    int complications = self.complications.intValue;
-    for(int i = 0 ; i < sortedComplicationKeys.count ; i++)
-        if( complications & 1 << i )
-            [toReturn addObject:[sortedComplicationKeys objectAtIndex:i]];
-    return toReturn;
+	int complications = self.complications == nil ? 0 : self.complications.intValue;
+	return [Operation bitFieldToDictionary:complications withSortedKeys:sortedComplicationKeys];
 }
 
 + (NSMutableDictionary *)emptyComplications
@@ -54,57 +55,86 @@
 
 - (void)setComplicationsValue:(NSDictionary *)complications
 {
-    NSArray *sortedComplicationKeys = [[Operation emptyComplications].allKeys sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]];
-    int toSet = 0;
-    for(int i = 0 ; i < sortedComplicationKeys.count ; i++)
-    {
-        if( [[complications objectForKey:[sortedComplicationKeys objectAtIndex:i]] isEqualToNumber:[NSNumber numberWithBool:YES]] )
-            toSet |= 1 << i;
-        else
-            toSet &= ~(1 << i);
-    }
-    self.complications = [NSNumber numberWithInt:toSet];
+    self.complications = [NSNumber numberWithInt:[Operation dictionaryToBitField:complications withSortedKeys:[[Operation emptyComplications].allKeys sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]]]];
+}
+
++ (NSMutableDictionary *)emptyResections
+{
+	return [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false], @"Lobectomy", [NSNumber numberWithBool:false], @"Segmentectomy", [NSNumber numberWithBool:false], @"Pneumonectomy", [NSNumber numberWithBool:false], @"Broncho- or Vasculo-plastic", [NSNumber numberWithBool:false], @"Nonanatomical resection", nil];
+}
+
+- (void)setResectionsValue:(NSDictionary *)resections
+{
+	self.resection = [NSNumber numberWithInt:[Operation dictionaryToBitField:resections withSortedKeys:[[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]]]];
+}
+
++ (NSMutableDictionary *)bitFieldToDictionary:(int)field withSortedKeys:(NSArray *)sortedKeys
+{
+	NSMutableDictionary *toReturn = [NSMutableDictionary dictionary];
+	for(int i = 0 ; i < sortedKeys.count ; i++)
+		[toReturn setObject:[NSNumber numberWithBool:field & 1 << i] forKey:[sortedKeys objectAtIndex:i]];
+	return toReturn;
+}
+
+- (NSMutableDictionary *)resectionsDictionary
+{
+	NSArray *sortedPossibleResections = [[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]];
+	int resections = self.resection == nil ? 0 : self.resection.intValue;
+	return [Operation bitFieldToDictionary:resections withSortedKeys:sortedPossibleResections];
+}
+
++ (int)dictionaryToBitField:(NSDictionary *)dictionary withSortedKeys:(NSArray *)sortedKeys
+{
+	int toSet = 0;
+	for(int index = 0 ; index < sortedKeys.count ; index++)
+		if([[dictionary objectForKey:[sortedKeys objectAtIndex:index]] isEqualToNumber:[NSNumber numberWithBool:YES]])
+			toSet |= 1 << index;
+	return toSet;
+}
+
+- (NSArray *)resectionsArray
+{
+	return [Operation trueKeys:self.resectionsDictionary];
+}
+
++ (NSArray *)trueKeys:(NSDictionary *)dictionary
+{
+	NSMutableArray *toReturn = [NSMutableArray array];
+	for( NSString * key in dictionary )
+		if( [[dictionary objectForKey:key] isEqualToNumber:[NSNumber numberWithBool:true]] )
+			[toReturn addObject:key];
+	return toReturn;
+}
+
+- (NSArray *)complicationsArray
+{
+	return [Operation trueKeys:self.complicationsDictionary];
 }
 
 -(NSString *)simpleDateString:(NSDate *)date
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    return [dateFormatter stringFromDate:date];
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateStyle:NSDateFormatterLongStyle];
+	[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+	return [dateFormatter stringFromDate:date];
 }
 
 - (NSString *)dateString
 {
-    return [self simpleDateString:self.date];
+	return [self simpleDateString:self.date];
 }
 
 - (NSString *)followUpDateString
 {
-    return [self simpleDateString:self.followUpDate];
+	return [self simpleDateString:self.followUpDate];
 }
 
 - (NSString *)deathDateString
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    return [dateFormatter stringFromDate:self.deathDate];
-}
-
-- (NSString *)resectionString
-{
-    return self.resection == nil ? nil : [[Operation possibleResections] objectAtIndex:self.resection.integerValue];
-}
-
-+ (NSArray *)possibleResections
-{
-    return [NSArray arrayWithObjects:@"Lobectomy", @"Segmentectomy", @"Pneumonectomy", @"Broncho- or Vasculo-plastic", @"Nonanatomical resection", nil];
-}
-
-- (void)setResectionValue:(NSString *)resection
-{
-    self.resection = [NSNumber numberWithInteger:[[Operation possibleResections] indexOfObject:resection]];
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateStyle:NSDateFormatterLongStyle];
+	[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+	return [dateFormatter stringFromDate:self.deathDate];
 }
 
 - (NSString *)approachString
@@ -119,7 +149,10 @@
 
 - (void)setApproachValue:(NSString *)approach
 {
-    self.approach = [NSNumber numberWithInteger:[[Operation possibleApproaches] indexOfObject:approach]];
+	if([[Operation possibleApproaches] containsObject:approach])
+		self.approach = [NSNumber numberWithInteger:[[Operation possibleApproaches] indexOfObject:approach]];
+	else
+		self.approach = nil;
 }
 
 @end
