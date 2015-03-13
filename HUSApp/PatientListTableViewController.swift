@@ -14,6 +14,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 	@IBAction func userDidPressSettings(sender: UIBarButtonItem)
 	{
 		let storyboard = UIStoryboard(name: "Main", bundle:nil)
+		self.searchController!.active = false
 		var settingsTVC = storyboard.instantiateViewControllerWithIdentifier("SettingsTable") as SettingsTableViewController
 		var settingsNVC = UINavigationController(rootViewController: settingsTVC)
 		self.presentViewController(settingsNVC, animated: true, completion: nil)
@@ -51,6 +52,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         switch(destination.restorationIdentifier!)
         {
             case "PatientEditor":
+				self.searchController!.active = false
                 let destinationNVC = destination as UINavigationController
                 let patientEditor = destinationNVC.visibleViewController as PatientEditorViewController
                 let entityDescript = NSEntityDescription.entityForName("Patient", inManagedObjectContext: managedObjectContext!)!
@@ -65,7 +67,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
-		println("in updatesearchresultsforsearchcontroller")
+		println("in updatesearchresultsforsearchcontroller: \(searchController.searchBar.text)")
 		var fetchRequest = NSFetchRequest(entityName:"Patient")
 		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector:"caseInsensitiveCompare:")]
 		if countElements(searchController.searchBar.text) > 0
@@ -84,7 +86,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 		self.searchController!.searchResultsUpdater = self
 		self.searchController!.hidesNavigationBarDuringPresentation = false
 		self.searchController!.dimsBackgroundDuringPresentation = false
-		self.searchController!.definesPresentationContext = false
 		self.searchController!.searchBar.sizeToFit()
     }
 
@@ -123,6 +124,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
+		self.searchController!.active = false
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let patientTVC = storyboard.instantiateViewControllerWithIdentifier("PatientViewer") as PatientTableViewController
         patientTVC.setup(managedObjectContext: managedObjectContext!, patient: currentPatient)
