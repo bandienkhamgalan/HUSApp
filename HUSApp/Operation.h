@@ -46,6 +46,7 @@
 - (NSString *)durationString;
 - (NSString *)followUpDateString;
 - (NSString *)deathDateString;
+- (NSDictionary *)serialize;
 
 
 @end

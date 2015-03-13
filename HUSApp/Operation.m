@@ -25,6 +25,11 @@
 @dynamic patient;
 @dynamic durationOfStay;
 
+-(NSDictionary *)serialize
+{
+	return [NSDictionary dictionaryWithObjectsAndKeys:@"date", self.date, @"approach", self.approachString, @"resection", self.resectionsArray, @"duration", self.duration, @"bloodLoss", self.bloodLoss, @"admittedToICU", self.admittedToICU, @"durationOfStay", self.durationOfStay, @"followUpDate", self.followUpDate, @"complications", self.complicationsArray, @"death", [NSNumber numberWithBool:!self.alive.boolValue], @"deathDate", self.deathDate, nil];
+}
+
 - (NSString *)durationString
 {
     int minutes = self.duration.intValue;

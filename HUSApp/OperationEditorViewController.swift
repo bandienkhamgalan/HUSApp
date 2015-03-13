@@ -14,6 +14,8 @@ protocol OperationEditorViewControllerDelegate
     func userDidPressDone(operationEditor: OperationEditorViewController)
 }
 
+let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+
 class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SelectorTableViewControllerDelegate
 {
     // views
@@ -79,7 +81,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
 	
     // miscellaneous
     var delegate: OperationEditorViewControllerDelegate?
-    let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+
 
 	func userPressedCancel()
 	{
