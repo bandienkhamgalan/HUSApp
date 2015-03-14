@@ -287,7 +287,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 1:
                 screenTwo!.prompt = "Type of Approach"
 				approach = operation!.approachString()
-                screenTwo!.options = Operation.possibleApproaches() as [String]
+                screenTwo!.options = Operation.possibleApproaches() as [String]!
                 if operation!.approachString() != nil
                 {
                     screenTwo!.selection = [operation!.approachString()]

@@ -30,8 +30,7 @@
 - (NSMutableDictionary *)complicationsDictionary;
 + (NSMutableDictionary *)emptyComplications;
 - (void)setComplicationsValue:(NSDictionary *)complications;
-
-+ (NSArray *)trueKeys;
++ (NSArray *)trueKeys:(NSDictionary *)dictionary;
 + (NSMutableDictionary *)bitFieldToDictionary:(int)field withSortedKeys:(NSArray *)sortedKeys;
 - (NSArray *)resectionsArray;
 - (NSMutableDictionary *)resectionsDictionary;
