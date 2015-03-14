@@ -14,9 +14,11 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     var patient: Patient?
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
+    var dbFileSystem = DBFilesystem.sharedFilesystem()
     
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
+        Dropbox().exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -25,9 +27,11 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     {
         self.operation = operationEditor.operation!
         managedObjectContext!.save(nil)
+        Dropbox().exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
@@ -42,6 +46,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userPressedEdit()
     {
+        Dropbox().deleteFile(patient!.name, fileName: operation!.dateString())
         let operationEditor = OperationEditorViewController()
         operationEditor.operation = operation
         operationEditor.delegate = self

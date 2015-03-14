@@ -14,16 +14,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        /*let entityDescript = NSEntityDescription.entityForName("Patient", inManagedObjectContext: managedObjectContext!)!
-        let newPatient = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: managedObjectContext!) as Patient
-        newPatient.name = "Bandi Enkh-Amgalan"; */
+        
+        // Dropbox
+        let accountManager = DBAccountManager(appKey: "g3x0ahovcbkomft", secret: "xrk9e61hklk83jd")
+        DBAccountManager.setSharedManager(accountManager)
+        
         let rootViewController = window!.rootViewController! as UINavigationController
         let patientListViewController = rootViewController.visibleViewController as PatientListTableViewController
         patientListViewController.managedObjectContext = managedObjectContext;
+        
         return true
+    }
+    
+    // Dropbox
+    func application(application: UIApplication, openURL url: NSURL,
+        sourceApplication: String, annotation: AnyObject?) -> Bool {
+        
+            let account = DBAccountManager.sharedManager().handleOpenURL(url)
+            if (account != nil) {
+                println("App linked to Dropbox successfully!")
+                return true
+            }
+            return false
     }
 
     func applicationWillResignActive(application: UIApplication) {

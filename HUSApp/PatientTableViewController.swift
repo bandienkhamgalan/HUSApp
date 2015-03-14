@@ -14,6 +14,9 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
     
+    var dbFileSystem = DBFilesystem.sharedFilesystem()
+    var oldPatientName: String?
+    
     func userDidPressCancel(patientEditor: PatientEditorViewController)
     {
         self.tableView.reloadData()
@@ -24,6 +27,8 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
+        Dropbox().updateFolderinDropbox(oldPatientName!, newPatientName: patient!.name)
+        self.title = patient!.name
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
@@ -39,6 +44,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         patient!.addOperations(NSSet(object: operationEditor.operation!))
         managedObjectContext!.save(nil)
+        Dropbox().exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -91,6 +97,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         if indexPath.section == 0
         {
+            oldPatientName = patient!.name
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
             let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
@@ -165,6 +172,14 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         return indexPath.section == 0 ? 67 : 40
     }
+    
+   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+   {
+        if (indexPath.section == 0){
+            return false
+        }
+        return true
+   }
 
     
     func controllerWillChangeContent(controller: NSFetchedResultsController)
@@ -241,9 +256,9 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         if editingStyle == .Delete
         {
             // Delete the row from the data source
-            
             let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
             patient!.removeOperations(NSSet(object: operation!))
+            Dropbox().exportToDropbox(operation!, patient: patient!, create:false)
             managedObjectContext!.save(nil)
         }
     }

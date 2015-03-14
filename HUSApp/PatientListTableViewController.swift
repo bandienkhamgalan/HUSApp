@@ -9,16 +9,27 @@
 import UIKit
 import CoreData
 
-class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, UISearchResultsUpdating {
+class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, SettingsViewControllerDelegate, UISearchResultsUpdating {
+    
+    
+    var account = DBAccountManager.sharedManager()?.linkedAccount
+    var dbFileSystem = DBFilesystem.sharedFilesystem()
     
 	@IBAction func userDidPressSettings(sender: UIBarButtonItem)
 	{
 		let storyboard = UIStoryboard(name: "Main", bundle:nil)
 		self.searchController!.active = false
 		var settingsTVC = storyboard.instantiateViewControllerWithIdentifier("SettingsTable") as SettingsTableViewController
+        settingsTVC.delegate = self
 		var settingsNVC = UINavigationController(rootViewController: settingsTVC)
 		self.presentViewController(settingsNVC, animated: true, completion: nil)
 	}
+    
+    func userDidPressDone(settings: SettingsTableViewController)
+    {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+	
     var searchController: UISearchController?
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
@@ -42,8 +53,11 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     func userDidPressDone(patientEditor: PatientEditorViewController)
     {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        var name:String? = patientEditor.patient?.name
+        Dropbox().createFolder(name!)
         managedObjectContext!.save(nil)
+        self.tableView.reloadData()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
@@ -244,6 +258,8 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         {
             // Delete the row from the data source
             let patient = self.results!.objectAtIndexPath(indexPath) as Patient
+            var name:String? = patient.name
+            Dropbox().deleteFolder(name!)
             managedObjectContext!.deleteObject(patient)
             managedObjectContext!.save(nil)
         }
