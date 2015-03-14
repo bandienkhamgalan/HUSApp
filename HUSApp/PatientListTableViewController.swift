@@ -52,16 +52,8 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     func userDidPressDone(patientEditor: PatientEditorViewController)
     {
-        account = DBAccountManager.sharedManager().linkedAccount
-        if (dbFileSystem == nil){
-            DBFilesystem.setSharedFilesystem(DBFilesystem(account: DBAccountManager.sharedManager().linkedAccount))
-            dbFileSystem = DBFilesystem.sharedFilesystem()
-        }
         var name:String? = patientEditor.patient?.name
-        var path:String = "/" + name!
-        var dbpath:DBPath = DBPath.root().childPath(path)
-        dbFileSystem.createFolder(dbpath, error: nil)
- 
+        Dropbox().createFolder(name!)
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -265,17 +257,8 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         {
             // Delete the row from the data source
             let patient = self.results!.objectAtIndexPath(indexPath) as Patient
-            
-            if (dbFileSystem == nil){
-                account = DBAccountManager.sharedManager().linkedAccount
-                DBFilesystem.setSharedFilesystem(DBFilesystem(account: account))
-                dbFileSystem = DBFilesystem.sharedFilesystem()
-            }
             var name:String? = patient.name
-            var path:String = "/" + name!
-            var dbpath:DBPath = DBPath.root().childPath(path)
-            dbFileSystem.deletePath(dbpath, error: nil)
-            
+            Dropbox().deleteFolder(name!)
             managedObjectContext!.deleteObject(patient)
             managedObjectContext!.save(nil)
         }

@@ -18,6 +18,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
+        Dropbox().exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -26,32 +27,11 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     {
         self.operation = operationEditor.operation!
         managedObjectContext!.save(nil)
-        exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
+        Dropbox().exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // Create or Delete .xls files
-    func exportToDropbox(operation:Operation, patient:Patient, create:Bool){
-        if (dbFileSystem == nil){
-            DBFilesystem.setSharedFilesystem(DBFilesystem(account: DBAccountManager.sharedManager().linkedAccount))
-            dbFileSystem = DBFilesystem.sharedFilesystem()
-        }
-        var name:String? = patient.name
-        var date:String? = operation.dateString()
-        var path:String =  "/" + name! + "/" + date! + ".xls"
-        var dbpath:DBPath = DBPath.root().childPath(path)
-        if dbFileSystem.fileInfoForPath(dbpath, error: nil) != nil {
-            dbFileSystem.deletePath(dbpath, error: nil)
-        }
-        if create {
-            var newFile = dbFileSystem.createFile(dbpath, error: nil)
-            if newFile != nil {
-                newFile.writeString(patient.name, error: nil)
-                newFile.close()
-            }
-        }
-    }
     
     func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
@@ -66,6 +46,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userPressedEdit()
     {
+        Dropbox().deleteFile(patient!.name, fileName: operation!.dateString())
         let operationEditor = OperationEditorViewController()
         operationEditor.operation = operation
         operationEditor.delegate = self
