@@ -172,6 +172,14 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         return indexPath.section == 0 ? 67 : 40
     }
+    
+   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+   {
+        if (indexPath.section == 0){
+            return false
+        }
+        return true
+   }
 
     
     func controllerWillChangeContent(controller: NSFetchedResultsController)
@@ -248,7 +256,6 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         if editingStyle == .Delete
         {
             // Delete the row from the data source
-            
             let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
             patient!.removeOperations(NSSet(object: operation!))
             Dropbox().exportToDropbox(operation!, patient: patient!, create:false)
