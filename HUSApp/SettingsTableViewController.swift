@@ -8,12 +8,22 @@
 
 import UIKit
 
+protocol SettingsViewControllerDelegate
+{
+    func userDidPressDone(settings: SettingsTableViewController)
+}
+
 class SettingsTableViewController: UITableViewController {
+    
+    var delegate: SettingsViewControllerDelegate?
     
     var themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
     
     func done(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if delegate != nil
+        {
+            delegate!.userDidPressDone(self)
+        }
     }
     
     @IBOutlet var infoDropbox: UITableViewCell!

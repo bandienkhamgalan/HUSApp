@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let accountManager = DBAccountManager(appKey: "g3x0ahovcbkomft", secret: "xrk9e61hklk83jd")
         DBAccountManager.setSharedManager(accountManager)
         
-        
         let rootViewController = window!.rootViewController! as UINavigationController
         let patientListViewController = rootViewController.visibleViewController as PatientListTableViewController
         patientListViewController.managedObjectContext = managedObjectContext;

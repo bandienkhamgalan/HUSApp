@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, UISearchResultsUpdating {
+class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, SettingsViewControllerDelegate, UISearchResultsUpdating {
     
     
     var account = DBAccountManager.sharedManager()?.linkedAccount
@@ -20,6 +20,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 		let storyboard = UIStoryboard(name: "Main", bundle:nil)
 		self.searchController!.active = false
 		var settingsTVC = storyboard.instantiateViewControllerWithIdentifier("SettingsTable") as SettingsTableViewController
+        settingsTVC.delegate = self
 		var settingsNVC = UINavigationController(rootViewController: settingsTVC)
 		self.presentViewController(settingsNVC, animated: true, completion: nil)
 	}
