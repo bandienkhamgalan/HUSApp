@@ -42,10 +42,13 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     var screenFour: DateAndTimePickerTableViewController?
     var screenFive: ValuePickerTableViewController?
     var screenSix: ValuePickerTableViewController?
-    var screenSeven: SelectorTableViewController?
-    var screenEight: SelectorTableViewController?
-    var screenNine: DateAndTimePickerTableViewController?
-    var screenTen: DeathTableViewController?
+    var screenSeven: ValuePickerTableViewController?
+    
+    var screenEight: ValuePickerTableViewController?
+    var screenNine: SelectorTableViewController?
+    var screenTen: SelectorTableViewController?
+    var screenEleven: DateAndTimePickerTableViewController?
+    var screenTwelve: DeathTableViewController?
     var doneButton: UIBarButtonItem?
     var nextButton: UIBarButtonItem?
     
@@ -65,7 +68,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                     completed++
                 }
             }
-            return Float(completed) / 10.0
+            return Float(completed) / 12.0
         }
     }
     
@@ -73,7 +76,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     {
         get
         {
-            for i in [1, 2, 6, 7]
+            for i in [1, 2, 8, 9]
             {
                 if screensCompleted[i] == false
                 {
@@ -108,7 +111,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screensCompleted[2] = true
                 userPressedNext()
                 break
-            case screenSeven!:
+            case screenNine!:
                 // complications
                 for obj in complications!.allKeys
                 {
@@ -116,9 +119,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                     complications!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
                 }
                 operation!.setComplicationsValue(complications!)
-                screensCompleted[6] = true
+                screensCompleted[8] = true
                 break
-            case screenEight!:
+            case screenTen!:
                 // admission to ICU
                 var answer = selections[0] as String
                 if answer == "Yes"
@@ -129,7 +132,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 {
                     operation!.admittedToICU = NSNumber(bool: false)
                 }
-                screensCompleted[7] = true
+                screensCompleted[9] = true
                 userPressedNext()
             default:
                 break
@@ -147,19 +150,22 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             }
             if screenFive != nil {
                 operation!.bloodLoss = screenFive!.value
-
             }
             if screenSix != nil {
-                operation!.durationOfStay = screenSix!.value
-                
+                operation!.fev1 = screenSix!.value
             }
-            if screenNine != nil {
-                operation!.followUpDate = screenNine!.date
-                
+            if screenSeven != nil {
+                operation!.dlco = screenSeven!.value
             }
-            if screenTen != nil {
-                operation!.alive = !(screenTen!.death)
-                operation!.deathDate = screenTen!.date
+            if screenEight != nil {
+                operation!.durationOfStay = screenEight!.value
+            }
+            if screenEleven != nil {
+                operation!.followUpDate = screenEleven!.date
+            }
+            if screenTwelve != nil {
+                operation!.alive = !(screenTwelve!.death)
+                operation!.deathDate = screenTwelve!.date
             }
             delegate!.userDidPressDone(self)
         }
@@ -181,7 +187,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     
     func userPressedNext()
     {
-        if currentPage < 9
+        if currentPage < 11
         {
             var targetX = (currentPage + 1) * Int(scrollView!.frame.size.width)
             scrollView!.setContentOffset(CGPointMake(CGFloat(targetX), 0), animated: true)
@@ -195,12 +201,12 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         currentPage = Int(screen)
         
         // determine progress
-        if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 8) && previousPage != currentPage
+        if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 6 || previousPage == 7 || previousPage == 10) && previousPage != currentPage
         {
             screensCompleted[previousPage] = true
         }
         
-        if existingOperation || (essentialCompleted && currentPage == 9 )
+        if existingOperation || (essentialCompleted == true && currentPage == 11 )
         {
             self.navigationItem.rightBarButtonItem = doneButton
         }
@@ -210,7 +216,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         }
     
         progressView?.setProgress(completion, animated: true)
-        title = "Question \((Int(screen) + 1))/10"
+        title = "Question \((Int(screen) + 1))/12"
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView)
@@ -243,17 +249,23 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenSix = storyboard.instantiateViewControllerWithIdentifier("ValuePicker") as? ValuePickerTableViewController
                 return screenSix
             case 6:
-                screenSeven = storyboard.instantiateViewControllerWithIdentifier("Selector") as? SelectorTableViewController
+                screenSeven = storyboard.instantiateViewControllerWithIdentifier("ValuePicker") as? ValuePickerTableViewController
                 return screenSeven
             case 7:
-                screenEight = storyboard.instantiateViewControllerWithIdentifier("Selector") as? SelectorTableViewController
+                screenEight = storyboard.instantiateViewControllerWithIdentifier("ValuePicker") as? ValuePickerTableViewController
                 return screenEight
             case 8:
-                screenNine = storyboard.instantiateViewControllerWithIdentifier("DateTimePicker") as? DateAndTimePickerTableViewController
+                screenNine = storyboard.instantiateViewControllerWithIdentifier("Selector") as? SelectorTableViewController
                 return screenNine
             case 9:
-                screenTen = storyboard.instantiateViewControllerWithIdentifier("Death") as? DeathTableViewController
+                screenTen = storyboard.instantiateViewControllerWithIdentifier("Selector") as? SelectorTableViewController
                 return screenTen
+            case 10:
+                screenEleven = storyboard.instantiateViewControllerWithIdentifier("DateTimePicker") as? DateAndTimePickerTableViewController
+                return screenEleven
+            case 11:
+                screenTwelve = storyboard.instantiateViewControllerWithIdentifier("Death") as? DeathTableViewController
+                return screenTwelve
             default:
                 return nil
         }
@@ -312,57 +324,82 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                     screenFive!.savedValue = operation!.bloodLoss.integerValue
                 }
                 break
+            
             case 5:
-                screenSix!.prompt = "Total Time in Hospital / days"
+                screenSix!.prompt = "FEV1 / %"
                 screenSix!.min = 0
-                screenSix!.max = 365
+                screenSix!.max = 100
                 screenSix!.interval = 1
-                screenSix!.initial = 7
-                if operation!.durationOfStay != nil
+                screenSix!.initial = 50
+                if operation!.bloodLoss != nil
                 {
-                    screenSix!.savedValue = operation!.durationOfStay.integerValue
+                    screenSix!.savedValue = operation!.fev1.integerValue
                 }
                 break
             case 6:
-                screenSeven!.prompt = "Complications during hospital stay"
-                complications = Operation.emptyComplications()
-                screenSeven!.options = complications!.allKeys as? [String]
-                screenSeven!.mode = .Multiple
-                if operation!.complications != nil
+                screenSeven!.prompt = "DLCO / %"
+                screenSeven!.min = 0
+                screenSeven!.max = 100
+                screenSeven!.interval = 1
+                screenSeven!.initial = 50
+                if operation!.bloodLoss != nil
                 {
-                    screenSeven!.selection = operation!.complicationsArray() as [String]
+                    screenSeven!.savedValue = operation!.dlco.integerValue
                 }
-                screenSeven!.delegate = self
                 break
+
+            
             case 7:
-                screenEight!.prompt = "Admission to ICU"
-                screenEight!.options = ["Yes", "No"]
-                screenEight!.mode = .Single
-                if operation!.admittedToICU != nil
+                screenEight!.prompt = "Total Time in Hospital / days"
+                screenEight!.min = 0
+                screenEight!.max = 365
+                screenEight!.interval = 1
+                screenEight!.initial = 7
+                if operation!.durationOfStay != nil
                 {
-                    screenEight!.selection = [operation!.admittedToICU.boolValue == true ? "Yes" : "No"]
+                    screenEight!.savedValue = operation!.durationOfStay.integerValue
                 }
-                screenEight!.delegate = self
                 break
             case 8:
-                screenNine!.prompt = "Follow-up Date"
-                screenNine!.pickerMode = .Date
-                if operation!.followUpDate != nil
+                screenNine!.prompt = "Complications during hospital stay"
+                complications = Operation.emptyComplications()
+                screenNine!.options = complications!.allKeys as? [String]
+                screenNine!.mode = .Multiple
+                if operation!.complications != nil
                 {
-                    screenNine!.savedDate = operation!.followUpDate
+                    screenNine!.selection = operation!.complicationsArray() as [String]
                 }
+                screenNine!.delegate = self
                 break
             case 9:
+                screenTen!.prompt = "Admission to ICU"
+                screenTen!.options = ["Yes", "No"]
+                screenTen!.mode = .Single
+                if operation!.admittedToICU != nil
+                {
+                    screenTen!.selection = [operation!.admittedToICU.boolValue == true ? "Yes" : "No"]
+                }
+                screenTen!.delegate = self
+                break
+            case 10:
+                screenEleven!.prompt = "Follow-up Date"
+                screenEleven!.pickerMode = .Date
+                if operation!.followUpDate != nil
+                {
+                    screenEleven!.savedDate = operation!.followUpDate
+                }
+                break
+            case 11:
                 if operation!.deathDate != nil
                 {
-                    screenTen!.savedDeathDate = operation!.deathDate
+                    screenTwelve!.savedDeathDate = operation!.deathDate
                 }
                 break
             default:
                 break
         }
     }
-    
+
     func insertIntoScrollView(index: Int)
     {
         var tvc = screens[index]!
@@ -375,7 +412,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         if(!initialized)
         {
             initialized = true
-            for i in 0...9
+            for i in 0...11
             {
                 if screens[i] == nil
                 {
@@ -439,13 +476,13 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         }
         
         // setup screen completed (model)
-        for _ in 0...9
+        for _ in 0...11
         {
             screensCompleted.append(false)
         }
         
         // setup screens array
-        for _ in 0...9
+        for _ in 0...11
         {
             screens.append(nil)
         }

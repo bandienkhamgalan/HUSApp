@@ -25,6 +25,8 @@
 @property (nonatomic, retain) NSDate * followUpDate;
 @property (nonatomic, retain) NSNumber * resection;
 @property (nonatomic, retain) Patient *patient;
+@property (nonatomic, retain) NSNumber * fev1;
+@property (nonatomic, retain) NSNumber * dlco;
 
 - (NSArray *)complicationsArray;
 + (NSMutableDictionary *)emptyComplications;
@@ -37,7 +39,7 @@
 + (NSArray *)possibleApproaches;
 - (void)setApproachValue:(NSString *)approach;
 - (NSString *)dateString;
--(NSString *)simpleDateString:(NSDate *)date;
+- (NSString *)simpleDateString:(NSDate *)date;
 - (NSString *)durationString;
 - (NSString *)followUpDateString;
 - (NSString *)deathDateString;

@@ -151,6 +151,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("operationCell", forIndexPath: indexPath) as UITableViewCell
             configureCell(cell, atIndexPath:indexPath)
+            
             return cell
         }
     }
@@ -171,8 +172,9 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         self.tableView.beginUpdates()
     }
-    
+
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType)
+
     {
         switch(type)
         {
@@ -180,7 +182,9 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Left)
             break
         case .Delete:
+            if (sectionIndex == 1 ){
             self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: UITableViewRowAnimation.Right)
+            }
             break
         default:
             break
@@ -212,42 +216,45 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             self.tableView.insertRowsAtIndexPaths([fixedNewIndexPath!], withRowAnimation: .Left)
             break
         case .Delete:
-            if( self.results!.fetchedObjects!.count == 0 )
-            {
-                self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Right)
-            }
-            
-            self.tableView.deleteRowsAtIndexPaths([fixedIndexPath!], withRowAnimation: .Right)
+                if( self.results!.fetchedObjects!.count == 0 ){
+                    self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Right)
+                }
+                self.tableView.deleteRowsAtIndexPaths([fixedIndexPath!], withRowAnimation: .Right)
             break
         case .Update:
             configureCell(tableView.cellForRowAtIndexPath(fixedIndexPath!)!, atIndexPath: fixedIndexPath!)
             break
         case .Move:
-            self.tableView.deleteRowsAtIndexPaths([fixedIndexPath!], withRowAnimation: .Right)
+            if (indexPath?.section == 1){
+                self.tableView.deleteRowsAtIndexPaths([fixedIndexPath!], withRowAnimation: .Right)
             self.tableView.insertRowsAtIndexPaths([fixedNewIndexPath!], withRowAnimation: .Left)
+            }
             break
         default:
             break
         }
     }
-    
+
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
         self.tableView.endUpdates()
     }
     
+
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete
-        {
-            // Delete the row from the data source
+        
+        if (indexPath.section == 1){
+            if editingStyle == .Delete
+            {
+                // Delete the row from the data source
             
-            let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
-            patient!.removeOperations(NSSet(object: operation!))
-            managedObjectContext!.save(nil)
+                let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
+                patient!.removeOperations(NSSet(object: operation!))
+                managedObjectContext!.save(nil)
+            }
         }
     }
-    
-
 
 }
+

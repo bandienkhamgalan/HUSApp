@@ -24,6 +24,8 @@
 @dynamic resection;
 @dynamic patient;
 @dynamic durationOfStay;
+@dynamic fev1;
+@dynamic dlco;
 
 - (NSString *)durationString
 {

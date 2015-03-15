@@ -71,7 +71,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section){
             case 0:
-                return 7
+                return 9
             case 1:
                 return operation!.complicationsArray().count
             case 2:
@@ -89,7 +89,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
         if (indexPath.section == 0){
             switch (indexPath.row){
                 
-            case 0:
+                case 0:
                     cell.textLabel!.text = "Date of Operation"
                     cell.detailTextLabel!.text = operation!.dateString()
                     break;
@@ -106,10 +106,18 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                     cell.detailTextLabel!.text = operation!.durationString()
                     break;
                 case 4:
+                    cell.textLabel!.text = "FEV1/%"
+                    cell.detailTextLabel!.text = "\(operation!.fev1) %"
+                    break;
+                case 5:
+                    cell.textLabel!.text = "DLCO/%"
+                    cell.detailTextLabel!.text = "\(operation!.dlco) %"
+                    break;
+                case 6:
                     cell.textLabel!.text = "Blood Loss"
                     cell.detailTextLabel!.text = "\(operation!.bloodLoss) mL"
                     break;
-                case 5:
+                case 7:
                     cell.textLabel!.text = "Admission to ICU"
                     if (operation!.admittedToICU == 1){
                         cell.detailTextLabel!.text = "Yes"
@@ -118,7 +126,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                         cell.detailTextLabel!.text = "No"
                     }
                     break;
-                case 6:
+                case 8:
                     cell.textLabel!.text = "Duration of Hospital Stay"
                     cell.detailTextLabel!.text = "\(operation!.durationOfStay) days"
                     break;
