@@ -76,7 +76,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     {
         get
         {
-            for i in [1, 2, 8, 9]
+            for i in [1, 2, 4, 8, 9]
             {
                 if screensCompleted[i] == false
                 {
@@ -138,6 +138,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 break
         }
     }
+    
     
     func userPressedDone()
     {

@@ -106,11 +106,11 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                     cell.detailTextLabel!.text = operation!.durationString()
                     break;
                 case 4:
-                    cell.textLabel!.text = "FEV1/%"
+                    cell.textLabel!.text = "FEV1"
                     cell.detailTextLabel!.text = "\(operation!.fev1) %"
                     break;
                 case 5:
-                    cell.textLabel!.text = "DLCO/%"
+                    cell.textLabel!.text = "DLCO"
                     cell.detailTextLabel!.text = "\(operation!.dlco) %"
                     break;
                 case 6:

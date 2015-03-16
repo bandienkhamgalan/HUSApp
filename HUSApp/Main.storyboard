@@ -436,6 +436,41 @@
             </objects>
             <point key="canvasLocation" x="391" y="2800"/>
         </scene>
+        <!--TextFieldInput-->
+        <scene sceneID="GOL-Lq-zCN">
+            <objects>
+                <tableViewController storyboardIdentifier="TextFieldInput" title="TextFieldInput" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D5Z-cr-m3Z" customClass="TextFieldInputTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="21e-cb-U8s">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <textField key="tableFooterView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="nrO-eF-zOF">
+                            <rect key="frame" x="0.0" y="-30" width="600" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="C6v-hx-mG1">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C6v-hx-mG1" id="Rwi-z5-Z3B">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="D5Z-cr-m3Z" id="X2D-Tr-0Hk"/>
+                            <outlet property="delegate" destination="D5Z-cr-m3Z" id="Dmc-Ia-e4l"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="textInput" destination="nrO-eF-zOF" id="AVl-8I-GAz"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="73C-RS-Xrd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1094" y="2779"/>
+        </scene>
         <!--Death-->
         <scene sceneID="CNR-Z9-tM3">
             <objects>
