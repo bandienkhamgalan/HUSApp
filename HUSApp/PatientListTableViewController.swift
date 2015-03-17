@@ -11,7 +11,6 @@ import CoreData
 
 class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, SettingsViewControllerDelegate, UISearchResultsUpdating {
     
-    
     var account = DBAccountManager.sharedManager()?.linkedAccount
     var dbFileSystem = DBFilesystem.sharedFilesystem()
     

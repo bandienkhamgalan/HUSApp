@@ -16,7 +16,7 @@ protocol OperationEditorViewControllerDelegate
 
 let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
 
-class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SelectorTableViewControllerDelegate
+class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SelectorTableViewControllerDelegate, TextFieldInputTableViewControllerDelegate
 {
     // views
     
@@ -128,19 +128,27 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                     var key = obj as String
                     complications!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
                 }
-                screensCompleted[6] = true
+                operation!.setComplicationsValue(complications!)
+                screensCompleted[8] = true
                 break
             case screenTen!:
                 // admission to ICU
                 var answer = selections[0] as String
                 admittedToICU = answer == "Yes"
-                screensCompleted[7] = true
+                screensCompleted[9] = true
                 userPressedNext()
             default:
                 break
         }
     }
     
+    func userDidChangeText(sender: TextFieldInputTableViewController)
+    {
+        if screenFive!.value > 0
+        {
+            screensCompleted[4] = true
+        }
+    }
     
     func userPressedDone()
     {
@@ -161,16 +169,19 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 operation!.bloodLoss = screenFive!.value
             }
             if screenSix != nil {
-                operation!.durationOfStay = screenSix!.value
+                operation!.fev1 = screenSix!.value
             }
-			if screenSeven != nil {
-				operation!.setComplicationsValue(complications!)
-			}
-			if screenEight != nil {
-				operation!.admittedToICU = NSNumber(bool:admittedToICU!)
-			}
+            if screenSeven != nil {
+                operation!.dlco = screenSeven!.value
+            }
+            if screenEight != nil {
+                operation!.durationOfStay = screenEight!.value
+            }
             if screenNine != nil {
-                operation!.followUpDate = screenNine!.date
+                operation!.setComplicationsValue(complications!)
+            }
+            if screenTen != nil {
+                operation!.admittedToICU = admittedToICU
             }
             if screenEleven != nil {
                 operation!.followUpDate = screenEleven!.date
@@ -179,7 +190,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 operation!.alive = !(screenTwelve!.death)
                 operation!.deathDate = screenTwelve!.date
             }
-			println(operation)
             delegate!.userDidPressDone(self)
         }
 
@@ -335,6 +345,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 break
             case 4:
                 screenFive!.prompt = "Blood Loss / mL"
+                screenFive!.delegate = self
                 if operation!.bloodLoss != nil
                 {
                     screenFive!.value = operation!.bloodLoss.integerValue
@@ -362,8 +373,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                     screenSeven!.savedValue = operation!.dlco.integerValue
                 }
                 break
-
-            
             case 7:
                 screenEight!.prompt = "Total Time in Hospital / days"
                 screenEight!.min = 0
@@ -378,8 +387,8 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 8:
                 screenNine!.prompt = "Complications during hospital stay"
                 complications = Operation.emptyComplications()
-				screenSeven!.options = sorted(complications!.allKeys as [String], <)
-                screenSeven!.mode = .Multiple
+				screenNine!.options = sorted(complications!.allKeys as [String], <)
+                screenNine!.mode = .Multiple
                 if operation!.complications != nil
                 {
                     screenNine!.selection = operation!.complicationsArray() as [String]
@@ -393,7 +402,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 if operation!.admittedToICU != nil
                 {
 					admittedToICU = operation!.admittedToICU.boolValue
-                    screenEight!.selection = [admittedToICU! == true ? "Yes" : "No"]
+                    screenTen!.selection = [admittedToICU! == true ? "Yes" : "No"]
                 }
                 screenTen!.delegate = self
                 break
@@ -510,12 +519,9 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         
     
         super.viewDidLoad()
-    
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
