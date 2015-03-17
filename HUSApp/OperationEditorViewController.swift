@@ -40,7 +40,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     var screenTwo: SelectorTableViewController?
     var screenThree: SelectorTableViewController?
     var screenFour: DateAndTimePickerTableViewController?
-    var screenFive: ValuePickerTableViewController?
+    var screenFive: TextFieldInputTableViewController?
     var screenSix: ValuePickerTableViewController?
     var screenSeven: ValuePickerTableViewController?
     
@@ -207,6 +207,12 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             screensCompleted[previousPage] = true
         }
         
+        // resign blood loss text field from first responder
+        if previousPage == 4 && previousPage != currentPage
+        {
+            screenFive?.resignTextFieldFirstResponder()
+        }
+        
         if existingOperation || (essentialCompleted == true && currentPage == 11 )
         {
             self.navigationItem.rightBarButtonItem = doneButton
@@ -244,7 +250,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenFour = storyboard.instantiateViewControllerWithIdentifier("DateTimePicker") as? DateAndTimePickerTableViewController
                 return screenFour
             case 4:
-                screenFive = storyboard.instantiateViewControllerWithIdentifier("ValuePicker") as? ValuePickerTableViewController
+                screenFive = storyboard.instantiateViewControllerWithIdentifier("TextFieldInput") as? TextFieldInputTableViewController
                 return screenFive
             case 5:
                 screenSix = storyboard.instantiateViewControllerWithIdentifier("ValuePicker") as? ValuePickerTableViewController
@@ -316,16 +322,11 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 break
             case 4:
                 screenFive!.prompt = "Blood Loss / mL"
-                screenFive!.min = 0
-                screenFive!.max = 100
-                screenFive!.interval = 1
-                screenFive!.initial = 20
                 if operation!.bloodLoss != nil
                 {
-                    screenFive!.savedValue = operation!.bloodLoss.integerValue
+                    screenFive!.value = operation!.bloodLoss.integerValue
                 }
                 break
-            
             case 5:
                 screenSix!.prompt = "FEV1 / %"
                 screenSix!.min = 0

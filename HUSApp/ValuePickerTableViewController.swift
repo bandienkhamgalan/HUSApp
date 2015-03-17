@@ -10,7 +10,6 @@ import UIKit
 
 class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate
 {
-    
     var prompt = ""
     var min = 0
     var initial = 50

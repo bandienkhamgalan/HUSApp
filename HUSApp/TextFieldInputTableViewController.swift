@@ -12,26 +12,41 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "resignTextFieldFirstResponder"))
+        textField.delegate = self
     }
 
+    func resignTextFieldFirstResponder()
+    {
+        textField.resignFirstResponder()
+    }
+    
+    var prompt = ""
+    
+    var value: Int
+    {
+        get
+        {
+            return (NSNumberFormatter().numberFromString(textField.text)! as NSNumber).integerValue
+        }
+        set
+        {
+            textField.text = NSNumberFormatter().stringFromNumber(NSNumber(integer: newValue))
+        }
+    }
+    
+    @IBOutlet weak var textField: UITextField!
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        return " "
+        return prompt
     }
 
     @IBOutlet weak var textInput: UITextField!
@@ -48,23 +63,14 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
         var newString = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        switch(textField)
+        if NSNumberFormatter().numberFromString(newString) != nil
         {
-        case textInput:
-            let processedBloodLoss = NSNumberFormatter().numberFromString(newString)
-            if processedBloodLoss != nil
-            {
-                
-            }
-            else
-            {
-                
-            }
-            break
-        default:
-            break
+            return true
         }
-        return true
+        else
+        {
+            return false
+        }
     }
 
     
