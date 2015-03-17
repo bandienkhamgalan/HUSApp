@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 protocol SettingsViewControllerDelegate
 {
@@ -36,8 +37,17 @@ class SettingsTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = doneButton
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "linkDropbox", name: "dropbox", object: nil)
+        
         updateView()
 
+    }
+    
+    func linkDropbox() {
+        // println(DBAccountManager.sharedManager().linkedAccount)
+        // println(DBAccountManager.sharedManager().linkedAccount.info)
+        // updateView()
+        done()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +59,7 @@ class SettingsTableViewController: UITableViewController {
         if DBAccountManager.sharedManager().linkedAccount != nil {
             actionDropbox.textLabel?.text = "Sign Out from Dropbox"
             actionDropbox.textLabel?.textColor = UIColor.redColor()
-            infoDropbox.detailTextLabel?.text = DBAccountManager.sharedManager().linkedAccount.info.userName
+            infoDropbox.detailTextLabel?.text = DBAccountManager.sharedManager().linkedAccount.info?.userName
             
         } else {
             actionDropbox.textLabel?.text = "Link with Dropbox"
