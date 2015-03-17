@@ -24,6 +24,8 @@
 @dynamic resection;
 @dynamic patient;
 @dynamic durationOfStay;
+@dynamic fev1;
+@dynamic dlco;
 
 -(NSDictionary *)serialize
 {
@@ -50,7 +52,7 @@
 
 + (NSMutableDictionary *)emptyComplications
 {
-    return [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false], @"Pneumonia", [NSNumber numberWithBool:false], @"Respiratory failure", [NSNumber numberWithBool:false], @"Empyema", [NSNumber numberWithBool:false], @"Prolonged air leak", [NSNumber numberWithBool:false], @"Pulmonary embolism", [NSNumber numberWithBool:false], @"Arrythmia", [NSNumber numberWithBool:false], @"Myocardial infarction", [NSNumber numberWithBool:false], @"Delirium", [NSNumber numberWithBool:false], @"Cerebral infarktion/bleeding", nil];
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false], @"Pneumonia", [NSNumber numberWithBool:false], @"Respiratory Failure", [NSNumber numberWithBool:false], @"Empyema", [NSNumber numberWithBool:false], @"Prolonged Air Leak", [NSNumber numberWithBool:false], @"Pulmonary Embolism", [NSNumber numberWithBool:false], @"Arrythmia", [NSNumber numberWithBool:false], @"Myocardial Infarction", [NSNumber numberWithBool:false], @"Delirium", [NSNumber numberWithBool:false], @"Cerebral Infarktion/Bleeding", nil];
 }
 
 - (void)setComplicationsValue:(NSDictionary *)complications

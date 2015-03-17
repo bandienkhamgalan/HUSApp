@@ -10,7 +10,6 @@ import UIKit
 
 class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate
 {
-    
     var prompt = ""
     var min = 0
     var initial = 50
@@ -60,6 +59,7 @@ class ValuePickerTableViewController: UITableViewController, UIPickerViewDataSou
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
 
     @IBOutlet weak var picker: UIPickerView!
     

@@ -34,6 +34,7 @@
 		34E20D691AA8D1DB004F0C8F /* DeathTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */; };
 		391BE22C1AA9FD470046D5C8 /* OperationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */; };
 		3970E8691AA8820400999358 /* DateAndTimePickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */; };
+		398ED0C91AB66B980059505B /* TextFieldInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeathTableViewController.swift; sourceTree = "<group>"; };
 		391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationTableViewController.swift; sourceTree = "<group>"; };
 		3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerTableViewController.swift; sourceTree = "<group>"; };
+		398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldInputTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */,
 				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
 				34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */,
+				398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */,
 				34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */,
 				34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */,
 				391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */,
@@ -320,6 +323,7 @@
 				34E117761AB0523900E4DDFD /* SettingsTableViewController.swift in Sources */,
 				391BE22C1AA9FD470046D5C8 /* OperationTableViewController.swift in Sources */,
 				34E20D651AA8D13F004F0C8F /* SelectorTableViewController.swift in Sources */,
+				398ED0C91AB66B980059505B /* TextFieldInputTableViewController.swift in Sources */,
 				344F95F51AA3803A0015B806 /* Operation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
