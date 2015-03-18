@@ -523,8 +523,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GIk-j7-tCt" id="Plg-eU-rsV">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="20" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZtN-ql-g7h">
-                                                    <rect key="frame" x="15" y="3" width="570" height="37"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="20" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZtN-ql-g7h">
+                                                    <rect key="frame" x="15" y="3" width="570" height="36"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 </textField>

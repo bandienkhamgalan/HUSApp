@@ -14,7 +14,11 @@ protocol TextFieldInputTableViewControllerDelegate
 }
 
 class TextFieldInputTableViewController: UITableViewController, UITextFieldDelegate {
-
+    
+    @IBOutlet weak var textField: UITextField!
+    var prompt = ""
+    var delegate: TextFieldInputTableViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "resignTextFieldFirstResponder"))
@@ -25,10 +29,7 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
     {
         textField.resignFirstResponder()
     }
-    
-    @IBOutlet weak var textInput: UITextField!
-    var prompt = ""
-    var delegate: TextFieldInputTableViewControllerDelegate?
+
     var value: Int
     {
         get
@@ -40,8 +41,6 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
             textField.text = NSNumberFormatter().stringFromNumber(NSNumber(integer: newValue))
         }
     }
-    
-    @IBOutlet weak var textField: UITextField!
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

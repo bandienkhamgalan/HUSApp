@@ -10,7 +10,7 @@ import Foundation
 
 class Dropbox {
     
-    var dbFileSystem:DBFilesystem
+    var dbFileSystem:DBFilesystem?
     
     init(){
         var dbFileSystem = DBFilesystem.sharedFilesystem()
@@ -25,21 +25,21 @@ class Dropbox {
         if oldPatientName != newPatientName {
             var oldPath:DBPath = DBPath.root().childPath("/" + oldPatientName)
             var newPath:DBPath = DBPath.root().childPath("/" + newPatientName)
-            self.dbFileSystem.movePath(oldPath, toPath: newPath, error: nil)
-            self.dbFileSystem.deletePath(oldPath, error: nil)
+            self.dbFileSystem?.movePath(oldPath, toPath: newPath, error: nil)
+            self.dbFileSystem?.deletePath(oldPath, error: nil)
         } 
     }
     
     func createFolder(patientName:String){
         var path:String = "/" + patientName
         var dbpath:DBPath = DBPath.root().childPath(path)
-        self.dbFileSystem.createFolder(dbpath, error: nil)
+        self.dbFileSystem!.createFolder(dbpath, error: nil)
     }
     
     func deleteFolder(patientName:String){
         var path:String = "/" + patientName
         var dbpath:DBPath = DBPath.root().childPath(path)
-        self.dbFileSystem.deletePath(dbpath, error: nil)
+        self.dbFileSystem?.deletePath(dbpath, error: nil)
     }
     
     // Create or Delete .xls files
@@ -53,8 +53,8 @@ class Dropbox {
     func deleteFile(patientName:String, fileName:String){
         var path:String =  "/" + patientName + "/" + fileName + ".xls"
         var dbpath:DBPath = DBPath.root().childPath(path)
-        if self.dbFileSystem.fileInfoForPath(dbpath, error: nil) != nil {
-            self.dbFileSystem.deletePath(dbpath, error: nil)
+        if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil {
+            self.dbFileSystem?.deletePath(dbpath, error: nil)
         }
     }
     
@@ -129,12 +129,15 @@ class Dropbox {
         }
         
         xlsstring += footer
-        
-        var newFile = self.dbFileSystem.createFile(dbpath, error: nil)
-        if newFile != nil {
-            newFile.writeString(xlsstring, error: nil)
-            newFile.close()
+
+        if self.dbFileSystem != nil{
+            var newFile = self.dbFileSystem!.createFile(dbpath, error: nil)
+            if newFile != nil {
+                newFile.writeString(xlsstring, error: nil)
+                newFile.close()
+            }
         }
+        
         
     }
     

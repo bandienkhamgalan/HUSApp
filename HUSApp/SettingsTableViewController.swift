@@ -71,6 +71,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 && DBAccountManager.sharedManager().linkedAccount != nil {
             DBAccountManager.sharedManager().linkedAccount.unlink()
+            println("App unlined from Dropbox!")
         } else if indexPath.section == 1 {
             DBAccountManager.sharedManager().linkFromController(self)
         }
