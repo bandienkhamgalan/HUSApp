@@ -22,6 +22,10 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "resignTextFieldFirstResponder"))
+        if savedValue != nil
+        {
+            value = savedValue!
+        }
         textField.delegate = self
     }
 
@@ -29,7 +33,8 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
     {
         textField.resignFirstResponder()
     }
-
+    
+    var savedValue: Int?
     var value: Int
     {
         get
@@ -38,7 +43,10 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
         }
         set
         {
-            textField.text = NSNumberFormatter().stringFromNumber(NSNumber(integer: newValue))
+            if textField != nil
+            {
+                textField.text = NSNumberFormatter().stringFromNumber(NSNumber(integer: newValue))
+            }
         }
     }
     

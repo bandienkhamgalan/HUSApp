@@ -175,6 +175,11 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
                         return false
                     }
                 }
+                else if countElements(newString) == 0
+                {
+                    age = -1
+                    return true
+                }
                 else
                 {
                     return false

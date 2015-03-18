@@ -43,8 +43,8 @@ class SettingsTableViewController: UITableViewController {
     }
     
     func linkDropbox() {
-        // println(DBAccountManager.sharedManager().linkedAccount)
-        // println(DBAccountManager.sharedManager().linkedAccount.info)
+        println(DBAccountManager.sharedManager().linkedAccount)
+        println(DBAccountManager.sharedManager().linkedAccount.info)
         // updateView()
         done()
     }
@@ -75,6 +75,7 @@ class SettingsTableViewController: UITableViewController {
             DBAccountManager.sharedManager().linkFromController(self)
         }
         
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         updateView()
     }
 

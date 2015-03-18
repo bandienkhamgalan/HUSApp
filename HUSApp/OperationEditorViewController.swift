@@ -348,7 +348,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenFive!.delegate = self
                 if operation!.bloodLoss != nil
                 {
-                    screenFive!.value = operation!.bloodLoss.integerValue
+                    screenFive!.savedValue = operation!.bloodLoss.integerValue
                 }
                 break
             case 5:
@@ -368,7 +368,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 screenSeven!.max = 100
                 screenSeven!.interval = 1
                 screenSeven!.initial = 50
-                if operation!.bloodLoss != nil
+                if operation!.dlco != nil
                 {
                     screenSeven!.savedValue = operation!.dlco.integerValue
                 }
