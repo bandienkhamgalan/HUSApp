@@ -18,7 +18,7 @@ class SettingsTableViewController: UITableViewController {
     
     var delegate: SettingsViewControllerDelegate?
     
-    var themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+    let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
     
     func done(){
         if delegate != nil
@@ -40,7 +40,6 @@ class SettingsTableViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "linkDropbox", name: "dropbox", object: nil)
         
         updateView()
-
     }
     
     func linkDropbox() {
