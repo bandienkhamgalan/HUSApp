@@ -32,7 +32,7 @@
     int minutes = self.duration.intValue;
     if( minutes > 60 )
     {
-        return minutes % 60 == 0 ? [NSString stringWithFormat:@"%d hours", minutes / 60] : [NSString stringWithFormat:@"%d hours and %d minutes", minutes / 60, minutes % 60];
+        return minutes % 60 == 0 ? [NSString stringWithFormat:@"%d hour%c", minutes / 60, minutes < 120 ? '\0' : 's'] : [NSString stringWithFormat:@"%d hour%c and %d minutes", minutes / 60,  minutes < 120 ? '\0' : 's', minutes % 60];
     }
     else
         return [NSString stringWithFormat:@"%d minutes", minutes];

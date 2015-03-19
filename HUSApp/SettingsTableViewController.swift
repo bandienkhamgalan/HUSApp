@@ -37,15 +37,19 @@ class SettingsTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = doneButton
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "linkDropbox", name: "dropbox", object: nil)
+        // Observe for Dropbox successfully linked
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dbSuccess", name: "dropbox", object: nil)
         
         updateView()
     }
     
-    func linkDropbox() {
+    
+    func dbSuccess() {
         println(DBAccountManager.sharedManager().linkedAccount)
-        println(DBAccountManager.sharedManager().linkedAccount.info)
+        // println(DBAccountManager.sharedManager().linkedAccount.info)
         // updateView()
+        PKNotification.successBackgroundColor = themeColour
+        PKNotification.success("Linked!")
         done()
     }
 
@@ -70,7 +74,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 && DBAccountManager.sharedManager().linkedAccount != nil {
             DBAccountManager.sharedManager().linkedAccount.unlink()
-            println("App unlined from Dropbox!")
+            println("App unlinked from Dropbox!")
         } else if indexPath.section == 1 {
             DBAccountManager.sharedManager().linkFromController(self)
         }

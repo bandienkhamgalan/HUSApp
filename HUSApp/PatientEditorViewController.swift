@@ -90,9 +90,18 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         }
     }
     
+    func dbSuccess() {
+        println(DBAccountManager.sharedManager().linkedAccount)
+        PKNotification.successBackgroundColor = themeColour
+        PKNotification.success("Linked!")
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        // Observe for Dropbox successfully linked
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dbSuccess", name: "dropbox", object: nil)
         
         linkDropbox()
         

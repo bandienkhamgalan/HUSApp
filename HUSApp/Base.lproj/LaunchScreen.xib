@@ -18,7 +18,7 @@
             <viewControllers>
                 <tableViewController id="NFG-B4-tcy">
                     <navigationItem key="navigationItem" title="Patients" id="pf3-re-QVt">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="Fon-8o-bf7"/>
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Fon-8o-bf7"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="iB1-Hb-fNQ"/>
                     </navigationItem>
                 </tableViewController>
