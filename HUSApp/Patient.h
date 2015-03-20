@@ -13,7 +13,6 @@
 
 @property (nonatomic, retain) NSNumber * age;
 @property (nonatomic, retain) NSNumber * gender;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * patientID;
 @property (nonatomic, retain) NSSet *operations;
 @end

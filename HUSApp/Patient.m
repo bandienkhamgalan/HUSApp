@@ -12,13 +12,12 @@
 
 @dynamic age;
 @dynamic gender;
-@dynamic name;
 @dynamic patientID;
 @dynamic operations;
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"Patient named: %@, aged: %@, id: %@ and gender: %@", self.name, self.age, self.patientID, self.gender];
+    return [NSString stringWithFormat:@"Patient aged: %@, id: %@ and gender: %@",  self.age, self.patientID, self.gender];
 }
 
 - (NSString *)genderString
@@ -35,7 +34,7 @@
 - (NSString *)firstLetter
 {
     [self willAccessValueForKey:@"firstLetter"];
-    NSString *firstLetter = [[[self name] substringToIndex:1] uppercaseString];
+    NSString *firstLetter = [[[self patientID] substringToIndex:1] uppercaseString];
     [self didAccessValueForKey:@"firstLetter"];
     return firstLetter;
 }

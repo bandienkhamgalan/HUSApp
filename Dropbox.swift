@@ -21,10 +21,10 @@ class Dropbox {
     }
     
     // Move to new folder and delete old folder if Patient's name change
-    func updateFolderinDropbox(oldPatientName:String, newPatientName:String){
-        if oldPatientName != newPatientName {
-            var oldPath:DBPath = DBPath.root().childPath("/" + oldPatientName)
-            var newPath:DBPath = DBPath.root().childPath("/" + newPatientName)
+    func updateFolderinDropbox(oldPatientID:String, newPatientID:String){
+        if oldPatientID != newPatientID {
+            var oldPath:DBPath = DBPath.root().childPath("/" + oldPatientID)
+            var newPath:DBPath = DBPath.root().childPath("/" + newPatientID)
             self.dbFileSystem?.movePath(oldPath, toPath: newPath, error: nil)
             self.dbFileSystem?.deletePath(oldPath, error: nil)
         } 
@@ -44,9 +44,9 @@ class Dropbox {
     
     // Create or Delete .xls files
     func exportToDropbox(operation:Operation, patient:Patient, create:Bool){
-        deleteFile(patient.name, fileName: operation.dateString())
+        deleteFile(patient.patientID, fileName: operation.dateString())
         if create {
-            createFile(patient.name, fileName: operation.dateString(), patient: patient, operation: operation)
+            createFile(patient.patientID, fileName: operation.dateString(), patient: patient, operation: operation)
         }
     }
 
@@ -70,10 +70,9 @@ class Dropbox {
         
         var footer = "</Table>\n</Worksheet>\n</Workbook>"
         
-        var totalRow = 13 + operation.resectionsArray().count + operation.complicationsArray().count
+        var totalRow = 12 + operation.resectionsArray().count + operation.complicationsArray().count
         var xlsstring = header + "2" + columncount + "\(totalRow)" + rowcount
         
-        xlsstring += createRow("Name", value:patient.name, text: true)
         xlsstring += createRow("Patient ID", value: patient.patientID, text: true)
         xlsstring += createRow("Age", value: patient.ageString(), text: false)
         

@@ -24,7 +24,6 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
 {
     var patient: Patient?
     var delegate: PatientEditorViewControllerDelegate?
-    var name = ""
     var patientID = ""
     var age = -1
     var gender = -1
@@ -40,7 +39,6 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func done(sender: UIBarButtonItem)
     {
-        patient!.name = name
         patient!.patientID = patientID
         patient!.age = age
         patient!.gender = gender
@@ -50,7 +48,6 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         }
     }
     
-    @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var idField: UITextField!
     @IBOutlet weak var ageField: UITextField!
     
@@ -73,7 +70,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
     
     func tryToEnableDoneButton()
     {
-        if countElements(name) > 0 && age > -1 && gender > -1
+        if age > -1 && gender > -1
         {
             doneButton.enabled = true
         }
@@ -116,14 +113,9 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         {
             self.view!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "resignAllTextFieldsFirstResponders"))
             // existing patient -> load information
-            if(patient!.name != nil)
-            {
-                nameField.text = patient!.name
-                self.title = "Editing \(patient!.name)"
-                name = patient!.name
-            }
             if(patient!.patientID != nil)
             {
+                self.title = "Editing \(patient!.patientID)"
                 idField.text = patient!.patientID
                 patientID = patient!.patientID
             }
@@ -138,7 +130,6 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
                 genderPicker.selectedSegmentIndex = gender
             }
             
-            nameField.delegate = self
             idField.delegate = self
             ageField.delegate = self
         }
@@ -155,7 +146,6 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
     
     func resignAllTextFieldsFirstResponders()
     {
-        nameField.resignFirstResponder()
         idField.resignFirstResponder()
         ageField.resignFirstResponder()
     }
@@ -165,9 +155,6 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         var newString = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
         switch(textField)
         {
-            case nameField:
-                name = newString
-                break
             case idField:
                 patientID = newString
                 break

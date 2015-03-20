@@ -46,7 +46,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userPressedEdit()
     {
-        Dropbox().deleteFile(patient!.name, fileName: operation!.dateString())
+        Dropbox().deleteFile(patient!.patientID, fileName: operation!.dateString())
         let operationEditor = OperationEditorViewController()
         operationEditor.operation = operation
         operationEditor.delegate = self
