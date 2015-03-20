@@ -70,11 +70,12 @@ class Dropbox {
         
         var footer = "</Table>\n</Worksheet>\n</Workbook>"
         
-        var totalRow = 12 + operation.resectionsArray().count + operation.complicationsArray().count
+        var totalRow = 13 + operation.resectionsArray().count + operation.complicationsArray().count
         var xlsstring = header + "2" + columncount + "\(totalRow)" + rowcount
         
         xlsstring += createRow("Patient ID", value: patient.patientID, text: true)
         xlsstring += createRow("Age", value: patient.ageString(), text: false)
+        xlsstring += createRow("Gender", value: patient.genderString(), text: true)
         
         xlsstring += createRow("Date of Operation", value: operation.dateString(), text: true)
         xlsstring += createRow("Type of Approach", value: operation.approachString(), text: true)
