@@ -15,6 +15,7 @@
 		0DED36521AB0ED8A00F10E76 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36511AB0ED8A00F10E76 /* QuartzCore.framework */; };
 		0DED36541AB0ED9800F10E76 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36531AB0ED9800F10E76 /* libc++.dylib */; };
 		0DED36561AB0EDA400F10E76 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36551AB0EDA400F10E76 /* libz.dylib */; };
+		0DF80FBD1ABB27A200554D04 /* PKNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF80FBC1ABB27A200554D04 /* PKNotification.swift */; };
 		343736E01AA6813700013C79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343736DF1AA6813700013C79 /* Main.storyboard */; };
 		344F95CB1AA37FCB0015B806 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CA1AA37FCB0015B806 /* AppDelegate.swift */; };
 		344F95D01AA37FCB0015B806 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CF1AA37FCB0015B806 /* ViewController.swift */; };
@@ -34,6 +35,7 @@
 		34E20D691AA8D1DB004F0C8F /* DeathTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */; };
 		391BE22C1AA9FD470046D5C8 /* OperationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */; };
 		3970E8691AA8820400999358 /* DateAndTimePickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */; };
+		398ED0C91AB66B980059505B /* TextFieldInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,14 +57,15 @@
 		0DED36511AB0ED8A00F10E76 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0DED36531AB0ED9800F10E76 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		0DED36551AB0EDA400F10E76 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		0DF80FBC1ABB27A200554D04 /* PKNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKNotification.swift; sourceTree = "<group>"; };
 		343736DF1AA6813700013C79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		344F95C51AA37FCB0015B806 /* HUSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HUSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		344F95C51AA37FCB0015B806 /* Lung Ops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lung Ops.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		344F95C91AA37FCB0015B806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		344F95CA1AA37FCB0015B806 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		344F95CF1AA37FCB0015B806 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		344F95D41AA37FCB0015B806 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		344F95D71AA37FCB0015B806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		344F95DD1AA37FCB0015B806 /* HUSAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HUSAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		344F95DD1AA37FCB0015B806 /* Lung OpsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lung OpsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		344F95E21AA37FCB0015B806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		344F95E31AA37FCB0015B806 /* HUSAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUSAppTests.swift; sourceTree = "<group>"; };
 		344F95EE1AA3802C0015B806 /* HUSApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HUSApp.xcdatamodel; sourceTree = "<group>"; };
@@ -81,6 +84,7 @@
 		34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeathTableViewController.swift; sourceTree = "<group>"; };
 		391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationTableViewController.swift; sourceTree = "<group>"; };
 		3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateAndTimePickerTableViewController.swift; sourceTree = "<group>"; };
+		398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldInputTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +130,8 @@
 		344F95C61AA37FCB0015B806 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				344F95C51AA37FCB0015B806 /* HUSApp.app */,
-				344F95DD1AA37FCB0015B806 /* HUSAppTests.xctest */,
+				344F95C51AA37FCB0015B806 /* Lung Ops.app */,
+				344F95DD1AA37FCB0015B806 /* Lung OpsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,6 +139,7 @@
 		344F95C71AA37FCB0015B806 /* HUSApp */ = {
 			isa = PBXGroup;
 			children = (
+				0DF80FBC1ABB27A200554D04 /* PKNotification.swift */,
 				0DED36491AB0ED3C00F10E76 /* Dropbox.framework */,
 				0D35CF501AB3ABC4007F8820 /* Dropbox.swift */,
 				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
@@ -148,6 +153,7 @@
 				34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */,
 				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
 				34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */,
+				398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */,
 				34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */,
 				34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */,
 				391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */,
@@ -191,9 +197,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		344F95C41AA37FCB0015B806 /* HUSApp */ = {
+		344F95C41AA37FCB0015B806 /* Lung Ops */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 344F95E71AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "HUSApp" */;
+			buildConfigurationList = 344F95E71AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "Lung Ops" */;
 			buildPhases = (
 				344F95C11AA37FCB0015B806 /* Sources */,
 				344F95C21AA37FCB0015B806 /* Frameworks */,
@@ -204,14 +210,14 @@
 			);
 			dependencies = (
 			);
-			name = HUSApp;
+			name = "Lung Ops";
 			productName = HUSApp;
-			productReference = 344F95C51AA37FCB0015B806 /* HUSApp.app */;
+			productReference = 344F95C51AA37FCB0015B806 /* Lung Ops.app */;
 			productType = "com.apple.product-type.application";
 		};
-		344F95DC1AA37FCB0015B806 /* HUSAppTests */ = {
+		344F95DC1AA37FCB0015B806 /* Lung OpsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 344F95EA1AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "HUSAppTests" */;
+			buildConfigurationList = 344F95EA1AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "Lung OpsTests" */;
 			buildPhases = (
 				344F95D91AA37FCB0015B806 /* Sources */,
 				344F95DA1AA37FCB0015B806 /* Frameworks */,
@@ -222,9 +228,9 @@
 			dependencies = (
 				344F95DF1AA37FCB0015B806 /* PBXTargetDependency */,
 			);
-			name = HUSAppTests;
+			name = "Lung OpsTests";
 			productName = HUSAppTests;
-			productReference = 344F95DD1AA37FCB0015B806 /* HUSAppTests.xctest */;
+			productReference = 344F95DD1AA37FCB0015B806 /* Lung OpsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -245,7 +251,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 344F95C01AA37FCB0015B806 /* Build configuration list for PBXProject "HUSApp" */;
+			buildConfigurationList = 344F95C01AA37FCB0015B806 /* Build configuration list for PBXProject "Lung Ops" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -258,8 +264,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				344F95C41AA37FCB0015B806 /* HUSApp */,
-				344F95DC1AA37FCB0015B806 /* HUSAppTests */,
+				344F95C41AA37FCB0015B806 /* Lung Ops */,
+				344F95DC1AA37FCB0015B806 /* Lung OpsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -320,7 +326,9 @@
 				34E117761AB0523900E4DDFD /* SettingsTableViewController.swift in Sources */,
 				391BE22C1AA9FD470046D5C8 /* OperationTableViewController.swift in Sources */,
 				34E20D651AA8D13F004F0C8F /* SelectorTableViewController.swift in Sources */,
+				398ED0C91AB66B980059505B /* TextFieldInputTableViewController.swift in Sources */,
 				344F95F51AA3803A0015B806 /* Operation.m in Sources */,
+				0DF80FBD1ABB27A200554D04 /* PKNotification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +345,7 @@
 /* Begin PBXTargetDependency section */
 		344F95DF1AA37FCB0015B806 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 344F95C41AA37FCB0015B806 /* HUSApp */;
+			target = 344F95C41AA37FCB0015B806 /* Lung Ops */;
 			targetProxy = 344F95DE1AA37FCB0015B806 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -442,7 +450,7 @@
 				);
 				INFOPLIST_FILE = HUSApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Lung Ops";
 				SWIFT_OBJC_BRIDGING_HEADER = "HUSApp/HUSApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -459,7 +467,7 @@
 				);
 				INFOPLIST_FILE = HUSApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Lung Ops";
 				SWIFT_OBJC_BRIDGING_HEADER = "HUSApp/HUSApp-Bridging-Header.h";
 			};
 			name = Release;
@@ -478,8 +486,8 @@
 				);
 				INFOPLIST_FILE = HUSAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HUSApp.app/HUSApp";
+				PRODUCT_NAME = "Lung OpsTests";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lung Ops.app/Lung Ops";
 			};
 			name = Debug;
 		};
@@ -493,15 +501,15 @@
 				);
 				INFOPLIST_FILE = HUSAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HUSApp.app/HUSApp";
+				PRODUCT_NAME = "Lung OpsTests";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lung Ops.app/Lung Ops";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		344F95C01AA37FCB0015B806 /* Build configuration list for PBXProject "HUSApp" */ = {
+		344F95C01AA37FCB0015B806 /* Build configuration list for PBXProject "Lung Ops" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				344F95E51AA37FCB0015B806 /* Debug */,
@@ -510,7 +518,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		344F95E71AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "HUSApp" */ = {
+		344F95E71AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "Lung Ops" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				344F95E81AA37FCB0015B806 /* Debug */,
@@ -519,7 +527,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		344F95EA1AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "HUSAppTests" */ = {
+		344F95EA1AA37FCB0015B806 /* Build configuration list for PBXNativeTarget "Lung OpsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				344F95EB1AA37FCB0015B806 /* Debug */,

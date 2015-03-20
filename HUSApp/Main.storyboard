@@ -8,7 +8,7 @@
         <!--Patients-->
         <scene sceneID="A4Y-5Z-vUm">
             <objects>
-                <tableViewController storyboardIdentifier="patientList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qV9-Dn-17g" customClass="PatientListTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="patientList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qV9-Dn-17g" customClass="PatientListTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zIN-Yz-HNX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,6 +37,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Patients" id="za4-hT-AVH">
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="Cx5-aB-79l">
+                            <color key="tintColor" red="0.22352941330000001" green="0.62352943419999995" blue="0.61176472900000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="userDidPressSettings:" destination="qV9-Dn-17g" id="uuK-Ec-8Ch"/>
                             </connections>
@@ -57,7 +58,7 @@
         <!--Settings-->
         <scene sceneID="OkI-TY-Aof">
             <objects>
-                <tableViewController storyboardIdentifier="SettingsTable" title="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cda-4j-OkI" customClass="SettingsTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsTable" title="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cda-4j-OkI" customClass="SettingsTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="kjv-G7-K6K">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -65,7 +66,7 @@
                         <sections>
                             <tableViewSection headerTitle="Dropbox" id="4qH-73-1O0">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Dhq-Zx-hQ4" detailTextLabel="bwP-VS-dqr" style="IBUITableViewCellStyleValue1" id="izc-hd-weL">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Dhq-Zx-hQ4" detailTextLabel="bwP-VS-dqr" style="IBUITableViewCellStyleValue1" id="izc-hd-weL">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="izc-hd-weL" id="G7N-5H-GsA">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -142,7 +143,7 @@
         <!--PatientEditorContents-->
         <scene sceneID="qTM-Ft-87L">
             <objects>
-                <viewController storyboardIdentifier="patientEditorInside" title="PatientEditorContents" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gPH-7y-98f" customClass="PatientEditorViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="patientEditorInside" title="PatientEditorContents" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gPH-7y-98f" customClass="PatientEditorViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ia1-16-iTU"/>
                         <viewControllerLayoutGuide type="bottom" id="C3S-3f-aOh"/>
@@ -352,7 +353,7 @@
         <!--PatientViewer-->
         <scene sceneID="bah-sP-PKo">
             <objects>
-                <tableViewController storyboardIdentifier="PatientViewer" title="PatientViewer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oU2-Mo-mmM" customClass="PatientTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PatientViewer" title="PatientViewer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oU2-Mo-mmM" customClass="PatientTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="em7-MD-4nA">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -428,7 +429,7 @@
         <!--DateTimePicker-->
         <scene sceneID="RSP-cS-gDv">
             <objects>
-                <tableViewController storyboardIdentifier="DateTimePicker" title="DateTimePicker" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGU-lP-gTi" customClass="DateAndTimePickerTableViewController" customModule="HUSApp" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DateTimePicker" title="DateTimePicker" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGU-lP-gTi" customClass="DateAndTimePickerTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="QEF-La-Gih">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -475,7 +476,7 @@
         <!--Selector-->
         <scene sceneID="rzW-z1-t5h">
             <objects>
-                <tableViewController storyboardIdentifier="Selector" title="Selector" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gie-Cb-WBp" customClass="SelectorTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Selector" title="Selector" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gie-Cb-WBp" customClass="SelectorTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="UqJ-ta-zZQ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -507,10 +508,56 @@
             </objects>
             <point key="canvasLocation" x="391" y="2800"/>
         </scene>
+        <!--TextFieldInput-->
+        <scene sceneID="GOL-Lq-zCN">
+            <objects>
+                <tableViewController storyboardIdentifier="TextFieldInput" title="TextFieldInput" useStoryboardIdentifierAsRestorationIdentifier="YES" id="D5Z-cr-m3Z" customClass="TextFieldInputTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="21e-cb-U8s">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="ppH-CO-89Q">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="GIk-j7-tCt">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GIk-j7-tCt" id="Plg-eU-rsV">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="20" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZtN-ql-g7h">
+                                                    <rect key="frame" x="15" y="3" width="570" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ZtN-ql-g7h" secondAttribute="bottom" constant="-4" id="6J7-RK-ryz"/>
+                                                <constraint firstItem="ZtN-ql-g7h" firstAttribute="top" secondItem="Plg-eU-rsV" secondAttribute="topMargin" constant="-5" id="6q6-YV-B2N"/>
+                                                <constraint firstItem="ZtN-ql-g7h" firstAttribute="leading" secondItem="Plg-eU-rsV" secondAttribute="leadingMargin" constant="7" id="GEL-4b-WYM"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ZtN-ql-g7h" secondAttribute="trailing" constant="7" id="sMX-1V-Enb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="D5Z-cr-m3Z" id="X2D-Tr-0Hk"/>
+                            <outlet property="delegate" destination="D5Z-cr-m3Z" id="Dmc-Ia-e4l"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="textField" destination="ZtN-ql-g7h" id="3m9-4Z-EUc"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="73C-RS-Xrd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1094" y="2779"/>
+        </scene>
         <!--Death-->
         <scene sceneID="CNR-Z9-tM3">
             <objects>
-                <tableViewController storyboardIdentifier="Death" title="Death" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f00-IE-q6L" customClass="DeathTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Death" title="Death" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f00-IE-q6L" customClass="DeathTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="gFK-we-3hx">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -602,7 +649,7 @@
         <!--OperationTableView-->
         <scene sceneID="px1-n3-5NX">
             <objects>
-                <tableViewController storyboardIdentifier="OperationTableView" title="OperationTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6ja-vF-KMC" customClass="OperationTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="OperationTableView" title="OperationTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6ja-vF-KMC" customClass="OperationTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wal-cO-kno">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -644,7 +691,7 @@
         <!--ValuePicker-->
         <scene sceneID="Q7s-JD-AHk">
             <objects>
-                <tableViewController storyboardIdentifier="ValuePicker" title="ValuePicker" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YMM-kr-6JM" customClass="ValuePickerTableViewController" customModule="HUSApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ValuePicker" title="ValuePicker" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YMM-kr-6JM" customClass="ValuePickerTableViewController" customModule="Lung_Ops" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="8lm-t8-cei">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -678,7 +725,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="picker" destination="Sbn-kA-mia" id="Bd2-Ul-u7S"/>
+                        <outlet property="picker" destination="Sbn-kA-mia" id="ere-kd-5Uc"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lvz-af-qPm" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,7 +10,7 @@ import Foundation
 
 class Dropbox {
     
-    var dbFileSystem:DBFilesystem
+    var dbFileSystem:DBFilesystem?
     
     init(){
         var dbFileSystem = DBFilesystem.sharedFilesystem()
@@ -25,21 +25,21 @@ class Dropbox {
         if oldPatientName != newPatientName {
             var oldPath:DBPath = DBPath.root().childPath("/" + oldPatientName)
             var newPath:DBPath = DBPath.root().childPath("/" + newPatientName)
-            self.dbFileSystem.movePath(oldPath, toPath: newPath, error: nil)
-            self.dbFileSystem.deletePath(oldPath, error: nil)
+            self.dbFileSystem?.movePath(oldPath, toPath: newPath, error: nil)
+            self.dbFileSystem?.deletePath(oldPath, error: nil)
         } 
     }
     
     func createFolder(patientName:String){
         var path:String = "/" + patientName
         var dbpath:DBPath = DBPath.root().childPath(path)
-        self.dbFileSystem.createFolder(dbpath, error: nil)
+        self.dbFileSystem!.createFolder(dbpath, error: nil)
     }
     
     func deleteFolder(patientName:String){
         var path:String = "/" + patientName
         var dbpath:DBPath = DBPath.root().childPath(path)
-        self.dbFileSystem.deletePath(dbpath, error: nil)
+        self.dbFileSystem?.deletePath(dbpath, error: nil)
     }
     
     // Create or Delete .xls files
@@ -53,8 +53,8 @@ class Dropbox {
     func deleteFile(patientName:String, fileName:String){
         var path:String =  "/" + patientName + "/" + fileName + ".xls"
         var dbpath:DBPath = DBPath.root().childPath(path)
-        if self.dbFileSystem.fileInfoForPath(dbpath, error: nil) != nil {
-            self.dbFileSystem.deletePath(dbpath, error: nil)
+        if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil {
+            self.dbFileSystem?.deletePath(dbpath, error: nil)
         }
     }
     
@@ -63,85 +63,94 @@ class Dropbox {
         var path:String =  "/" + patientName + "/" + fileName + ".xls"
         var dbpath:DBPath = DBPath.root().childPath(path)
         
-        var header = "<?xml version=\"1.0\"?>\n<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:o=\"urn:schemas-microsoft-com:office:office\"\nxmlns:x=\"urn:schemas-microsoft-com:office:excel\"\nxmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:html=\"http://www.w3.org/TR/REC-html40\">\n<Worksheet ss:Name=\"Sheet1\">\n<Table ss:ExpandedColumnCount=\""
+        var header = "<?xml version=\"1.0\"?>\n<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:o=\"urn:schemas-microsoft-com:office:office\"\nxmlns:x=\"urn:schemas-microsoft-com:office:excel\"\nxmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:html=\"http://www.w3.org/TR/REC-html40\">\n<Styles>\n<Style ss:ID=\"left\"><Alignment ss:Horizontal=\"Left\"/></Style></Styles>\n<Worksheet ss:Name=\"Sheet1\">\n<Table ss:ExpandedColumnCount=\""
         
         var columncount = "\"ss:ExpandedRowCount=\""
         var rowcount = "\" x:FullColumns=\"1\"x:FullRows=\"1\">\n"
         
         var footer = "</Table>\n</Worksheet>\n</Workbook>"
         
-        var totalRow = 11 + operation.resectionsArray().count + operation.complicationsArray().count
+        var totalRow = 13 + operation.resectionsArray().count + operation.complicationsArray().count
         var xlsstring = header + "2" + columncount + "\(totalRow)" + rowcount
         
-        xlsstring += createRow("Name", value:patient.name)
-        xlsstring += createRow("Patient ID", value: patient.patientID)
-        xlsstring += createRow("Age", value: patient.ageString())
+        xlsstring += createRow("Name", value:patient.name, text: true)
+        xlsstring += createRow("Patient ID", value: patient.patientID, text: true)
+        xlsstring += createRow("Age", value: patient.ageString(), text: false)
         
-        xlsstring += createRow("Date of Operation", value: operation.dateString())
-        xlsstring += createRow("Type of Approach", value: operation.approachString())
+        xlsstring += createRow("Date of Operation", value: operation.dateString(), text: true)
+        xlsstring += createRow("Type of Approach", value: operation.approachString(), text: true)
         
         var first = true
         if (operation.resectionsArray().count > 0){
             for obj in operation.resectionsArray() {
                 var resection = obj as String
                 if first {
-                    xlsstring += createRow("Type of Resection", value: resection)
+                    xlsstring += createRow("Type of Resection", value: resection, text: true)
                     first = false
                 } else {
-                    xlsstring += createRow("", value: resection)
+                    xlsstring += createRow("", value: resection, text: true)
                     
                 }
             }
         }
         
-        xlsstring += createRow("Duration of Operation", value: operation.durationString())
-        xlsstring += createRow("Blood Loss / mL", value: "\(operation.bloodLoss)")
+        xlsstring += createRow("Duration of Operation", value: operation.durationString(), text: true)
+        xlsstring += createRow("FEV1", value: "\(operation.fev1)", text: false)
+        xlsstring += createRow("DLCO", value: "\(operation.dlco)", text: false)
+        xlsstring += createRow("Blood Loss / mL", value: "\(operation.bloodLoss)", text: false)
         
         if (operation.admittedToICU == 1){
-            xlsstring += createRow("Admission to ICU", value: "Yes")
+            xlsstring += createRow("Admission to ICU", value: "Yes", text: true)
         }
         else {
-            xlsstring += createRow("Admission to ICU", value: "No")
+            xlsstring += createRow("Admission to ICU", value: "No", text: true)
         }
-        xlsstring += createRow("Total Time in Hospital / days", value: "\(operation.durationOfStay)")
+        xlsstring += createRow("Total Time in Hospital / days", value: "\(operation.durationOfStay)", text: false)
         
         first = true
         if (operation.complicationsArray().count > 0){
             for obj in operation.complicationsArray() {
                 var complications = obj as String
                 if first {
-                    xlsstring += createRow("Complications during Hospital Stay", value: complications)
+                    xlsstring += createRow("Complications during Hospital Stay", value: complications, text: true)
                     first = false
                 } else {
-                    xlsstring += createRow("", value: complications)
+                    xlsstring += createRow("", value: complications, text: true)
                 }
             }
         }
         if (operation.alive == 1) {
-            xlsstring += createRow("Follow-up Date", value: operation.followUpDateString())
-            xlsstring += createRow("Death Date", value: "NA")
+            xlsstring += createRow("Follow-up Date", value: operation.followUpDateString(), text: true)
+            xlsstring += createRow("Death Date", value: "NA", text: true)
         }
         if (operation.alive == 0) {
-            xlsstring += createRow("Follow-up Date", value: "NA")
-            xlsstring += createRow("Death Date", value: operation.dateString())
+            xlsstring += createRow("Follow-up Date", value: "NA", text: true)
+            xlsstring += createRow("Death Date", value: operation.dateString(), text: true)
         }
         
         xlsstring += footer
-        
-        var newFile = self.dbFileSystem.createFile(dbpath, error: nil)
-        if newFile != nil {
-            newFile.writeString(xlsstring, error: nil)
-            newFile.close()
+
+        if self.dbFileSystem != nil{
+            var newFile = self.dbFileSystem!.createFile(dbpath, error: nil)
+            if newFile != nil {
+                newFile.writeString(xlsstring, error: nil)
+                newFile.close()
+            }
         }
+        
         
     }
     
-    func createRow(label:String, value:String) -> String{
+    func createRow(label:String, value:String, text:BooleanType) -> String{
         
         var rowStart = "<Row>\n"
         var rowEnde = "\n</Row>\n"
+        var stringStart = "<Cell ss:StyleID=\"left\"><Data ss:Type=\"Number\">"
         
-        var stringStart = "<Cell><Data ss:Type=\"String\">"
+        if text {
+            stringStart = "<Cell><Data ss:Type=\"String\">"
+        }
+       
         var stringEnde = "</Data></Cell>"
         
         var numberStart = "<Cell><Data ss:Type=\"String\">"

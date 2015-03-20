@@ -11,14 +11,27 @@ import CoreData
 
 class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, SettingsViewControllerDelegate, UISearchResultsUpdating {
     
-    
     var account = DBAccountManager.sharedManager()?.linkedAccount
     var dbFileSystem = DBFilesystem.sharedFilesystem()
     
+    var searchController: UISearchController?
+    var results: NSFetchedResultsController?
+    
+    var managedObjectContext: NSManagedObjectContext?
+        {
+        didSet
+        {
+            var fetchRequest = NSFetchRequest(entityName:"Patient")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector:"caseInsensitiveCompare:")]
+            results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath:"firstLetter", cacheName:nil)
+            results!.delegate = self
+        }
+    }
+    
 	@IBAction func userDidPressSettings(sender: UIBarButtonItem)
 	{
-		let storyboard = UIStoryboard(name: "Main", bundle:nil)
 		self.searchController!.active = false
+        let storyboard = UIStoryboard(name: "Main", bundle:nil)
 		var settingsTVC = storyboard.instantiateViewControllerWithIdentifier("SettingsTable") as SettingsTableViewController
         settingsTVC.delegate = self
 		var settingsNVC = UINavigationController(rootViewController: settingsTVC)
@@ -30,25 +43,12 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 	
-    var searchController: UISearchController?
-    var results: NSFetchedResultsController?
-    var managedObjectContext: NSManagedObjectContext?
-    {
-        didSet
-        {
-            var fetchRequest = NSFetchRequest(entityName:"Patient")
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector:"caseInsensitiveCompare:")]
-            results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath:"firstLetter", cacheName:nil)
-            results!.delegate = self
-        }
-    }
-    
     func userDidPressCancel(patientEditor: PatientEditorViewController)
     {
-        self.dismissViewControllerAnimated(true, completion: nil)
         let patient = patientEditor.patient
         managedObjectContext!.deleteObject(patient!)
         managedObjectContext!.save(nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func userDidPressDone(patientEditor: PatientEditorViewController)
@@ -121,7 +121,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -166,9 +165,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as UITableViewCell
-        
         configureCell(cell, atIndexPath: indexPath)
-        
         return cell
     }
     

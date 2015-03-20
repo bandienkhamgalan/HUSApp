@@ -8,7 +8,8 @@
 
 import UIKit
 import CoreData
-
+import Foundation
+ 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -34,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let account = DBAccountManager.sharedManager().handleOpenURL(url)
             if (account != nil) {
                 println("App linked to Dropbox successfully!")
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("dropbox", object: nil)
+                
                 return true
             }
             return false

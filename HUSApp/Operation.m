@@ -24,18 +24,15 @@
 @dynamic resection;
 @dynamic patient;
 @dynamic durationOfStay;
-
--(NSDictionary *)serialize
-{
-	return [NSDictionary dictionaryWithObjectsAndKeys:@"date", self.date, @"approach", self.approachString, @"resection", self.resectionsArray, @"duration", self.duration, @"bloodLoss", self.bloodLoss, @"admittedToICU", self.admittedToICU, @"durationOfStay", self.durationOfStay, @"followUpDate", self.followUpDate, @"complications", self.complicationsArray, @"death", [NSNumber numberWithBool:!self.alive.boolValue], @"deathDate", self.deathDate, nil];
-}
+@dynamic fev1;
+@dynamic dlco;
 
 - (NSString *)durationString
 {
     int minutes = self.duration.intValue;
     if( minutes > 60 )
     {
-        return minutes % 60 == 0 ? [NSString stringWithFormat:@"%d hours", minutes / 60] : [NSString stringWithFormat:@"%d hours and %d minutes", minutes / 60, minutes % 60];
+        return minutes % 60 == 0 ? [NSString stringWithFormat:@"%d hour%c", minutes / 60, minutes < 120 ? '\0' : 's'] : [NSString stringWithFormat:@"%d hour%c and %d minutes", minutes / 60,  minutes < 120 ? '\0' : 's', minutes % 60];
     }
     else
         return [NSString stringWithFormat:@"%d minutes", minutes];
@@ -50,7 +47,7 @@
 
 + (NSMutableDictionary *)emptyComplications
 {
-    return [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false], @"Pneumonia", [NSNumber numberWithBool:false], @"Respiratory failure", [NSNumber numberWithBool:false], @"Empyema", [NSNumber numberWithBool:false], @"Prolonged air leak", [NSNumber numberWithBool:false], @"Pulmonary embolism", [NSNumber numberWithBool:false], @"Arrythmia", [NSNumber numberWithBool:false], @"Myocardial infarction", [NSNumber numberWithBool:false], @"Delirium", [NSNumber numberWithBool:false], @"Cerebral infarktion/bleeding", nil];
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false], @"Pneumonia", [NSNumber numberWithBool:false], @"Respiratory Failure", [NSNumber numberWithBool:false], @"Empyema", [NSNumber numberWithBool:false], @"Prolonged Air Leak", [NSNumber numberWithBool:false], @"Pulmonary Embolism", [NSNumber numberWithBool:false], @"Arrythmia", [NSNumber numberWithBool:false], @"Myocardial Infarction", [NSNumber numberWithBool:false], @"Delirium", [NSNumber numberWithBool:false], @"Cerebral Infarktion/Bleeding", nil];
 }
 
 - (void)setComplicationsValue:(NSDictionary *)complications

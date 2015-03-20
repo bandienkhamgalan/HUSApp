@@ -56,6 +56,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func genderPicked(sender: UISegmentedControl)
     {
+        resignAllTextFieldsFirstResponders()
         switch(sender.selectedSegmentIndex)
         {
             case 0:
@@ -89,9 +90,18 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         }
     }
     
+    func dbSuccess() {
+        println(DBAccountManager.sharedManager().linkedAccount)
+        PKNotification.successBackgroundColor = themeColour
+        PKNotification.success("Linked!")
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        // Observe for Dropbox successfully linked
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dbSuccess", name: "dropbox", object: nil)
         
         linkDropbox()
         
@@ -104,7 +114,8 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         }
         else
         {
-            println(patient!)
+            self.view!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "resignAllTextFieldsFirstResponders"))
+            // existing patient -> load information
             if(patient!.name != nil)
             {
                 nameField.text = patient!.name
@@ -126,6 +137,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
                 gender = patient!.gender.integerValue
                 genderPicker.selectedSegmentIndex = gender
             }
+            
             nameField.delegate = self
             idField.delegate = self
             ageField.delegate = self
@@ -141,6 +153,13 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         // Dispose of any resources that can be recreated.
     }
     
+    func resignAllTextFieldsFirstResponders()
+    {
+        nameField.resignFirstResponder()
+        idField.resignFirstResponder()
+        ageField.resignFirstResponder()
+    }
+    
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
         var newString = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
@@ -153,14 +172,26 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
                 patientID = newString
                 break
             case ageField:
-                let processedAge = NSNumberFormatter().numberFromString(newString)
+                var processedAge = NSNumberFormatter().numberFromString(newString)
                 if processedAge != nil
                 {
-                    age = processedAge!.integerValue
+                    if newString.rangeOfString(".", options: nil, range: nil, locale: nil) == nil
+                    {
+                        age = processedAge!.integerValue
+                    }
+                    else
+                    {
+                        return false
+                    }
+                }
+                else if countElements(newString) == 0
+                {
+                    age = -1
+                    return true
                 }
                 else
                 {
-                    age = -1
+                    return false
                 }
                 break
             default:

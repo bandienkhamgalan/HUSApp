@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 protocol SettingsViewControllerDelegate
 {
@@ -17,7 +18,7 @@ class SettingsTableViewController: UITableViewController {
     
     var delegate: SettingsViewControllerDelegate?
     
-    var themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+    let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
     
     func done(){
         if delegate != nil
@@ -36,8 +37,20 @@ class SettingsTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = doneButton
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: themeColour]
         
+        // Observe for Dropbox successfully linked
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dbSuccess", name: "dropbox", object: nil)
+        
         updateView()
-
+    }
+    
+    
+    func dbSuccess() {
+        println(DBAccountManager.sharedManager().linkedAccount)
+        // println(DBAccountManager.sharedManager().linkedAccount.info)
+        // updateView()
+        PKNotification.successBackgroundColor = themeColour
+        PKNotification.success("Linked!")
+        done()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +62,7 @@ class SettingsTableViewController: UITableViewController {
         if DBAccountManager.sharedManager().linkedAccount != nil {
             actionDropbox.textLabel?.text = "Sign Out from Dropbox"
             actionDropbox.textLabel?.textColor = UIColor.redColor()
-            infoDropbox.detailTextLabel?.text = DBAccountManager.sharedManager().linkedAccount.info.userName
+            infoDropbox.detailTextLabel?.text = DBAccountManager.sharedManager().linkedAccount.info?.userName
             
         } else {
             actionDropbox.textLabel?.text = "Link with Dropbox"
@@ -61,10 +74,12 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 && DBAccountManager.sharedManager().linkedAccount != nil {
             DBAccountManager.sharedManager().linkedAccount.unlink()
+            println("App unlinked from Dropbox!")
         } else if indexPath.section == 1 {
             DBAccountManager.sharedManager().linkFromController(self)
         }
         
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         updateView()
     }
 
