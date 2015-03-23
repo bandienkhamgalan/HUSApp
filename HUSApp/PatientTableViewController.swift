@@ -15,7 +15,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     var managedObjectContext: NSManagedObjectContext?
     
     var dbFileSystem = DBFilesystem.sharedFilesystem()
-    var oldPatientName: String?
+    var oldPatientID: String?
     
     func userDidPressCancel(patientEditor: PatientEditorViewController)
     {
@@ -27,8 +27,8 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
-        Dropbox().updateFolderinDropbox(oldPatientName!, newPatientName: patient!.name)
-        self.title = patient!.name
+        Dropbox().updateFolderinDropbox(oldPatientID!, newPatientID: patient!.patientID)
+        self.title = patient!.patientID
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
@@ -75,7 +75,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     override func viewDidLoad()
     {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "userPressedAdd")
-        self.title = patient!.name
+        self.title = patient!.patientID
         results!.performFetch(nil)
         super.viewDidLoad()
     }
@@ -97,7 +97,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         if indexPath.section == 0
         {
-            oldPatientName = patient!.name
+            oldPatientID = patient!.patientID
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
             let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController

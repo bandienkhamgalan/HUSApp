@@ -53,8 +53,8 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     func userDidPressDone(patientEditor: PatientEditorViewController)
     {
-        var name:String? = patientEditor.patient?.name
-        Dropbox().createFolder(name!)
+        var patientID:String? = patientEditor.patient?.patientID
+        Dropbox().createFolder(patientID!)
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -83,10 +83,10 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     {
 		println("in updatesearchresultsforsearchcontroller: \(searchController.searchBar.text)")
 		var fetchRequest = NSFetchRequest(entityName:"Patient")
-		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector:"caseInsensitiveCompare:")]
+		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "patientID", ascending: true, selector:"caseInsensitiveCompare:")]
 		if countElements(searchController.searchBar.text) > 0
 		{
-			fetchRequest.predicate = NSPredicate(format: "name CONTAINS[c] %@", searchController.searchBar.text)
+			fetchRequest.predicate = NSPredicate(format: "patientID CONTAINS[c] %@", searchController.searchBar.text)
 		}
 		results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath:"firstLetter", cacheName:nil)
 		results!.performFetch(nil)
@@ -158,7 +158,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
     {
         var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
-        cell.textLabel!.text = currentPatient.name
+        cell.textLabel!.text = currentPatient.patientID
 
     }
     
@@ -255,8 +255,8 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         {
             // Delete the row from the data source
             let patient = self.results!.objectAtIndexPath(indexPath) as Patient
-            var name:String? = patient.name
-            Dropbox().deleteFolder(name!)
+            var patientID:String? = patient.patientID
+            Dropbox().deleteFolder(patientID!)
             managedObjectContext!.deleteObject(patient)
             managedObjectContext!.save(nil)
         }
