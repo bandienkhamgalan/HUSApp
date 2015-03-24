@@ -80,7 +80,8 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         }
     }
     
-    func linkDropbox(){
+    func linkDropbox()
+	{
         var account = DBAccountManager.sharedManager().linkedAccount
         if account == nil {
             DBAccountManager.sharedManager().linkFromController(self)

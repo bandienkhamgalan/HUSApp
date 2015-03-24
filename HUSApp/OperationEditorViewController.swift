@@ -96,7 +96,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
 	
 	func userCanUpdateChoice(newSelection: [String], sender: SelectorTableViewController) -> Bool
 	{
-		println("in usercanupdatechoice")
 		println(sender == screenThree! ? countElements(newSelection) > 0 : true)
 		return sender == screenThree! ? countElements(newSelection) > 0 : true
 	}
@@ -233,8 +232,12 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         // resign blood loss text field from first responder
         if previousPage == 4 && previousPage != currentPage
         {
-            screenFive?.resignTextFieldFirstResponder()
+            screenFive!.resignTextFieldFirstResponder()
         }
+		else if currentPage == 4 && previousPage != currentPage
+		{
+			screenFive!.becomeFirstResponder()
+		}
         
         if existingOperation || (essentialCompleted == true && currentPage == 11 )
         {

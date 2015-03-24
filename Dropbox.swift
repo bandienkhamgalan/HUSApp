@@ -10,55 +10,88 @@ import Foundation
 
 class Dropbox {
     
-    var dbFileSystem:DBFilesystem?
-    
-    init(){
-        var dbFileSystem = DBFilesystem.sharedFilesystem()
-        if (dbFileSystem == nil){
-            DBFilesystem.setSharedFilesystem(DBFilesystem(account: DBAccountManager.sharedManager().linkedAccount))
-        }
-        self.dbFileSystem  = DBFilesystem.sharedFilesystem()
-    }
+	var dbFileSystem: DBFilesystem?
+	{
+		if DBFilesystem.sharedFilesystem() == nil
+		{
+			DBFilesystem.setSharedFilesystem(DBFilesystem(account: DBAccountManager.sharedManager().linkedAccount))
+		}
+		return DBFilesystem.sharedFilesystem()
+	}
+	
+	var serialThread: dispatch_queue_t
+	
+	init()
+	{
+		serialThread = dispatch_queue_create("LungOpsDropbox", nil)
+	}
     
     // Move to new folder and delete old folder if Patient's name change
-    func updateFolderinDropbox(oldPatientID:String, newPatientID:String){
-        if oldPatientID != newPatientID {
+    func updateFolderinDropbox(oldPatientID:String, newPatientID:String)
+	{
+        if oldPatientID != newPatientID
+		{
             var oldPath:DBPath = DBPath.root().childPath("/" + oldPatientID)
             var newPath:DBPath = DBPath.root().childPath("/" + newPatientID)
-            self.dbFileSystem?.movePath(oldPath, toPath: newPath, error: nil)
-            self.dbFileSystem?.deletePath(oldPath, error: nil)
-        } 
+			dispatch_async(serialThread)
+			{
+				self.dbFileSystem?.movePath(oldPath, toPath: newPath, error: nil)
+				self.dbFileSystem?.deletePath(oldPath, error: nil)
+			}
+        }
     }
     
-    func createFolder(patientID:String){
+    func createFolder(patientID:String)
+	{
         var path:String = "/" + patientID
         var dbpath:DBPath = DBPath.root().childPath(path)
-        self.dbFileSystem!.createFolder(dbpath, error: nil)
+		dispatch_async(serialThread)
+		{
+			self.dbFileSystem?.createFolder(dbpath, error: nil)
+			return
+		}
     }
     
     func deleteFolder(patientID:String){
         var path:String = "/" + patientID
         var dbpath:DBPath = DBPath.root().childPath(path)
-        self.dbFileSystem?.deletePath(dbpath, error: nil)
+		
+		dispatch_async(serialThread)
+		{
+			if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil
+			{
+				self.dbFileSystem?.deletePath(dbpath, error: nil)
+			}
+		}
     }
     
     // Create or Delete .xls files
-    func exportToDropbox(operation:Operation, patient:Patient, create:Bool){
-        deleteFile(patient.patientID, fileName: operation.dateString())
-        if create {
-            createFile(patient.patientID, fileName: operation.dateString(), patient: patient, operation: operation)
-        }
+    func exportToDropbox(operation:Operation, patient:Patient, create:Bool)
+	{
+		dispatch_async(serialThread)
+		{
+			self.deleteFile(patient.patientID, fileName: operation.dateString())
+			if create
+			{
+				self.createFile(patient.patientID, fileName: operation.dateString(), patient: patient, operation: operation)
+			}
+		}
     }
 
-    func deleteFile(patientID:String, fileName:String){
+    func deleteFile(patientID:String, fileName:String)
+	{
         var path:String =  "/" + patientID + "/" + fileName + ".xls"
         var dbpath:DBPath = DBPath.root().childPath(path)
-        if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil {
-            self.dbFileSystem?.deletePath(dbpath, error: nil)
-        }
+		dispatch_async(serialThread)
+		{
+			if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil {
+				self.dbFileSystem?.deletePath(dbpath, error: nil)
+			}
+		}
     }
     
-    func createFile(patientID:String, fileName:String, patient:Patient, operation:Operation){
+    func createFile(patientID:String, fileName:String, patient:Patient, operation:Operation)
+	{
         
         var path:String =  "/" + patientID + "/" + fileName + ".xls"
         var dbpath:DBPath = DBPath.root().childPath(path)
@@ -157,18 +190,19 @@ class Dropbox {
 
         xlsstring += footer
 
-        if self.dbFileSystem != nil{
-            var newFile = self.dbFileSystem!.createFile(dbpath, error: nil)
-            if newFile != nil {
-                newFile.writeString(xlsstring, error: nil)
-                newFile.close()
-            }
-        }
-        
-        
+		dispatch_async(serialThread)
+		{
+			var newFile = self.dbFileSystem?.createFile(dbpath, error: nil)
+			if newFile != nil
+			{
+				newFile!.writeString(xlsstring, error: nil)
+				newFile!.close()
+			}
+		}
     }
     
-    func createCell(value:String, text:BooleanType) -> String{
+    func createCell(value:String, text:BooleanType) -> String
+	{
         
         var stringStart = "<Cell ss:StyleID=\"center\"><Data ss:Type=\"Number\">"
         

@@ -33,6 +33,11 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
     {
         textField.resignFirstResponder()
     }
+	
+	override func becomeFirstResponder() -> Bool
+	{
+		return textField.becomeFirstResponder()
+	}
     
     var savedValue: Int?
     var value: Int

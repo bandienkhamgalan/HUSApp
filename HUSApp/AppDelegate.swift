@@ -1,4 +1,4 @@
- //
+  //
 //  AppDelegate.swift
 //  HUSApp
 //
@@ -20,10 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Dropbox
         let accountManager = DBAccountManager(appKey: "g3x0ahovcbkomft", secret: "xrk9e61hklk83jd")
         DBAccountManager.setSharedManager(accountManager)
-        
+		
         let rootViewController = window!.rootViewController! as UINavigationController
         let patientListViewController = rootViewController.visibleViewController as PatientListTableViewController
         patientListViewController.managedObjectContext = managedObjectContext;
+		patientListViewController.dropbox = Dropbox()
         
         return true
     }
@@ -35,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let account = DBAccountManager.sharedManager().handleOpenURL(url)
             if (account != nil) {
                 println("App linked to Dropbox successfully!")
-                
+				
                 NSNotificationCenter.defaultCenter().postNotificationName("dropbox", object: nil)
                 
                 return true

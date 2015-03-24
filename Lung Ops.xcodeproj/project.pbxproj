@@ -18,7 +18,6 @@
 		0DF80FBD1ABB27A200554D04 /* PKNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF80FBC1ABB27A200554D04 /* PKNotification.swift */; };
 		343736E01AA6813700013C79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343736DF1AA6813700013C79 /* Main.storyboard */; };
 		344F95CB1AA37FCB0015B806 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CA1AA37FCB0015B806 /* AppDelegate.swift */; };
-		344F95D01AA37FCB0015B806 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CF1AA37FCB0015B806 /* ViewController.swift */; };
 		344F95D51AA37FCB0015B806 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344F95D41AA37FCB0015B806 /* Images.xcassets */; };
 		344F95D81AA37FCB0015B806 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 344F95D61AA37FCB0015B806 /* LaunchScreen.xib */; };
 		344F95E41AA37FCB0015B806 /* HUSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95E31AA37FCB0015B806 /* HUSAppTests.swift */; };
@@ -62,7 +61,6 @@
 		344F95C51AA37FCB0015B806 /* Lung Ops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lung Ops.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		344F95C91AA37FCB0015B806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		344F95CA1AA37FCB0015B806 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		344F95CF1AA37FCB0015B806 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		344F95D41AA37FCB0015B806 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		344F95D71AA37FCB0015B806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		344F95DD1AA37FCB0015B806 /* Lung OpsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lung OpsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,18 +143,17 @@
 				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
 				344F95CA1AA37FCB0015B806 /* AppDelegate.swift */,
 				343736DF1AA6813700013C79 /* Main.storyboard */,
-				344F95CF1AA37FCB0015B806 /* ViewController.swift */,
 				344F95F71AA380430015B806 /* PatientListTableViewController.swift */,
 				34E117751AB0523900E4DDFD /* SettingsTableViewController.swift */,
 				34B1C06E1AA76BC2007DA58E /* PatientTableViewController.swift */,
 				34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */,
+				391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */,
 				34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */,
 				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
 				34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */,
 				398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */,
 				34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */,
 				34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */,
-				391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */,
 				344F95F11AA3803A0015B806 /* Operation.h */,
 				344F95F21AA3803A0015B806 /* Operation.m */,
 				344F95F31AA3803A0015B806 /* Patient.h */,
@@ -306,30 +303,12 @@
 		};
 /* End PBXShellScriptBuildPhase section */
 
-
-/* Begin PBXShellScriptBuildPhase section */
-		50524F424C454D533F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export CODESIGN_ALLOCATE=/Library/JailCoder/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ]; then\n/Library/JailCoder/Entitlements/Entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		344F95C11AA37FCB0015B806 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				34B1C06D1AA740D2007DA58E /* PatientEditorViewController.swift in Sources */,
-				344F95D01AA37FCB0015B806 /* ViewController.swift in Sources */,
 				344F95CB1AA37FCB0015B806 /* AppDelegate.swift in Sources */,
 				34A776211AA88529002AA3C8 /* OperationEditorViewController.swift in Sources */,
 				344F95F61AA3803A0015B806 /* Patient.m in Sources */,

@@ -20,7 +20,8 @@ class SettingsTableViewController: UITableViewController {
     
     let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
     
-    func done(){
+    func done()
+	{
         if delegate != nil
         {
             delegate!.userDidPressDone(self)

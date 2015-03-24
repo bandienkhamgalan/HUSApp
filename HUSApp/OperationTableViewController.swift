@@ -8,8 +8,9 @@
 
 import UIKit
 
-class OperationTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, OperationEditorViewControllerDelegate {
-    
+class OperationTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, OperationEditorViewControllerDelegate
+{
+	var dropbox: Dropbox?
     var operation: Operation?
     var patient: Patient?
     var results: NSFetchedResultsController?
@@ -18,7 +19,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
-        Dropbox().exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
+        dropbox?.exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -27,14 +28,15 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     {
         self.operation = operationEditor.operation!
         managedObjectContext!.save(nil)
-        Dropbox().exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
+        dropbox?.exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
-    func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
+	func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient, dropbox dropboxValue:Dropbox?)
     {
+		dropbox = dropboxValue
         patient = patientValue
         managedObjectContext = moc
         let request = NSFetchRequest(entityName:"Operation")
@@ -46,7 +48,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userPressedEdit()
     {
-        Dropbox().deleteFile(patient!.patientID, fileName: operation!.dateString())
+        dropbox?.deleteFile(patient!.patientID, fileName: operation!.dateString())
         let operationEditor = OperationEditorViewController()
         operationEditor.operation = operation
         operationEditor.delegate = self
