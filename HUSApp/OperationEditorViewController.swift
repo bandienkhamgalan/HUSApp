@@ -96,7 +96,6 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
 	
 	func userCanUpdateChoice(newSelection: [String], sender: SelectorTableViewController) -> Bool
 	{
-		println(sender == screenThree! ? countElements(newSelection) > 0 : true)
 		return sender == screenThree! ? countElements(newSelection) > 0 : true
 	}
 	
@@ -203,7 +202,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         toReturn.pagingEnabled = true
         toReturn.bounces = false
         toReturn.directionalLockEnabled = true
-        toReturn.contentSize = CGSize(width: toReturn.frame.size.width * 10, height: toReturn.frame.size.height)
+        toReturn.contentSize = CGSize(width: toReturn.frame.size.width * 12, height: toReturn.frame.size.height)
         toReturn.delegate = self
         return toReturn
     }
@@ -513,10 +512,30 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         {
             screens.append(nil)
         }
-        
-        // add screens
-        ensureScreensInitialized()
-        
+		
+		// call this function to initialize first two screens
+		ensureScreensInitialized()
+		
+		// start initializing screens on background thread
+		dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.value), 0))
+		{
+			for i in 0...11
+			{
+				if self.screens[i] == nil
+				{
+					self.screens[i] = self.initializeScreen(i)
+					self.setupScreen(i)
+					dispatch_sync(dispatch_get_main_queue())
+					{
+						println("adding view \(i)")
+						self.insertIntoScrollView(i)
+						return
+					}
+				}
+			}
+			self.initialized = true
+		}
+		
         // update
         updateIndicatorAndTitle()
         

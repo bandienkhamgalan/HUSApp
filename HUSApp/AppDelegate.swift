@@ -14,18 +14,18 @@ import Foundation
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+	var dropboxManager: Dropbox?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Dropbox
         let accountManager = DBAccountManager(appKey: "g3x0ahovcbkomft", secret: "xrk9e61hklk83jd")
-        DBAccountManager.setSharedManager(accountManager)
+		DBAccountManager.setSharedManager(accountManager)
+		dropboxManager = Dropbox(managedObjectContext: managedObjectContext!)
 		
         let rootViewController = window!.rootViewController! as UINavigationController
         let patientListViewController = rootViewController.visibleViewController as PatientListTableViewController
         patientListViewController.managedObjectContext = managedObjectContext;
-		patientListViewController.dropbox = Dropbox()
-        
         return true
     }
     

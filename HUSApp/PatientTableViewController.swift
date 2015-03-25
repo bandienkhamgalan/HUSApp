@@ -10,7 +10,6 @@ import UIKit
 
 class PatientTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, OperationEditorViewControllerDelegate
 {
-	var dropbox: Dropbox?
     var patient: Patient?
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
@@ -28,7 +27,6 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
-        dropbox?.updateFolderinDropbox(oldPatientID!, newPatientID: patient!.patientID)
         self.title = patient!.patientID
         self.dismissViewControllerAnimated(true, completion: nil)
         
@@ -36,27 +34,26 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
-        managedObjectContext!.deleteObject(operationEditor.operation!)
-        self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func userDidPressDone(operationEditor: OperationEditorViewController)
     {
-        patient!.addOperations(NSSet(object: operationEditor.operation!))
-        managedObjectContext!.save(nil)
-        dropbox?.exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
+		managedObjectContext!.insertObject(operationEditor.operation!)
+		operationEditor.operation!.patient = patient!
+		patient!.addOperations(NSSet(object: operationEditor.operation!))
+		managedObjectContext!.save(nil)
+
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-	func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient, dropbox dropboxValue:Dropbox?)
+	func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
-		dropbox = dropboxValue
         patient = patientValue
         managedObjectContext = moc
         let request = NSFetchRequest(entityName:"Operation")
-        request.predicate = NSPredicate(format: "(patient = %@) AND (date != nil)", patient!)
+        request.predicate = NSPredicate(format: "patient = %@", patient!)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         results = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         results!.delegate = self
@@ -66,8 +63,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         let operationEditor = OperationEditorViewController()
         let entityDescript = NSEntityDescription.entityForName("Operation", inManagedObjectContext: managedObjectContext!)!
-        let newOperation = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: managedObjectContext!) as Operation
-        newOperation.patient = patient!
+        let newOperation = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: nil) as Operation
         operationEditor.delegate = self
         operationEditor.operation = newOperation
         let nvc = UINavigationController(rootViewController: operationEditor)
@@ -112,7 +108,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let operationViewer = storyboard.instantiateViewControllerWithIdentifier("OperationTableView") as OperationTableViewController
-			operationViewer.setup(managedObjectContext: managedObjectContext!, patient: patient!, dropbox: dropbox)
+			operationViewer.setup(managedObjectContext: managedObjectContext!, patient: patient!)
             operationViewer.operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
             self.navigationController!.showViewController(operationViewer, sender: self)
         }
@@ -265,7 +261,6 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             // Delete the row from the data source
             let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
             patient!.removeOperations(NSSet(object: operation!))
-            dropbox?.exportToDropbox(operation!, patient: patient!, create:false)
             managedObjectContext!.save(nil)
         }
     }

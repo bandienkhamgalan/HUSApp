@@ -10,7 +10,6 @@ import UIKit
 
 class OperationTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, OperationEditorViewControllerDelegate
 {
-	var dropbox: Dropbox?
     var operation: Operation?
     var patient: Patient?
     var results: NSFetchedResultsController?
@@ -19,7 +18,6 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
-        dropbox?.exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -28,15 +26,13 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     {
         self.operation = operationEditor.operation!
         managedObjectContext!.save(nil)
-        dropbox?.exportToDropbox(operationEditor.operation!, patient: patient!, create:true)
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
-	func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient, dropbox dropboxValue:Dropbox?)
+	func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
-		dropbox = dropboxValue
         patient = patientValue
         managedObjectContext = moc
         let request = NSFetchRequest(entityName:"Operation")
@@ -48,7 +44,6 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     func userPressedEdit()
     {
-        dropbox?.deleteFile(patient!.patientID, fileName: operation!.dateString())
         let operationEditor = OperationEditorViewController()
         operationEditor.operation = operation
         operationEditor.delegate = self
@@ -59,7 +54,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     override func viewDidLoad()
     {        
         super.viewDidLoad()
-        self.title = "Operation"
+        self.title = "New Operation"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
    
     }
@@ -110,7 +105,6 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                     break;
                 case 1:
                     cell.textLabel!.text = "Type of Operation"
-					println(operation!.approachString())
                     cell.detailTextLabel!.text = operation!.approachString()
                     break;
                 case 2:
@@ -124,7 +118,6 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
 					}
 					text = (text as NSString).substringToIndex(max(0, countElements(text) - 1))
 					cell.detailTextLabel!.text = text
-					println(text)
                     break;
                 case 3:
                     cell.textLabel!.text = "Duration of Operation"

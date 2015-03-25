@@ -27,6 +27,11 @@
 @dynamic fev1;
 @dynamic dlco;
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"Operation on %@ for %@", self.dateString, self.patient];
+}
+
 - (NSString *)durationString
 {
     int minutes = self.duration.intValue;

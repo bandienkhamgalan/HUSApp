@@ -11,7 +11,6 @@ import CoreData
 
 class PatientListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PatientEditorViewControllerDelegate, SettingsViewControllerDelegate, UISearchResultsUpdating
 {
-	var dropbox: Dropbox?
     var searchController: UISearchController?
     var results: NSFetchedResultsController?
     
@@ -20,8 +19,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         didSet
         {
             var fetchRequest = NSFetchRequest(entityName:"Patient")
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector:"caseInsensitiveCompare:")]
-			fetchRequest.predicate = NSPredicate(format: "patientID != nil")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "patientID", ascending: true, selector:"caseInsensitiveCompare:")]
             results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath:nil, cacheName:nil)
             results!.delegate = self
         }
@@ -44,18 +42,16 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 	
     func userDidPressCancel(patientEditor: PatientEditorViewController)
     {
-        let patient = patientEditor.patient
-        managedObjectContext!.deleteObject(patient!)
-        managedObjectContext!.save(nil)
-        self.dismissViewControllerAnimated(true, completion: nil)
+		self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func userDidPressDone(patientEditor: PatientEditorViewController)
     {
+		managedObjectContext!.insertObject(patientEditor.patient!)
+		managedObjectContext!.save(nil)
+		
         var patientID:String? = patientEditor.patient?.patientID
-        dropbox?.createFolder(patientID!)
-        managedObjectContext!.save(nil)
-        self.tableView.reloadData()
+		
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -69,7 +65,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
                 let destinationNVC = destination as UINavigationController
                 let patientEditor = destinationNVC.visibleViewController as PatientEditorViewController
                 let entityDescript = NSEntityDescription.entityForName("Patient", inManagedObjectContext: managedObjectContext!)!
-                let newPatient = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: managedObjectContext!) as Patient
+                let newPatient = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: nil) as Patient
                 patientEditor.delegate = self
                 patientEditor.patient = newPatient
                 break
@@ -80,12 +76,11 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
-		println("in updatesearchresultsforsearchcontroller: \(searchController.searchBar.text)")
 		var fetchRequest = NSFetchRequest(entityName:"Patient")
 		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "patientID", ascending: true, selector:"caseInsensitiveCompare:")]
 		if countElements(searchController.searchBar.text) > 0
 		{
-			fetchRequest.predicate = NSPredicate(format: "(patientID != nil) AND (patientID CONTAINS[c] %@)", searchController.searchBar.text)
+			fetchRequest.predicate = NSPredicate(format: "patientID CONTAINS[c] %@", searchController.searchBar.text)
 		}
 		results = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath:"firstLetter", cacheName:nil)
 		results!.performFetch(nil)
@@ -104,16 +99,11 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 
     override func viewDidLoad()
     {
-        self.results!.performFetch(nil);
-        
-        for object in self.results!.fetchedObjects!
-        {
-            var patient = object as Patient
-            println(patient)
-        }
+        self.results!.performFetch(nil)
 		
 		self.tableView.tableHeaderView = self.searchController!.searchBar
-        self.searchController!.searchBar.tintColor = themeColour
+        self.searchController!.searchBar.tintColor = UIColor.whiteColor()
+		self.searchController!.searchBar.barTintColor = themeColour
         super.viewDidLoad()
     }
 
@@ -139,7 +129,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 		self.searchController!.active = false
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let patientTVC = storyboard.instantiateViewControllerWithIdentifier("PatientViewer") as PatientTableViewController
-		patientTVC.setup(managedObjectContext: managedObjectContext!, patient: currentPatient, dropbox: dropbox)
+		patientTVC.setup(managedObjectContext: managedObjectContext!, patient: currentPatient)
         let parentNVC = self.parentViewController as UINavigationController
         parentNVC.pushViewController(patientTVC, animated: true)
     }
@@ -256,7 +246,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
             // Delete the row from the data source
             let patient = self.results!.objectAtIndexPath(indexPath) as Patient
             var patientID:String? = patient.patientID
-            dropbox?.deleteFolder(patientID!)
             managedObjectContext!.deleteObject(patient)
             managedObjectContext!.save(nil)
         }
