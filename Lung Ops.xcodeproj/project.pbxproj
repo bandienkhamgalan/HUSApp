@@ -137,9 +137,9 @@
 		344F95C71AA37FCB0015B806 /* HUSApp */ = {
 			isa = PBXGroup;
 			children = (
-				0DF80FBC1ABB27A200554D04 /* PKNotification.swift */,
 				0DED36491AB0ED3C00F10E76 /* Dropbox.framework */,
 				0D35CF501AB3ABC4007F8820 /* Dropbox.swift */,
+				0DF80FBC1ABB27A200554D04 /* PKNotification.swift */,
 				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
 				344F95CA1AA37FCB0015B806 /* AppDelegate.swift */,
 				343736DF1AA6813700013C79 /* Main.storyboard */,

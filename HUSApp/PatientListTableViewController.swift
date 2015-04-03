@@ -1,6 +1,6 @@
 //
 //  PatientListTableViewController.swift
-//  app development project
+//  Lung Ops
 //
 //  Created by Bandi Enkh-Amgalan on 3/1/15.
 //  Copyright (c) 2015 a. All rights reserved.
@@ -97,25 +97,11 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 		self.searchController!.searchBar.sizeToFit()
     }
 
-    override func viewDidLoad()
-    {
-        self.results!.performFetch(nil)
-		
-		self.tableView.tableHeaderView = self.searchController!.searchBar
-        self.searchController!.searchBar.tintColor = UIColor.whiteColor()
-		self.searchController!.searchBar.barTintColor = themeColour
-        super.viewDidLoad()
-    }
-
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
+        // Return the number of sections.
 		if self.results == nil
 		{
 			return 0
@@ -136,19 +122,16 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
+        // Return the number of rows in the section.
 		if self.results == nil
 		{
 			return 0
 		}
-		let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
-		return sectionInfo.numberOfObjects;
-    }
-    
-    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
-    {
-        var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
-        cell.textLabel!.text = currentPatient.patientID
-
+        else
+        {
+            let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
+            return sectionInfo.numberOfObjects;
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -157,40 +140,12 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }
-	
-	/*
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!
-    {
-		if self.tableView.contentSize.height > self.tableView.bounds.size.height * 1.5
-		{
-			var toReturn = self.results!.sectionIndexTitles
-			toReturn.insert(UITableViewIndexSearch, atIndex: 0)
-			return toReturn
-		}
-		else
-		{
-			return nil
-		}
-    }
     
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int
+    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
     {
-		if index == 0
-		{
-			tableView.contentOffset = CGPointMake(0, -tableView.contentInset.top)
-			return NSNotFound
-		}
-		else
-		{
-			return self.results!.sectionForSectionIndexTitle(title, atIndex: index - 1)
-		}
+        var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
+        cell.textLabel!.text = currentPatient.patientID
     }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-    {
-        let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
-        return sectionInfo.indexTitle
-    } */
     
     func controllerWillChangeContent(controller: NSFetchedResultsController)
     {
@@ -201,14 +156,14 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     {
         switch(type)
         {
-        case .Insert:
-            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Left)
-            break
-        case .Delete:
-            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Right)
-            break
-        default:
-            break
+            case .Insert:
+                tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Left)
+                break
+            case .Delete:
+                tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Right)
+                break
+            default:
+                break
         }
     }
     
@@ -216,21 +171,21 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     {
         switch(type)
         {
-        case .Insert:
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
-            break
-        case .Delete:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
-            break;
-        case .Update:
-            self.configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, atIndexPath:indexPath!)
-            break
-        case .Move:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
-            break
-        default:
-            break
+            case .Insert:
+                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
+                break
+            case .Delete:
+                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
+                break;
+            case .Update:
+                self.configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, atIndexPath:indexPath!)
+                break
+            case .Move:
+                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Right)
+                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Left)
+                break
+            default:
+                break
         }
     }
     
@@ -240,7 +195,8 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     }
     
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+    {
         if editingStyle == .Delete
         {
             // Delete the row from the data source
@@ -251,5 +207,17 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         }
     }
     
+    override func viewDidLoad()
+    {
+        self.results!.performFetch(nil)
+        self.tableView.tableHeaderView = self.searchController!.searchBar
+        self.searchController!.searchBar.tintColor = UIColor.whiteColor()
+        super.viewDidLoad()
+    }
+    
+    override func didReceiveMemoryWarning()
+    {
+        super.didReceiveMemoryWarning()
+    }
 
 }

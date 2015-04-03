@@ -1,6 +1,6 @@
 //
 //  DateAndTimePickerTableViewController.swift
-//  HUSApp
+//  Lung Ops
 //
 //  Created by Yee Chong Tan on 05/03/2015.
 //  Copyright (c) 2015 ucl. All rights reserved.
@@ -21,6 +21,7 @@ class DateAndTimePickerTableViewController: UITableViewController
     var pickerMode = PickerMode.Date
     var savedDate: NSDate?
     var savedCountdown :NSTimeInterval?
+    var prompt = ""
     
     var date: NSDate?
     {
@@ -46,10 +47,10 @@ class DateAndTimePickerTableViewController: UITableViewController
         }
     }
     
-    var prompt = ""
-    
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
         datePicker.datePickerMode = pickerMode == .Date ? .Date : .CountDownTimer
         
         if pickerMode == .Date {
@@ -68,9 +69,9 @@ class DateAndTimePickerTableViewController: UITableViewController
 
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?

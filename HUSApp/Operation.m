@@ -1,6 +1,6 @@
 //
 //  Operation.m
-//  app development project
+//  Lung Ops
 //
 //  Created by Bandi Enkh-Amgalan on 2/11/15.
 //  Copyright (c) 2015 a. All rights reserved.
@@ -19,13 +19,13 @@
 @dynamic complications;
 @dynamic date;
 @dynamic deathDate;
+@dynamic dlco;
 @dynamic duration;
+@dynamic fev1;
 @dynamic followUpDate;
 @dynamic resection;
 @dynamic patient;
 @dynamic durationOfStay;
-@dynamic fev1;
-@dynamic dlco;
 
 - (NSString *)description
 {
@@ -60,6 +60,13 @@
     self.complications = [NSNumber numberWithInt:[Operation dictionaryToBitField:complications withSortedKeys:[[Operation emptyComplications].allKeys sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:nil ascending:YES]]]]];
 }
 
+- (NSMutableDictionary *)resectionsDictionary
+{
+    NSArray *sortedPossibleResections = [[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]];
+    int resections = self.resection == nil ? 0 : self.resection.intValue;
+    return [Operation bitFieldToDictionary:resections withSortedKeys:sortedPossibleResections];
+}
+
 + (NSMutableDictionary *)emptyResections
 {
 	return [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false], @"Lobectomy", [NSNumber numberWithBool:false], @"Segmentectomy", [NSNumber numberWithBool:false], @"Pneumonectomy", [NSNumber numberWithBool:false], @"Broncho- or Vasculo-plastic", [NSNumber numberWithBool:false], @"Nonanatomical resection", nil];
@@ -70,19 +77,25 @@
 	self.resection = [NSNumber numberWithInt:[Operation dictionaryToBitField:resections withSortedKeys:[[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]]]];
 }
 
++ (NSArray *)possibleApproaches
+{
+    return [NSArray arrayWithObjects:@"Minimally Invasive", @"Thoracotomy", nil];
+}
+
+- (void)setApproachValue:(NSString *)approach
+{
+    if([[Operation possibleApproaches] containsObject:approach])
+        self.approach = [NSNumber numberWithInteger:[[Operation possibleApproaches] indexOfObject:approach]];
+    else
+        self.approach = nil;
+}
+
 + (NSMutableDictionary *)bitFieldToDictionary:(int)field withSortedKeys:(NSArray *)sortedKeys
 {
 	NSMutableDictionary *toReturn = [NSMutableDictionary dictionary];
 	for(int i = 0 ; i < sortedKeys.count ; i++)
 		[toReturn setObject:[NSNumber numberWithBool:field & 1 << i] forKey:[sortedKeys objectAtIndex:i]];
 	return toReturn;
-}
-
-- (NSMutableDictionary *)resectionsDictionary
-{
-	NSArray *sortedPossibleResections = [[[Operation emptyResections] allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:YES]]];
-	int resections = self.resection == nil ? 0 : self.resection.intValue;
-	return [Operation bitFieldToDictionary:resections withSortedKeys:sortedPossibleResections];
 }
 
 + (int)dictionaryToBitField:(NSDictionary *)dictionary withSortedKeys:(NSArray *)sortedKeys
@@ -94,11 +107,6 @@
 	return toSet;
 }
 
-- (NSArray *)resectionsArray
-{
-	return [Operation trueKeys:self.resectionsDictionary];
-}
-
 + (NSArray *)trueKeys:(NSDictionary *)dictionary
 {
 	NSMutableArray *toReturn = [NSMutableArray array];
@@ -106,6 +114,11 @@
 		if( [[dictionary objectForKey:key] isEqualToNumber:[NSNumber numberWithBool:true]] )
 			[toReturn addObject:key];
 	return toReturn;
+}
+
+- (NSArray *)resectionsArray
+{
+    return [Operation trueKeys:self.resectionsDictionary];
 }
 
 - (NSArray *)complicationsArray
@@ -142,19 +155,6 @@
 - (NSString *)approachString
 {
     return self.approach == nil ? nil : [[Operation possibleApproaches] objectAtIndex:self.approach.integerValue];
-}
-
-+ (NSArray *)possibleApproaches
-{
-    return [NSArray arrayWithObjects:@"Minimally Invasive", @"Thoracotomy", nil];
-}
-
-- (void)setApproachValue:(NSString *)approach
-{
-	if([[Operation possibleApproaches] containsObject:approach])
-		self.approach = [NSNumber numberWithInteger:[[Operation possibleApproaches] indexOfObject:approach]];
-	else
-		self.approach = nil;
 }
 
 @end

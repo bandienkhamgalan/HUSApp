@@ -1,6 +1,6 @@
 //
 //  DeathTableViewController.swift
-//  HUSApp
+//  Lung Ops
 //
 //  Created by Bandi Enkh-Amgalan on 3/5/15.
 //  Copyright (c) 2015 ucl. All rights reserved.
@@ -10,6 +10,10 @@ import UIKit
 
 class DeathTableViewController: UITableViewController
 {
+    @IBOutlet weak var deathSwitch: UISwitch!
+    @IBOutlet weak var deathCell: UITableViewCell!
+    @IBOutlet weak var deathDate: UIDatePicker!
+    
     var savedDeathDate :NSDate?
     
     var death = false
@@ -21,12 +25,23 @@ class DeathTableViewController: UITableViewController
         }
     }
     
-    @IBOutlet weak var deathSwitch: UISwitch!
+    @IBAction func deathSwitchChanged(sender: UISwitch)
+    {
+        death = sender.on
+        if death == true {
+            deathCell.hidden = false
+        }
+        else {
+            deathCell.hidden = true
+        }
+    }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         deathCell.hidden = true
         
+        // Display Date Picker if Death Date exist
         if savedDeathDate != nil {
             deathSwitch.setOn(true, animated: true)
             death = true
@@ -35,27 +50,12 @@ class DeathTableViewController: UITableViewController
         }
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: - Table view data source
-    
-    @IBAction func deathSwitchChanged(sender: UISwitch) {
-        death = sender.on
-        
-        if death == true {
-            deathCell.hidden = false
-        }
-        else {
-            deathCell.hidden = true
-        }
-        
-    }
-    
-    @IBOutlet weak var deathCell: UITableViewCell!
-    @IBOutlet weak var deathDate: UIDatePicker!
-    
+    // Set Prompt to Empty String
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
         return " "
