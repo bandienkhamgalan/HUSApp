@@ -106,6 +106,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 		{
 			return 0
 		}
+		
 		return self.results!.sections!.count;
     }
     
@@ -202,6 +203,10 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
             // Delete the row from the data source
             let patient = self.results!.objectAtIndexPath(indexPath) as Patient
             var patientID:String? = patient.patientID
+			for obj in patient.operations
+			{
+				managedObjectContext!.deleteObject(obj as NSManagedObject)
+			}
             managedObjectContext!.deleteObject(patient)
             managedObjectContext!.save(nil)
         }

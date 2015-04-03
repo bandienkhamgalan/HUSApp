@@ -17,12 +17,6 @@ class Dropbox
 		case Delete
 	}
 	
-	enum OperationMode
-	{
-		case IndividualFiles
-		case OneDocument
-	}
-	
 	var dbFileSystem: DBFilesystem?
 	{
 		if DBFilesystem.sharedFilesystem() == nil
@@ -31,8 +25,6 @@ class Dropbox
 		}
 		return DBFilesystem.sharedFilesystem()
 	}
-    
-	var operationMode = OperationMode.OneDocument
 	
 	var serialThread: dispatch_queue_t
 	var managedObjectContext: NSManagedObjectContext?
@@ -40,61 +32,7 @@ class Dropbox
 	
 	@objc func objectChanged(notification: NSNotification)
 	{
-		if operationMode == .OneDocument
-		{
-			dispatch_async(serialThread, { self.saveAllOperations() } )
-		}
-		else if operationMode == .IndividualFiles
-		{
-			if let insertedObjects = notification.userInfo![NSInsertedObjectsKey as String] as? NSSet
-			{
-				for object in insertedObjects
-				{
-					if object.entity == NSEntityDescription.entityForName("Patient", inManagedObjectContext:managedObjectContext!)
-					{
-						dispatch_async(serialThread, { self.createPatientFolder((object as Patient).patientID) })
-					}
-					if object.entity == NSEntityDescription.entityForName("Operation", inManagedObjectContext:managedObjectContext!)
-					{
-						dispatch_async(serialThread, { self.updateOperationFile(object as Operation, mode: .Create) })
-					}
-				}
-			}
-			
-			if let deletedObjects = notification.userInfo![NSDeletedObjectsKey as String] as? NSSet
-			{
-				for object in deletedObjects
-				{
-					if object.entity == NSEntityDescription.entityForName("Patient", inManagedObjectContext:managedObjectContext!)
-					{
-						dispatch_async(serialThread, { self.deletePatientFolder((object as Patient).patientID) })
-					}
-					if object.entity == NSEntityDescription.entityForName("Operation", inManagedObjectContext:managedObjectContext!)
-					{
-						dispatch_async(serialThread, { self.updateOperationFile(object as Operation, mode: .Delete) })
-					}
-				}
-			}
-			
-			if let updatedObjects = notification.userInfo![NSUpdatedObjectsKey as String] as? NSSet
-			{
-				for object in updatedObjects
-				{
-					if object.entity == NSEntityDescription.entityForName("Patient", inManagedObjectContext:managedObjectContext!)
-					{
-						var patient = (object as Patient)
-						if let oldPatientID = patient.changedValuesForCurrentEvent()["patientID"] as? String
-						{
-							dispatch_async(serialThread, { self.updatePatientFolder(oldPatientID, newPatientID: patient.patientID) })
-						}
-					}
-					if object.entity == NSEntityDescription.entityForName("Operation", inManagedObjectContext:managedObjectContext!)
-					{
-						dispatch_async(serialThread, { self.updateOperationFile(object as Operation, mode: .Update) })
-					}
-				}
-			}
-		}
+		dispatch_async(serialThread, { self.saveAllOperations() } )
 	}
 	
 	init(managedObjectContext: NSManagedObjectContext)
@@ -149,6 +87,7 @@ class Dropbox
 			rows.append(XMLExcelHeaderRow)
 			for operation in operations
 			{
+				println("creating operation row for \(operation)")
 				rows.append(createOperationRow(operation))
 			}
 			

@@ -14,13 +14,10 @@ protocol OperationEditorViewControllerDelegate
     func userDidPressDone(operationEditor: OperationEditorViewController)
 }
 
-
+let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
 
 class OperationEditorViewController: UIViewController, UIScrollViewDelegate, SelectorTableViewControllerDelegate, TextFieldInputTableViewControllerDelegate
 {
-    
-    let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
-    
     // Views
     var scrollView: UIScrollView?
     var progressView: UIProgressView?
@@ -73,7 +70,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
     {
         get
         {
-            for i in [1, 2, 4, 8, 9]
+            for i in [1, 2, 4, 9]
             {
                 if screensCompleted[i] == false
                 {
@@ -225,7 +222,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
         currentPage = Int(screen)
         
         // determine progress
-        if (previousPage == 0 || previousPage == 3 || previousPage == 4 || previousPage == 5 || previousPage == 6 || previousPage == 7 || previousPage == 10) && previousPage != currentPage
+        if (previousPage == 0 || previousPage == 3 || previousPage == 5 || previousPage == 6 || previousPage == 7 || previousPage == 8 || previousPage == 10) && previousPage != currentPage
         {
             screensCompleted[previousPage] = true
         }

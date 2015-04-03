@@ -20,7 +20,6 @@ class SettingsTableViewController: UITableViewController
     @IBOutlet var infoDropbox: UITableViewCell!
     @IBOutlet var actionDropbox: UITableViewCell!
     
-    let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
     var delegate: SettingsViewControllerDelegate?
     
     func done()

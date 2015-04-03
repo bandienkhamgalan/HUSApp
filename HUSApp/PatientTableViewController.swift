@@ -241,6 +241,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             // Delete the row from the data source.
             let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
+			managedObjectContext!.deleteObject(operation!)
             patient!.removeOperations(NSSet(object: operation!))
             managedObjectContext!.save(nil)
         }
