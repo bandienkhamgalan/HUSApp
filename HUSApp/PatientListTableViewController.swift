@@ -212,7 +212,6 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         self.results!.performFetch(nil)
         self.tableView.tableHeaderView = self.searchController!.searchBar
         self.searchController!.searchBar.tintColor = UIColor.whiteColor()
-        self.searchController!.searchBar.barTintColor = themeColour
         super.viewDidLoad()
     }
     
