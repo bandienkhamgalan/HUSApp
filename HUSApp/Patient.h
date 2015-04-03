@@ -1,6 +1,6 @@
 //
 //  Patient.h
-//  app development project
+//  Lung Ops
 //
 //  Created by Bandi Enkh-Amgalan on 2/11/15.
 //  Copyright (c) 2015 a. All rights reserved.

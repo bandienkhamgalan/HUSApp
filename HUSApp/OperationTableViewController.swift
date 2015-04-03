@@ -1,6 +1,6 @@
 //
 //  OperationTableViewController.swift
-//  HUSApp
+//  Lung Ops
 //
 //  Created by Yee Chong Tan on 06/03/2015.
 //  Copyright (c) 2015 ucl. All rights reserved.
@@ -14,7 +14,6 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     var patient: Patient?
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
-    var dbFileSystem = DBFilesystem.sharedFilesystem()
     
     func userDidPressCancel(operationEditor: OperationEditorViewController)
     {
@@ -30,6 +29,14 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func userPressedEdit()
+    {
+        let operationEditor = OperationEditorViewController()
+        operationEditor.operation = operation
+        operationEditor.delegate = self
+        let nvc = UINavigationController(rootViewController: operationEditor)
+        self.presentViewController(nvc, animated: true, completion:nil)
+    }
     
 	func setup(managedObjectContext moc:NSManagedObjectContext, patient patientValue:Patient)
     {
@@ -42,35 +49,17 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
         results!.delegate = self
     }
     
-    func userPressedEdit()
+    // MARK: - Table view data source
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        let operationEditor = OperationEditorViewController()
-        operationEditor.operation = operation
-        operationEditor.delegate = self
-        let nvc = UINavigationController(rootViewController: operationEditor)
-        self.presentViewController(nvc, animated: true, completion:nil)
-    }
-    
-    override func viewDidLoad()
-    {        
-        super.viewDidLoad()
-        self.title = "New Operation"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
-   
-    }
-    
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // Return the number of sections.
         return 3
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        // Return the number of rows in the section.
         switch(section){
             case 0:
                 return 9
@@ -97,8 +86,8 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
         let cell = tableView.dequeueReusableCellWithIdentifier("operationViewerCell", forIndexPath: indexPath) as UITableViewCell
         
         if (indexPath.section == 0){
+            
             switch (indexPath.row){
-                
                 case 0:
                     cell.textLabel!.text = "Date of Operation"
                     cell.detailTextLabel!.text = operation!.dateString()
@@ -150,7 +139,6 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
                     break;
                 default:
                     break;
-            
             }
         }
     
@@ -192,11 +180,20 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
         return cell
     }
     
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        self.title = "New Operation"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
+    }
+    
+    override func didReceiveMemoryWarning()
+    {
+        super.didReceiveMemoryWarning()
+    }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String
     {
-		return section == 1 && operation!.complicationsArray().count > 0 ? "Complications During Hospital Stay" : ""
+        return section == 1 && operation!.complicationsArray().count > 0 ? "Complications During Hospital Stay" : ""
     }
-
-
 }

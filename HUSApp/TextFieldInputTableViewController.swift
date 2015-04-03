@@ -1,6 +1,6 @@
 //
 //  TextFieldInputTableViewController.swift
-//  HUSApp
+//  Lung Ops
 //
 //  Created by Yee Chong Tan on 16/03/2015.
 //  Copyright (c) 2015 ucl. All rights reserved.
@@ -16,35 +16,17 @@ protocol TextFieldInputTableViewControllerDelegate
 class TextFieldInputTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet weak var textField: UITextField!
+    
     var prompt = ""
     var delegate: TextFieldInputTableViewControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "resignTextFieldFirstResponder"))
-        if savedValue != nil
-        {
-            value = savedValue!
-        }
-        textField.delegate = self
-    }
-
-    func resignTextFieldFirstResponder()
-    {
-        textField.resignFirstResponder()
-    }
-	
-	override func becomeFirstResponder() -> Bool
-	{
-		return textField.becomeFirstResponder()
-	}
     
     var savedValue: Int?
     var value: Int
     {
         get
         {
-            return countElements(textField.text) == 0 ? -1 : (NSNumberFormatter().numberFromString(textField.text)! as NSNumber).integerValue
+            return countElements(textField.text) == 0 ? -1 :
+                (NSNumberFormatter().numberFromString(textField.text)! as NSNumber).integerValue
         }
         set
         {
@@ -55,16 +37,14 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    func resignTextFieldFirstResponder()
     {
-        return prompt
+        textField.resignFirstResponder()
+    }
+    
+    override func becomeFirstResponder() -> Bool
+    {
+        return textField.becomeFirstResponder()
     }
 
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
@@ -82,6 +62,28 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
         {
             return false
         }
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        self.view!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "resignTextFieldFirstResponder"))
+        textField.delegate = self
+        
+        if savedValue != nil
+        {
+            value = savedValue!
+        }
+    }
+    
+    override func didReceiveMemoryWarning()
+    {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        return prompt
     }
 
 }
