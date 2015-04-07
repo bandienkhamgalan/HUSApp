@@ -183,7 +183,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.title = "New Operation"
+        self.title = "Operation"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
     }
     
