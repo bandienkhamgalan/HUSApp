@@ -25,7 +25,7 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
     {
         get
         {
-            return countElements(textField.text) == 0 ? -1 :
+            return count(textField.text) == 0 ? -1 :
                 (NSNumberFormatter().numberFromString(textField.text)! as NSNumber).integerValue
         }
         set
@@ -50,7 +50,7 @@ class TextFieldInputTableViewController: UITableViewController, UITextFieldDeleg
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
         var newString = (textField.text as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        if NSNumberFormatter().numberFromString(newString) != nil || countElements(newString) == 0
+        if NSNumberFormatter().numberFromString(newString) != nil || count(newString) == 0
         {
             if delegate != nil
             {

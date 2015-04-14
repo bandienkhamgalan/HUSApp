@@ -10,8 +10,8 @@ import UIKit
 
 protocol PatientEditorViewControllerDelegate
 {
-    func userDidPressDone(patientEditor: PatientEditorViewController)
-    func userDidPressCancel(patientEditor: PatientEditorViewController)
+    func userDidPressDoneInPatientEditor(patientEditor: PatientEditorViewController)
+    func userDidPressCancelInPatientEditor(patientEditor: PatientEditorViewController)
 }
 
 enum Gender: Int
@@ -37,7 +37,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
     {
         if delegate != nil
         {
-            delegate!.userDidPressCancel(self)
+            delegate!.userDidPressCancelInPatientEditor(self)
         }
     }
     
@@ -48,7 +48,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         patient!.gender = gender
         if delegate != nil
         {
-            delegate!.userDidPressDone(self)
+            delegate!.userDidPressDoneInPatientEditor(self)
         }
     }
     
@@ -127,7 +127,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
                         return false
                     }
                 }
-                else if countElements(newString) == 0
+                else if count(newString) == 0
                 {
                     age = -1
                     return true
@@ -158,7 +158,7 @@ class PatientEditorViewController: UIViewController, UITextFieldDelegate
         {
             if delegate != nil
             {
-                delegate!.userDidPressCancel(self)
+                delegate!.userDidPressCancelInPatientEditor(self)
             }
         }
         else

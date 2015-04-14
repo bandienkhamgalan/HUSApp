@@ -29,7 +29,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 	{
 		self.searchController!.active = false
         let storyboard = UIStoryboard(name: "Main", bundle:nil)
-		var settingsTVC = storyboard.instantiateViewControllerWithIdentifier("SettingsTable") as SettingsTableViewController
+		var settingsTVC = storyboard.instantiateViewControllerWithIdentifier("SettingsTable") as! SettingsTableViewController
         settingsTVC.delegate = self
 		var settingsNVC = UINavigationController(rootViewController: settingsTVC)
 		self.presentViewController(settingsNVC, animated: true, completion: nil)
@@ -40,12 +40,12 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 	
-    func userDidPressCancel(patientEditor: PatientEditorViewController)
+    func userDidPressCancelInPatientEditor(patientEditor: PatientEditorViewController)
     {
 		self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func userDidPressDone(patientEditor: PatientEditorViewController)
+	func userDidPressDoneInPatientEditor(patientEditor: PatientEditorViewController)
     {
 		managedObjectContext!.insertObject(patientEditor.patient!)
 		managedObjectContext!.save(nil)
@@ -57,15 +57,15 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
-        let destination = segue.destinationViewController as UIViewController
+        let destination = segue.destinationViewController as! UIViewController
         switch(destination.restorationIdentifier!)
         {
             case "PatientEditor":
 				self.searchController!.active = false
-                let destinationNVC = destination as UINavigationController
-                let patientEditor = destinationNVC.visibleViewController as PatientEditorViewController
+                let destinationNVC = destination as! UINavigationController
+                let patientEditor = destinationNVC.visibleViewController as! PatientEditorViewController
                 let entityDescript = NSEntityDescription.entityForName("Patient", inManagedObjectContext: managedObjectContext!)!
-                let newPatient = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: nil) as Patient
+                let newPatient = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: nil) as! Patient
                 patientEditor.delegate = self
                 patientEditor.patient = newPatient
                 break
@@ -78,7 +78,7 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     {
 		var fetchRequest = NSFetchRequest(entityName:"Patient")
 		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "patientID", ascending: true, selector:"caseInsensitiveCompare:")]
-		if countElements(searchController.searchBar.text) > 0
+		if count(searchController.searchBar.text) > 0
 		{
 			fetchRequest.predicate = NSPredicate(format: "patientID CONTAINS[c] %@", searchController.searchBar.text)
 		}
@@ -112,12 +112,12 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        let currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
+        let currentPatient = self.results!.objectAtIndexPath(indexPath) as! Patient
 		self.searchController!.active = false
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let patientTVC = storyboard.instantiateViewControllerWithIdentifier("PatientViewer") as PatientTableViewController
+        let patientTVC = storyboard.instantiateViewControllerWithIdentifier("PatientViewer") as! PatientTableViewController
 		patientTVC.setup(managedObjectContext: managedObjectContext!, patient: currentPatient)
-        let parentNVC = self.parentViewController as UINavigationController
+        let parentNVC = self.parentViewController as! UINavigationController
         parentNVC.pushViewController(patientTVC, animated: true)
     }
 
@@ -130,21 +130,21 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
 		}
         else
         {
-            let sectionInfo = self.results!.sections![section] as NSFetchedResultsSectionInfo
+            let sectionInfo = self.results!.sections![section] as! NSFetchedResultsSectionInfo
             return sectionInfo.numberOfObjects;
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("patientCell", forIndexPath: indexPath) as! UITableViewCell
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath)
     {
-        var currentPatient = self.results!.objectAtIndexPath(indexPath) as Patient
+        var currentPatient = self.results!.objectAtIndexPath(indexPath) as! Patient
         cell.textLabel!.text = currentPatient.patientID
     }
     
@@ -201,11 +201,11 @@ class PatientListTableViewController: UITableViewController, NSFetchedResultsCon
         if editingStyle == .Delete
         {
             // Delete the row from the data source
-            let patient = self.results!.objectAtIndexPath(indexPath) as Patient
+            let patient = self.results!.objectAtIndexPath(indexPath) as! Patient
             var patientID:String? = patient.patientID
 			for obj in patient.operations
 			{
-				managedObjectContext!.deleteObject(obj as NSManagedObject)
+				managedObjectContext!.deleteObject(obj as! NSManagedObject)
 			}
             managedObjectContext!.deleteObject(patient)
             managedObjectContext!.save(nil)

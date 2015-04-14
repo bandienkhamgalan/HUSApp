@@ -14,13 +14,13 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     var results: NSFetchedResultsController?
     var managedObjectContext: NSManagedObjectContext?
     
-    func userDidPressCancel(patientEditor: PatientEditorViewController)
+    func userDidPressCancelInPatientEditor(patientEditor: PatientEditorViewController)
     {
         self.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func userDidPressDone(patientEditor: PatientEditorViewController)
+    func userDidPressDoneInPatientEditor(patientEditor: PatientEditorViewController)
     {
         managedObjectContext!.save(nil)
         self.tableView.reloadData()
@@ -37,7 +37,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
 		managedObjectContext!.insertObject(operationEditor.operation!)
 		operationEditor.operation!.patient = patient!
-		patient!.addOperations(NSSet(object: operationEditor.operation!))
+		patient!.addOperations(NSSet(object: operationEditor.operation!) as Set<NSObject>)
 		managedObjectContext!.save(nil)
 
         self.tableView.reloadData()
@@ -59,7 +59,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         let operationEditor = OperationEditorViewController()
         let entityDescript = NSEntityDescription.entityForName("Operation", inManagedObjectContext: managedObjectContext!)!
-        let newOperation = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: nil) as Operation
+        let newOperation = NSManagedObject(entity: entityDescript, insertIntoManagedObjectContext: nil) as! Operation
         operationEditor.delegate = self
         operationEditor.operation = newOperation
         let nvc = UINavigationController(rootViewController: operationEditor)
@@ -80,8 +80,8 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             // Patient Information selected.
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as UINavigationController
-            let patientEditor = patientEditorNVC.visibleViewController as PatientEditorViewController
+            let patientEditorNVC = storyboard.instantiateViewControllerWithIdentifier("PatientEditor") as! UINavigationController
+            let patientEditor = patientEditorNVC.visibleViewController as! PatientEditorViewController
             patientEditor.patient = patient!
             patientEditor.delegate = self
             self.presentViewController(patientEditorNVC, animated: true, completion: nil)
@@ -91,7 +91,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         {
             // Operation Information selected.
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let operationViewer = storyboard.instantiateViewControllerWithIdentifier("OperationTableView") as OperationTableViewController
+            let operationViewer = storyboard.instantiateViewControllerWithIdentifier("OperationTableView") as! OperationTableViewController
 			operationViewer.setup(managedObjectContext: managedObjectContext!, patient: patient!)
             operationViewer.operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
             self.navigationController!.showViewController(operationViewer, sender: self)
@@ -106,7 +106,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             return 1
         }
         else {
-            let sectionInfo = self.results!.sections![0] as NSFetchedResultsSectionInfo
+            let sectionInfo = self.results!.sections![0] as! NSFetchedResultsSectionInfo
             return sectionInfo.numberOfObjects
         }
     }
@@ -115,15 +115,15 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
     {
         if indexPath.section == 0
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier("patientInfoCell", forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("patientInfoCell", forIndexPath: indexPath) as! UITableViewCell
             
             for obj in cell.contentView.subviews
             {
-                let view = obj as UIView
+                let view = obj as! UIView
                 switch(view.tag)
                 {
                     case 1:
-                        let patientLabel = view as UILabel
+                        let patientLabel = view as! UILabel
                         patientLabel.text = patient!.patientID + " . " + patient!.age.stringValue + " yrs old . " + patient!.genderString()
                         break
                     default:
@@ -134,7 +134,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
         }
         else
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier("operationCell", forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("operationCell", forIndexPath: indexPath) as! UITableViewCell
             configureCell(cell, atIndexPath:indexPath)
             
             return cell
@@ -242,7 +242,7 @@ class PatientTableViewController: UITableViewController, NSFetchedResultsControl
             // Delete the row from the data source.
             let operation = self.results!.objectAtIndexPath(NSIndexPath(forRow: indexPath.row, inSection: 0)) as? Operation
 			managedObjectContext!.deleteObject(operation!)
-            patient!.removeOperations(NSSet(object: operation!))
+            patient!.removeOperations(NSSet(object: operation!) as Set<NSObject>)
             managedObjectContext!.save(nil)
         }
     }

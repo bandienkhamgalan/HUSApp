@@ -191,7 +191,7 @@ class Dropbox
 		var resections = ""
 		if (operation.resectionsArray().count > 0){
 			for obj in operation.resectionsArray() {
-				var resection = obj as String
+				var resection = obj as! String
 				if first {
 					resections += resection
 					first = false
@@ -220,7 +220,7 @@ class Dropbox
 		var complications = ""
 		if (operation.complicationsArray().count > 0){
 			for obj in operation.complicationsArray() {
-				var complication = obj as String
+				var complication = obj as! String
 				if first {
 					complications += complication
 					first = false
