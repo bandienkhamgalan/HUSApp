@@ -83,7 +83,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("operationViewerCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("operationViewerCell", forIndexPath: indexPath) as! UITableViewCell
         
         if (indexPath.section == 0){
             
@@ -103,9 +103,9 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
 					cell.detailTextLabel!.lineBreakMode = NSLineBreakMode.ByWordWrapping
 					for obj in operation!.resectionsArray()
 					{
-						text += (obj as String) + "\n"
+						text += (obj as! String) + "\n"
 					}
-					text = (text as NSString).substringToIndex(max(0, countElements(text) - 1))
+					text = (text as NSString).substringToIndex(max(0, count(text) - 1))
 					cell.detailTextLabel!.text = text
                     break;
                 case 3:
@@ -144,7 +144,7 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
     
         
         if (indexPath.section == 1){
-            var complication = operation!.complicationsArray()[indexPath.row] as String
+            var complication = operation!.complicationsArray()[indexPath.row] as! String
             cell.textLabel!.text = complication
             cell.detailTextLabel!.text = " "
         }

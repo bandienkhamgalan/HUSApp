@@ -95,7 +95,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
 	
 	func userCanUpdateChoice(newSelection: [String], sender: SelectorTableViewController) -> Bool
 	{
-		return sender == screenThree! ? countElements(newSelection) > 0 : true
+		return sender == screenThree! ? count(newSelection) > 0 : true
 	}
 	
     func userDidUpdateChoice(sender: SelectorTableViewController)
@@ -113,7 +113,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 // resection
 				for obj in resections!.allKeys
 				{
-					var key = obj as String
+					var key = obj as! String
 					resections!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
 				}
                 screensCompleted[2] = true
@@ -122,10 +122,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 // complications
                 for obj in complications!.allKeys
                 {
-                    var key = obj as String
+                    var key = obj as! String
                     complications!.setValue(contains(selections, key) ? NSNumber(bool: true) : NSNumber(bool: false), forKey: key)
                 }
-                operation!.setComplicationsValue(complications!)
+                operation!.setComplicationsValue(complications! as [NSObject : AnyObject])
                 screensCompleted[8] = true
                 break
             case screenTen!:
@@ -154,10 +154,10 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             progressView?.setProgress(1.0, animated: true)
             operation!.date = screenOne?.date
 			if screenTwo != nil {
-				operation!.setApproachValue(approach!)
+				operation!.setApproachValue(approach! as String)
 			}
 			if screenThree != nil {
-				operation!.setResectionsValue(resections!)
+				operation!.setResectionsValue(resections! as [NSObject : AnyObject])
 			}
             if screenFour != nil {
                 operation!.duration = Int(screenFour!.duration! / 60)
@@ -175,7 +175,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
                 operation!.durationOfStay = screenEight!.value
             }
             if screenNine != nil {
-                operation!.setComplicationsValue(complications!)
+                operation!.setComplicationsValue(complications! as [NSObject : AnyObject])
             }
             if screenTen != nil {
                 operation!.admittedToICU = admittedToICU
@@ -317,7 +317,7 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 1:
                 screenTwo!.prompt = "Type of Approach"
 				approach = operation!.approachString()
-                screenTwo!.options = Operation.possibleApproaches() as [String]!
+                screenTwo!.options = Operation.possibleApproaches() as! [String]!
                 if operation!.approachString() != nil
                 {
                     screenTwo!.selection = [operation!.approachString()]
@@ -328,11 +328,11 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 2:
                 screenThree!.prompt = "Type of Resection"
                 resections = operation!.resectionsDictionary()
-				screenThree!.options = sorted(resections!.allKeys as [String], <)
+				screenThree!.options = sorted(resections!.allKeys as! [String], <)
                 screenThree!.mode = .Multiple
                 if operation!.resection != nil
                 {
-                    screenThree!.selection = operation!.resectionsArray() as [String]
+                    screenThree!.selection = operation!.resectionsArray() as! [String]
                 }
                 screenThree!.delegate = self
                 break
@@ -388,11 +388,11 @@ class OperationEditorViewController: UIViewController, UIScrollViewDelegate, Sel
             case 8:
                 screenNine!.prompt = "Complications during hospital stay"
                 complications = Operation.emptyComplications()
-				screenNine!.options = sorted(complications!.allKeys as [String], <)
+				screenNine!.options = sorted(complications!.allKeys as! [String], <)
                 screenNine!.mode = .Multiple
                 if operation!.complications != nil
                 {
-                    screenNine!.selection = operation!.complicationsArray() as [String]
+                    screenNine!.selection = operation!.complicationsArray() as! [String]
                 }
                 screenNine!.delegate = self
                 break
