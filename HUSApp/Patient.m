@@ -1,10 +1,8 @@
-//
-//  Patient.m
-//  Lung Ops
-//
-//  Created by Bandi Enkh-Amgalan on 2/11/15.
-//  Copyright (c) 2015 a. All rights reserved.
-//
+/**
+	Patient.m
+ 
+	A subclass of NSManagedObject that provides an object-oriented representation of an Patient entity stored in Core Data.
+ */
 
 #import "Patient.h"
 
@@ -15,28 +13,22 @@
 @dynamic patientID;
 @dynamic operations;
 
+/*	description is implemented to be used for debug output */
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"Patient aged: %@, id: %@ and gender: %@",  self.age, self.patientID, self.gender];
 }
 
+/*	durationString returns a string representation of the gender of a Patient, which is internally stored as an integer. */
 - (NSString *)genderString
 {
     return [self.gender isEqualToNumber:[NSNumber numberWithInt:0]] ? @"Male" : @"Female";
 }
 
+/*	durationString returns a string representation of the age of a Patient, which is internally stored as an integer. */
 - (NSString *)ageString
 {
     return self.age != nil ? [self.age stringValue] : @"";
-}
-
-
-- (NSString *)firstLetter
-{
-    [self willAccessValueForKey:@"firstLetter"];
-    NSString *firstLetter = [[[self patientID] substringToIndex:1] uppercaseString];
-    [self didAccessValueForKey:@"firstLetter"];
-    return firstLetter;
 }
 
 @end

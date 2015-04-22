@@ -1,10 +1,8 @@
-//
-//  SelectorTableViewController.swift
-//  Lung Ops
-//
-//  Created by Bandi Enkh-Amgalan on 3/5/15.
-//  Copyright (c) 2015 ucl. All rights reserved.
-//
+/**
+	SelectorTableViewController.swift
+
+	A generic form controller used by OperationEditorViewController that specializes in user selection of one or more items in a table.
+*/
 
 import UIKit
 
@@ -14,34 +12,44 @@ enum SelectorMode
     case Single
 }
 
+//	Delegates receive important messages through implementing the following protocol
 @objc protocol SelectorTableViewControllerDelegate
 {
-    func userDidUpdateChoice(sender: SelectorTableViewController)
-	optional func userCanUpdateChoice(newSelection: [String], sender: SelectorTableViewController) -> Bool
+    func userDidUpdateChoice(sender: SelectorTableViewController)	// message after selection changes
+	optional func userCanUpdateChoice(newSelection: [String], sender: SelectorTableViewController) -> Bool	// optional method of validating selection
 }
 
 class SelectorTableViewController: UITableViewController
 {
-    let selectedColor = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
+	//	Styling
+    let selectedColor = themeColour
     let deselectedColor = UIColor.blackColor()
-    
+	
+	//	Model
     var options: [String]?
-    var mode = SelectorMode.Multiple
     var selection: [String] = []
+	
+	//	Externally configurable variables
+	var mode = SelectorMode.Multiple // form can be configured to permit multiple selections or only single selection of items, multiple is default
     var prompt = ""
-    var delegate: SelectorTableViewControllerDelegate?
-    
-    // MARK: - Table view data source
+	
+	var delegate: SelectorTableViewControllerDelegate?
+	
+	override func viewDidLoad()
+	{
+		tableView.scrollEnabled = false
+		super.viewDidLoad()
+	}
+	
+    // Table view data source methods
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        // Return the number of sections.
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        // Return the number of rows in the section.
         return options == nil ? 0 : options!.count
     }
 
@@ -49,9 +57,9 @@ class SelectorTableViewController: UITableViewController
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("selectorCell", forIndexPath: indexPath) as! UITableViewCell
 
-        // Configure the cell.
         cell.textLabel!.text = options![indexPath.row]
-        
+		
+		//	load pre-configured selections
         if contains(selection, options![indexPath.row])
         {
             cell.accessoryType = .Checkmark
@@ -65,40 +73,42 @@ class SelectorTableViewController: UITableViewController
 
         return cell
     }
+	
+	// Table view delegate methods
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
-        
+		
+		//	reflect change in temporary copy of model
 		var newSelection = selection
-        
-		// Buffer change to Model.
 		var selectedText = options![indexPath.row]
-        
 		if mode == .Single
 		{
 			newSelection = [selectedText]
 		}
-		else
+		if mode == .Multiple
 		{
 			var index = find(selection, selectedText)
 			if index == nil
 			{
-				// Selected Option doesn't exist, "SELECTION"
+				// item was not selected: "SELECTION"
                 newSelection.append(selectedText)
 			}
 			else
 			{
-				// Selected Option exists, "DESELECTION"
+				// item was selected: "DESELECTION"
                 newSelection.removeAtIndex(index!)
 			}
 		}
 		
+		//	give chance for delegate to approve changes
 		if delegate!.userCanUpdateChoice?(newSelection, sender: self) ?? true
 		{
+			// if approved, commit temporary changes
 			selection = newSelection
 			
-			// If User can update choice, proceed with changes to UI.
+			// reflect model change in view
 			if mode == .Multiple
 			{
 				if cell!.accessoryType == .Checkmark
@@ -114,39 +124,25 @@ class SelectorTableViewController: UITableViewController
 			}
 			else if mode == .Single
 			{
-                //  Remove all Styling from all Rows.
+                //  "deselect" all rows
 				for row in 0...tableView.numberOfRowsInSection(0) - 1
 				{
 					var currentCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0))
 					currentCell!.accessoryType = UITableViewCellAccessoryType.None
 					currentCell!.textLabel!.textColor = deselectedColor
 				}
-                // Style selected Row with checkmark and color.
+                // "select" only selected row
 				cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
 				cell!.textLabel!.textColor = selectedColor
 			}
 			
-			if delegate != nil
-			{
-				delegate!.userDidUpdateChoice(self)
-			}
+			delegate?.userDidUpdateChoice(self)
 		}
 		
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
 	
-    
-    override func viewDidLoad()
-    {
-        tableView.scrollEnabled = false
-        super.viewDidLoad()
-    }
-    
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-    }
-    
+	//	The prompt/question is displayed as a section header.
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String
     {
         return prompt

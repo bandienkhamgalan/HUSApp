@@ -1,22 +1,21 @@
-//
-//  Dropbox.swift
-//  Lung Ops
-//
-//  Created by Yong Lin Ong on 13/3/15.
-//  Copyright (c) 2015 ucl. All rights reserved.
-//
+/**
+	Dropbox.swift
+
+	This class as used as a singleton in Lung Ops. A single instance of Dropbox runs independently, and monitors the Core Data object model for changes. When a change event fires, all operations are compiled and exported, on a separate thread, to a single Excel document in the application folder of the user's Dropbox.
+ */
 
 import Foundation
 
 class Dropbox
 {
-	enum OperationUpdateMode
+	enum OperationUpdateMode // used in calls between class functions
 	{
 		case Create
 		case Update
 		case Delete
 	}
-	
+
+	// Dropbox Sync API
 	var dbFileSystem: DBFilesystem?
 	{
 		if DBFilesystem.sharedFilesystem() == nil
@@ -26,15 +25,13 @@ class Dropbox
 		return DBFilesystem.sharedFilesystem()
 	}
 	
-	var serialThread: dispatch_queue_t
+	// Core Data
 	var managedObjectContext: NSManagedObjectContext?
-	var XMLExcelHeaderRow = [String]()
 	
-	@objc func objectChanged(notification: NSNotification)
-	{
-		dispatch_async(serialThread, { self.saveAllOperations() } )
-	}
+	var serialThread: dispatch_queue_t	// serial thread for data processing & networking
+	var XMLExcelHeaderRow = [String]()	// convenience constant
 	
+	/* Designated initializer */
 	init(managedObjectContext: NSManagedObjectContext)
 	{
 		serialThread = dispatch_queue_create("LungOpsDropbox", nil)
@@ -58,45 +55,39 @@ class Dropbox
 		XMLExcelHeaderRow.append(createCell("Death Date", text: true))
 	}
 	
-    // Move to new folder and delete old folder if Patient's name change
-    func updatePatientFolder(oldPatientID:String, newPatientID:String)
+	/*	objectChanged is set to execute when the system posts NSManagedObjectContextObjectsDidChangeNotification.
+		It simply commences data processing & exporting on a separate thread. */
+	@objc func objectChanged(notification: NSNotification)
 	{
-        if oldPatientID != newPatientID
-		{
-            var oldPath:DBPath = DBPath.root().childPath("/" + oldPatientID)
-            var newPath:DBPath = DBPath.root().childPath("/" + newPatientID)
-			dispatch_async(serialThread)
-			{
-				self.dbFileSystem?.movePath(oldPath, toPath: newPath, error: nil)
-				self.dbFileSystem?.deletePath(oldPath, error: nil)
-			}
-        }
-    }
+		dispatch_async(serialThread, { self.saveAllOperations() } )
+	}
 	
+	/*	saveAllOperations compiles, formats and writes Operation data onto user's Dropbox */
 	func saveAllOperations()
 	{
-		var startDate = NSDate() // <<<< testing
-		
+		// Fetch all Operation entities, sorted in reverse chronological order
 		var fetchRequest = NSFetchRequest(entityName: "Operation")
-
 		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-		var generatedDate = NSDate() // <<<< testing
+	
 		if let operations = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [Operation]
 		{
 			var rows = [[String]]()
 			rows.append(XMLExcelHeaderRow)
+			
+			// Format Operation entity data into Excel XML spreadsheet
 			for operation in operations
 			{
-				println("creating operation row for \(operation)")
 				rows.append(createOperationRow(operation))
 			}
 			
+			// Delete existing file on Dropbox
 			var dbpath:DBPath = DBPath.root().childPath("All Operations.xls")
 			if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil
 			{
 				self.dbFileSystem?.deletePath(dbpath, error: nil)
 			}
-			generatedDate = NSDate() // <<<< testing
+			
+			// Save file to Dropbox
 			var newFile = self.dbFileSystem?.createFile(dbpath, error: nil)
 			if newFile != nil
 			{
@@ -104,50 +95,102 @@ class Dropbox
 				newFile!.close()
 			}
 		}
-		var endDate = NSDate() // <<<< testing
-		var executionTime = endDate.timeIntervalSinceDate(startDate) // <<<< testing
-		var generationTime = generatedDate.timeIntervalSinceDate(startDate) // <<<< testing
-		println("executed in \(executionTime) seconds (\(generationTime)) for generating .xls XML and \(executionTime - generationTime) for uploading)") // <<<< testing
 	}
-    
-    func createPatientFolder(patientID:String)
-	{
-        var path:String = "/" + patientID
-        var dbpath:DBPath = DBPath.root().childPath(path)
-		self.dbFileSystem?.createFolder(dbpath, error: nil)
-    }
-    
-    func deletePatientFolder(patientID:String)
-	{
-        var path:String = "/" + patientID
-        var dbpath:DBPath = DBPath.root().childPath(path)
-		
-		if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil
-		{
-			self.dbFileSystem?.deletePath(dbpath, error: nil)
-		}
-    }
-    
-    // Create or Delete .xls files
-	func updateOperationFile(operation:Operation, mode:OperationUpdateMode)
-	{
-		self.deleteOperationFile(operation)
-		if mode == .Create || mode == .Update
-		{
-			self.createOperationFile(operation)
-		}
-    }
-
-	func deleteOperationFile(operation:Operation)
-	{
-        var path:String =  "/" + operation.patient.patientID + "/" + operation.dateString() + ".xls"
-        var dbpath:DBPath = DBPath.root().childPath(path)
-
-		if self.dbFileSystem?.fileInfoForPath(dbpath, error: nil) != nil {
-			self.dbFileSystem?.deletePath(dbpath, error: nil)
-		}
-    }
 	
+	/*	createOperationRow takes an Operation entity as a parameter and formats the data for exporting to Excel XML format. 
+		It returns an array (of XML data strings), with each element representing one cell. */
+	func createOperationRow(operation:Operation) -> [String]
+	{
+		var cells = [String]()
+		
+		cells.append(createCell(operation.patient.patientID, text: true))
+		cells.append(createCell(operation.patient.ageString(), text: false))
+		cells.append(createCell(operation.patient.genderString(), text: true))
+		cells.append(createCell(operation.dateString(), text: true))
+		cells.append(createCell(operation.approachString(), text: true))
+		
+		// prepare contents of Resection cell (comma delimited list)
+		var first = true
+		var resections = ""
+		if (operation.resectionsArray().count > 0){
+			for obj in operation.resectionsArray() {
+				var resection = obj as! String
+				if first {
+					resections += resection
+					first = false
+				} else {
+					resections += ", "
+					resections += resection
+					
+				}
+			}
+		}
+		
+		cells.append(createCell(resections, text: true))
+		cells.append(createCell("\(operation.duration)", text: false))
+		cells.append(createCell("\(operation.fev1)", text: false))
+		cells.append(createCell("\(operation.dlco)", text: false))
+		cells.append(createCell("\(operation.bloodLoss)", text: false))
+		
+		// prepare contents of Admitted to ICU cell (yes/no)
+		if (operation.admittedToICU == 1) {
+			cells.append(createCell("Yes", text: true))
+		}
+		else {
+			cells.append(createCell("No", text: true))
+		}
+		
+		cells.append(createCell("\(operation.durationOfStay)", text: false))
+		
+		// prepare contents of Complications cell (comma delimited list)
+		first = true
+		var complications = ""
+		if (operation.complicationsArray().count > 0){
+			for obj in operation.complicationsArray() {
+				var complication = obj as! String
+				if first {
+					complications += complication
+					first = false
+				} else {
+					complications += ", "
+					complications += complication
+				}
+			}
+		}
+		cells.append(createCell(complications, text: true))
+		
+		// prepare contents of Alive status cell (yes/no with optional date)
+		if (operation.alive == 1) {
+			cells.append(createCell(operation.followUpDateString(), text: true))
+			cells.append(createCell("NA", text: true))
+		}
+		if (operation.alive == 0) {
+			cells.append(createCell("NA", text: true))
+			cells.append(createCell(operation.deathDateString(), text: true))
+		}
+		
+		return cells
+	}
+	
+	/*	createOperationRow takes a string as a parameter, and returns a string holding Excel XML for a cell that contains the text. */
+
+	func createCell(value:String, text:Bool) -> String
+	{
+		var stringStart = "<Cell ss:StyleID=\"center\"><Data ss:Type=\"Number\">"
+		
+		if text {
+			stringStart = "<Cell ss:StyleID=\"center\"><Data ss:Type=\"String\">"
+		}
+		
+		var stringEnde = "</Data></Cell>"
+		
+		var numberStart = "<Cell><Data ss:Type=\"String\">"
+		var numberEnde = "</Data></Cell>"
+		
+		return stringStart + value + stringEnde
+	}
+	
+	/*	XMLDataToXMLExcelString takes a structured array of arrays of Strings (each holding Excel XML data for one cell) as a parameter and encloses it within proper header and footer data, returning a complete, valid String representation of an Excel spreadsheet file. */
 	func XMLDataToXMLExcelString(data:[[String]]) -> String
 	{
 		if data.count > 0 && data[0].count > 0
@@ -177,101 +220,4 @@ class Dropbox
 		return ""
 	}
 	
-	func createOperationRow(operation:Operation) -> [String]
-	{
-		var cells = [String]()
-		
-		cells.append(createCell(operation.patient.patientID, text: true))
-		cells.append(createCell(operation.patient.ageString(), text: false))
-		cells.append(createCell(operation.patient.genderString(), text: true))
-		cells.append(createCell(operation.dateString(), text: true))
-		cells.append(createCell(operation.approachString(), text: true))
-		
-		var first = true
-		var resections = ""
-		if (operation.resectionsArray().count > 0){
-			for obj in operation.resectionsArray() {
-				var resection = obj as! String
-				if first {
-					resections += resection
-					first = false
-				} else {
-					resections += ", "
-					resections += resection
-					
-				}
-			}
-		}
-		
-		cells.append(createCell(resections, text: true))
-		cells.append(createCell("\(operation.duration)", text: false))
-		cells.append(createCell("\(operation.fev1)", text: false))
-		cells.append(createCell("\(operation.dlco)", text: false))
-		cells.append(createCell("\(operation.bloodLoss)", text: false))
-		if (operation.admittedToICU == 1){
-			cells.append(createCell("Yes", text: true))
-		}
-		else {
-			cells.append(createCell("No", text: true))
-		}
-		cells.append(createCell("\(operation.durationOfStay)", text: false))
-		
-		first = true
-		var complications = ""
-		if (operation.complicationsArray().count > 0){
-			for obj in operation.complicationsArray() {
-				var complication = obj as! String
-				if first {
-					complications += complication
-					first = false
-				} else {
-					complications += ", "
-					complications += complication
-				}
-			}
-		}
-		cells.append(createCell(complications, text: true))
-		
-		if (operation.alive == 1) {
-			cells.append(createCell(operation.followUpDateString(), text: true))
-			cells.append(createCell("NA", text: true))
-		}
-		if (operation.alive == 0) {
-			cells.append(createCell("NA", text: true))
-			cells.append(createCell(operation.deathDateString(), text: true))
-		}
-		
-		return cells
-	}
-	
-    func createOperationFile(operation:Operation)
-	{
-		var xlstring = XMLDataToXMLExcelString([XMLExcelHeaderRow, createOperationRow(operation)])
-		
-		var path:String =  "/" + operation.patient.patientID + "/" + operation.dateString() + ".xls"
-		var dbpath:DBPath = DBPath.root().childPath(path)
-
-		var newFile = self.dbFileSystem?.createFile(dbpath, error: nil)
-		if newFile != nil
-		{
-			newFile!.writeString(xlstring, error: nil)
-			newFile!.close()
-		}
-    }
-    
-    func createCell(value:String, text:BooleanType) -> String
-	{
-        var stringStart = "<Cell ss:StyleID=\"center\"><Data ss:Type=\"Number\">"
-        
-        if text {
-            stringStart = "<Cell ss:StyleID=\"center\"><Data ss:Type=\"String\">"
-        }
-       
-        var stringEnde = "</Data></Cell>"
-        
-        var numberStart = "<Cell><Data ss:Type=\"String\">"
-        var numberEnde = "</Data></Cell>"
-        
-        return stringStart + value + stringEnde
-    }
 }

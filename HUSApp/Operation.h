@@ -1,10 +1,6 @@
-//
-//  Operation.h
-//  Lung Ops
-//
-//  Created by Bandi Enkh-Amgalan on 2/11/15.
-//  Copyright (c) 2015 a. All rights reserved.
-//
+/**
+	Operation.h
+ */
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>

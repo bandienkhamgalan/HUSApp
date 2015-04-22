@@ -1,16 +1,18 @@
-//
-//  AppDelegate.swift
-//  Lung Ops
-//
-//  Created by Bandi Enkh-Amgalan on 3/1/15.
-//  Copyright (c) 2015 ucl. All rights reserved.
-//
+/**
+	AppDelegate.swift
+
+	Automatically generated class responsible for handling issues concerning the application as a whole.
+*/
 
 import UIKit
 import CoreData
 import Foundation
+
+// constant used across
+let themeColour = UIColor(red: 69.0/255.0, green: 174.0/255.0, blue: 172.0/255.0, alpha: 1.0)
  
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -23,21 +25,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		DBAccountManager.setSharedManager(accountManager)
 		dropboxManager = Dropbox(managedObjectContext: managedObjectContext!)
 		
+		// Set up Core Data on first view controller
         let rootViewController = window!.rootViewController! as! UINavigationController
         let patientListViewController = rootViewController.visibleViewController as! PatientListTableViewController
         patientListViewController.managedObjectContext = managedObjectContext;
         return true
     }
     
-    // Dropbox - Handle openURL
+    /*	This function is called after the user has linked his/her Dropbox account via Safari, Dropbox or another external application. */
     func application(application: UIApplication, openURL url: NSURL,
         sourceApplication: String?, annotation: AnyObject?) -> Bool
     {
         let account = DBAccountManager.sharedManager().handleOpenURL(url)
         if account != nil
         {
-            println("App linked to Dropbox successfully!")
+			// post notification which SettingsTableViewController is listening for
             NSNotificationCenter.defaultCenter().postNotificationName("dropbox", object: nil)
+			
             return true
         }
         return false
