@@ -1,10 +1,8 @@
-//
-//  DateAndTimePickerTableViewController.swift
-//  Lung Ops
-//
-//  Created by Yee Chong Tan on 05/03/2015.
-//  Copyright (c) 2015 ucl. All rights reserved.
-//
+/**
+	DateAndTimePickerTableViewController.swift
+
+	A generic form controller used by OperationEditorViewController that specializes in user input of either dates or duration through a scrollable picker.
+*/
 
 import UIKit
 
@@ -17,12 +15,16 @@ enum PickerMode
 class DateAndTimePickerTableViewController: UITableViewController
 {
     @IBOutlet weak var datePicker: UIDatePicker!
-    
+	
+	//	A class using DateAndTimePicker sets the mode of the input (either time or duration) with pickerMode
     var pickerMode = PickerMode.Date
+	
+	//	Externally configurable variables
     var savedDate: NSDate?
     var savedCountdown :NSTimeInterval?
     var prompt = ""
-    
+	
+	//	Computed property that returns current selection (for date mode)
     var date: NSDate?
     {
         get
@@ -34,7 +36,8 @@ class DateAndTimePickerTableViewController: UITableViewController
             return nil
         }
     }
-    
+	
+	//	Computed property that returns current duration (for duration mode)
     var duration: NSTimeInterval?
     {
         get
@@ -52,7 +55,8 @@ class DateAndTimePickerTableViewController: UITableViewController
         super.viewDidLoad()
         
         datePicker.datePickerMode = pickerMode == .Date ? .Date : .CountDownTimer
-        
+		
+		//	if a saved value is set, load that value into UI
         if pickerMode == .Date {
             if savedDate != nil {
                 datePicker.setDate(savedDate!, animated: true)
@@ -69,14 +73,10 @@ class DateAndTimePickerTableViewController: UITableViewController
 
     }
 
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-    }
-
+	//	Table view delegate methods
+	//		The prompt/question is displayed as a section header.
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
         return prompt
     }
-    
 }
