@@ -137,31 +137,13 @@
 		344F95C71AA37FCB0015B806 /* HUSApp */ = {
 			isa = PBXGroup;
 			children = (
-				0DED36491AB0ED3C00F10E76 /* Dropbox.framework */,
-				0D35CF501AB3ABC4007F8820 /* Dropbox.swift */,
-				0DF80FBC1ABB27A200554D04 /* PKNotification.swift */,
-				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
-				344F95CA1AA37FCB0015B806 /* AppDelegate.swift */,
-				343736DF1AA6813700013C79 /* Main.storyboard */,
-				344F95F71AA380430015B806 /* PatientListTableViewController.swift */,
-				34E117751AB0523900E4DDFD /* SettingsTableViewController.swift */,
-				34B1C06E1AA76BC2007DA58E /* PatientTableViewController.swift */,
-				34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */,
-				391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */,
-				34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */,
-				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
-				34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */,
-				398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */,
-				34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */,
-				34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */,
-				344F95F11AA3803A0015B806 /* Operation.h */,
-				344F95F21AA3803A0015B806 /* Operation.m */,
-				344F95F31AA3803A0015B806 /* Patient.h */,
-				344F95F41AA3803A0015B806 /* Patient.m */,
-				344F95ED1AA3802C0015B806 /* HUSApp.xcdatamodeld */,
+				347F1B801AE86CBF00135911 /* Views */,
+				347F1B7A1AE86C2200135911 /* Libraries */,
+				347F1B7B1AE86C4000135911 /* Singletons */,
+				347F1B7E1AE86C8600135911 /* Controllers */,
+				347F1B7C1AE86C7100135911 /* Models */,
 				344F95D41AA37FCB0015B806 /* Images.xcassets */,
 				344F95C81AA37FCB0015B806 /* Supporting Files */,
-				344F95F01AA380390015B806 /* HUSApp-Bridging-Header.h */,
 			);
 			path = HUSApp;
 			sourceTree = "<group>";
@@ -169,6 +151,7 @@
 		344F95C81AA37FCB0015B806 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				344F95F01AA380390015B806 /* HUSApp-Bridging-Header.h */,
 				344F95C91AA37FCB0015B806 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -189,6 +172,111 @@
 				344F95E21AA37FCB0015B806 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		347F1B7A1AE86C2200135911 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				0DED36491AB0ED3C00F10E76 /* Dropbox.framework */,
+				0DF80FBC1ABB27A200554D04 /* PKNotification.swift */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		347F1B7B1AE86C4000135911 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				0D35CF501AB3ABC4007F8820 /* Dropbox.swift */,
+				344F95CA1AA37FCB0015B806 /* AppDelegate.swift */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+		347F1B7C1AE86C7100135911 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				347F1B851AE8709100135911 /* Core Data */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		347F1B7D1AE86C7B00135911 /* Form Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3970E8681AA8820400999358 /* DateAndTimePickerTableViewController.swift */,
+				34E20D641AA8D13F004F0C8F /* SelectorTableViewController.swift */,
+				398ED0C81AB66B980059505B /* TextFieldInputTableViewController.swift */,
+				34E20D661AA8D18A004F0C8F /* ValuePickerTableViewController.swift */,
+				34E20D681AA8D1DB004F0C8F /* DeathTableViewController.swift */,
+			);
+			name = "Form Controllers";
+			sourceTree = "<group>";
+		};
+		347F1B7E1AE86C8600135911 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				347F1B821AE86E4000135911 /* Utility Controllers */,
+				347F1B811AE86E2F00135911 /* Data Controllers */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		347F1B801AE86CBF00135911 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				343736DF1AA6813700013C79 /* Main.storyboard */,
+				344F95D61AA37FCB0015B806 /* LaunchScreen.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		347F1B811AE86E2F00135911 /* Data Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				347F1B831AE86E9E00135911 /* Data Entry Controllers */,
+				347F1B841AE86EAA00135911 /* Data Display Controllers */,
+			);
+			name = "Data Controllers";
+			sourceTree = "<group>";
+		};
+		347F1B821AE86E4000135911 /* Utility Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				34E117751AB0523900E4DDFD /* SettingsTableViewController.swift */,
+			);
+			name = "Utility Controllers";
+			sourceTree = "<group>";
+		};
+		347F1B831AE86E9E00135911 /* Data Entry Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				347F1B7D1AE86C7B00135911 /* Form Controllers */,
+				34B1C06C1AA740D2007DA58E /* PatientEditorViewController.swift */,
+				34A776201AA88529002AA3C8 /* OperationEditorViewController.swift */,
+			);
+			name = "Data Entry Controllers";
+			sourceTree = "<group>";
+		};
+		347F1B841AE86EAA00135911 /* Data Display Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				344F95F71AA380430015B806 /* PatientListTableViewController.swift */,
+				34B1C06E1AA76BC2007DA58E /* PatientTableViewController.swift */,
+				391BE22B1AA9FD470046D5C8 /* OperationTableViewController.swift */,
+			);
+			name = "Data Display Controllers";
+			sourceTree = "<group>";
+		};
+		347F1B851AE8709100135911 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				344F95F11AA3803A0015B806 /* Operation.h */,
+				344F95F21AA3803A0015B806 /* Operation.m */,
+				344F95F31AA3803A0015B806 /* Patient.h */,
+				344F95F41AA3803A0015B806 /* Patient.m */,
+				344F95ED1AA3802C0015B806 /* HUSApp.xcdatamodeld */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
