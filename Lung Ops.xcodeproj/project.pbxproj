@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D35CF511AB3ABC4007F8820 /* Dropbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D35CF501AB3ABC4007F8820 /* Dropbox.swift */; };
+		0D50C8C01AEE1DA200D4D991 /* PKNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D50C8BF1AEE1DA200D4D991 /* PKNotification.swift */; };
 		0DED364A1AB0ED3D00F10E76 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36491AB0ED3C00F10E76 /* Dropbox.framework */; };
 		0DED364C1AB0ED6B00F10E76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED364B1AB0ED6B00F10E76 /* CFNetwork.framework */; };
 		0DED364E1AB0ED7600F10E76 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED364D1AB0ED7600F10E76 /* Security.framework */; };
@@ -15,7 +16,6 @@
 		0DED36521AB0ED8A00F10E76 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36511AB0ED8A00F10E76 /* QuartzCore.framework */; };
 		0DED36541AB0ED9800F10E76 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36531AB0ED9800F10E76 /* libc++.dylib */; };
 		0DED36561AB0EDA400F10E76 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DED36551AB0EDA400F10E76 /* libz.dylib */; };
-		0DF80FBD1ABB27A200554D04 /* PKNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF80FBC1ABB27A200554D04 /* PKNotification.swift */; };
 		343736E01AA6813700013C79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343736DF1AA6813700013C79 /* Main.storyboard */; };
 		344F95CB1AA37FCB0015B806 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344F95CA1AA37FCB0015B806 /* AppDelegate.swift */; };
 		344F95D51AA37FCB0015B806 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 344F95D41AA37FCB0015B806 /* Images.xcassets */; };
@@ -49,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		0D35CF501AB3ABC4007F8820 /* Dropbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dropbox.swift; path = ../Dropbox.swift; sourceTree = "<group>"; };
+		0D50C8BF1AEE1DA200D4D991 /* PKNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKNotification.swift; sourceTree = "<group>"; };
 		0DED36491AB0ED3C00F10E76 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		0DED364B1AB0ED6B00F10E76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0DED364D1AB0ED7600F10E76 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -56,7 +57,6 @@
 		0DED36511AB0ED8A00F10E76 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0DED36531AB0ED9800F10E76 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		0DED36551AB0EDA400F10E76 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		0DF80FBC1ABB27A200554D04 /* PKNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKNotification.swift; sourceTree = "<group>"; };
 		343736DF1AA6813700013C79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		344F95C51AA37FCB0015B806 /* Lung Ops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lung Ops.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		344F95C91AA37FCB0015B806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -177,8 +177,8 @@
 		347F1B7A1AE86C2200135911 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				0D50C8BF1AEE1DA200D4D991 /* PKNotification.swift */,
 				0DED36491AB0ED3C00F10E76 /* Dropbox.framework */,
-				0DF80FBC1ABB27A200554D04 /* PKNotification.swift */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -406,13 +406,13 @@
 				344F95EF1AA3802C0015B806 /* HUSApp.xcdatamodeld in Sources */,
 				34B1C06F1AA76BC2007DA58E /* PatientTableViewController.swift in Sources */,
 				34E20D671AA8D18A004F0C8F /* ValuePickerTableViewController.swift in Sources */,
+				0D50C8C01AEE1DA200D4D991 /* PKNotification.swift in Sources */,
 				34E20D691AA8D1DB004F0C8F /* DeathTableViewController.swift in Sources */,
 				34E117761AB0523900E4DDFD /* SettingsTableViewController.swift in Sources */,
 				391BE22C1AA9FD470046D5C8 /* OperationTableViewController.swift in Sources */,
 				34E20D651AA8D13F004F0C8F /* SelectorTableViewController.swift in Sources */,
 				398ED0C91AB66B980059505B /* TextFieldInputTableViewController.swift in Sources */,
 				344F95F51AA3803A0015B806 /* Operation.m in Sources */,
-				0DF80FBD1ABB27A200554D04 /* PKNotification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

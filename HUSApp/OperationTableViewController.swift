@@ -192,13 +192,6 @@ class OperationTableViewController: UITableViewController, NSFetchedResultsContr
         return cell
     }
     
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        self.title = "Operation"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "userPressedEdit")
-    }
-    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

@@ -93,7 +93,6 @@ class PKNotificationClass: UIViewController {
     var alertCornerRadius:CGFloat = 8
     
     // MARK: - Lifecycle
-
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -197,7 +196,7 @@ class PKNotificationClass: UIViewController {
             },
             completion: { (finished:Bool) -> Void in
                 UIView.animateWithDuration(0.1,
-                    delay: 1,
+                    delay: 2,
                     options: UIViewAnimationOptions.CurveLinear,
                     animations: { () -> Void in
                         progressVC.view.alpha = 0
@@ -288,9 +287,9 @@ class PKNotificationClass: UIViewController {
         var messageLabel:UILabel? = nil
         
         // MARK: - Lifecycle
-        init(title t:String?, message m:String?, items i:Array<AnyObject>?, cancelButtonTitle c:String?, tintColor tint:UIColor?, parent p:PKNotificationClass) {
+        convenience init(title t:String?, message m:String?, items i:Array<AnyObject>?, cancelButtonTitle c:String?, tintColor tint:UIColor?, parent p:PKNotificationClass) {
             /* initialize alert parts, resize them and set colors */
-			super.init(nibName: nil, bundle: nil)
+            self.init()
             parent = p
             let tintColor:UIColor! = (tint == nil) ? parent.alertButtonFontColor : tint
             
@@ -564,12 +563,12 @@ class PKNotificationClass: UIViewController {
         var height:CGFloat = 0
         
         // MARK: - Lifecycle
-        init(message m:String, parent p:PKNotificationClass) {
-			super.init(nibName: nil, bundle: nil)
+        convenience init(message m:String, parent p:PKNotificationClass) {
+            self.init()
             parent = p
             generate(message: m)
         }
-        
+
         required init(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
         }
@@ -683,20 +682,18 @@ class PKNotificationClass: UIViewController {
         var type:PKProgressType = .Loading
         
         // MARK: - Lifecycle
-        init(_ t:PKProgressType, _ m:String?, _ p:PKNotificationClass) {
-            super.init(nibName: nil, bundle: nil)
+        convenience init(_ t:PKProgressType, _ m:String?, _ p:PKNotificationClass) {
+            self.init()
             parent = p
+            type = t
             switch(t){
                 case .Loading:
-                    type = t
                     generateLoading()
                     break
                 case .Success:
-                    type = t
                     generateSuccess(m)
                     break
                 case .Failed:
-                    type = t
                     generateFailed(m)
                     break
             }
@@ -856,8 +853,8 @@ class PKNotificationClass: UIViewController {
 class PKButton: UIButton {
     var actionBlock:PKButtonActionBlock = {(item) -> Bool in return true}
     
-    init(title t:String, action a:PKButtonActionBlock, fontColor f:UIColor?, backgroundColor b:UIColor?) {
-		super.init(frame: CGRectZero)
+    convenience init(title t:String, action a:PKButtonActionBlock, fontColor f:UIColor?, backgroundColor b:UIColor?) {
+        self.init()
         actionBlock = a
         self.setTitle(t, forState: UIControlState.Normal)
         self.setTitleColor(f, forState: UIControlState.Normal)
